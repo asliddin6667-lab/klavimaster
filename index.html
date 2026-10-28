@@ -101,6 +101,15 @@ p.lead{color:var(--muted);font-weight:700}
 .catcard .pr i{display:block;height:100%;background:linear-gradient(90deg,var(--ok),var(--accent2));border-radius:99px;transition:.4s}
 .catcard .cnt{font-size:.8rem;font-weight:800;color:var(--muted);margin-top:5px}
 .catcard.done::after{content:'✅';position:absolute;top:12px;right:14px;font-size:1.4rem}
+.catcard.all{grid-column:1/-1;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;display:flex;align-items:center;gap:18px;padding:18px 24px}
+.catcard.all .em{font-size:3rem}
+.catcard.all .nm{font-size:1.4rem;margin:0}
+.catcard.all .ds,.catcard.all .cnt{color:rgba(255,255,255,.85)}
+.catcard.all .pr{background:rgba(255,255,255,.25)}
+.catcard.all .pr i{background:#fff}
+.catcard.all .go{margin-left:auto;background:#fff;color:var(--accent);padding:12px 22px;border-radius:14px;font-weight:900;font-size:1.05rem;white-space:nowrap}
+.catcard .best{position:absolute;top:12px;right:14px;font-size:.8rem;font-weight:900;color:var(--star);background:var(--card2);padding:4px 9px;border-radius:99px}
+.catcard.all .best{background:rgba(255,255,255,.22);color:#fff}
 .lesson{display:grid;grid-template-columns:1.3fr 1fr;gap:16px}
 @media(max-width:900px){.lesson{grid-template-columns:1fr}}
 .stepcard{text-align:center;position:relative;border:4px solid transparent;transition:.3s}
@@ -317,23 +326,24 @@ p.lead{color:var(--muted);font-weight:700}
   <section class="panel" id="panel-train">
     <div id="trainSetup">
       <div class="card" style="margin-bottom:14px">
-        <h2>🎮 Тренажёр</h2>
-        <p class="lead">Я говорю задание — ты нажимаешь правильное сочетание. Без подсказки ⭐⭐⭐, с подсказкой ⭐. ⌨️ Клавиатура появится после нажатия «Начать».</p>
-        <h3 style="margin-top:14px">Темы</h3>
-        <div class="row" id="trainCats" style="margin:8px 0 14px"></div>
-        <h3>Режим</h3>
-        <div class="row" style="margin:8px 0 14px">
+        <h2>🎮 Выбери тренажёр</h2>
+        <p class="lead">Я говорю задание — ты нажимаешь правильное сочетание. Без подсказки ⭐⭐⭐, с подсказкой ⭐. ⌨️ Клавиатура появится, как только ты выберешь тему.</p>
+        <div class="row" style="margin-top:12px">
+          <b style="font-size:1.05rem">Режим:</b>
           <button class="chip on" data-tm="free">🧘 Спокойный (без времени)</button>
           <button class="chip" data-tm="marathon">⏱ Марафон — 60 секунд</button>
           <button class="chip" data-tm="ten">🎯 10 заданий</button>
         </div>
-        <div class="row">
-          <button class="btn" id="trainStart">🚀 Начать!</button>
-          <span class="lead" id="trainCount"></span>
-        </div>
       </div>
+      <div class="catgrid" id="traingrid"></div>
     </div>
     <div id="trainView" style="display:none">
+      <div class="row" style="margin-bottom:10px">
+        <button class="btn ghost sm" id="trainBack">⬅ К темам</button>
+        <div class="pill" id="trainTopic">—</div>
+        <div class="spacer"></div>
+        <div class="pill" id="trainMode">🧘 Спокойный</div>
+      </div>
       <div class="stats" style="margin-bottom:12px">
         <div class="stat"><b id="tScore">0</b><span>ОЧКИ</span></div>
         <div class="stat"><b id="tOk">0</b><span>ВЕРНО</span></div>
@@ -366,7 +376,7 @@ p.lead{color:var(--muted);font-weight:700}
         <p class="lead" id="rText"></p>
         <div class="row" style="justify-content:center;margin-top:16px">
           <button class="btn" id="rAgain">🔁 Ещё раз</button>
-          <button class="btn ghost" id="rBack">⚙ Настройки</button>
+          <button class="btn ghost" id="rBack">⬅ К темам</button>
         </div>
       </div>
     </div>
@@ -1002,19 +1012,30 @@ $('#learnBack').addEventListener('click',backToCats);
 /* =====================================================================
    РЕЖИМ «ТРЕНАЖЁР»
    ===================================================================== */
-const T={active:false,cats:new Set(Object.keys(CATS)),tm:'free',pool:[],cur:null,score:0,ok:0,bad:0,streak:0,hinted:false,wrongs:0,locked:false,time:60,timer:null,count:0,total:0,history:[]};
-function renderTrainCats(){
-  const r=$('#trainCats'); r.innerHTML='';
-  const all=document.createElement('button'); all.className='chip'+(T.cats.size===Object.keys(CATS).length?' on':''); all.textContent='✨ Все темы'; all.addEventListener('click',()=>{ T.cats=new Set(Object.keys(CATS)); renderTrainCats(); }); r.appendChild(all);
-  Object.keys(CATS).forEach(c=>{ const b=document.createElement('button'); b.className='chip'+(T.cats.has(c)?' on':''); b.textContent=CATS[c].e+' '+CATS[c].n; b.addEventListener('click',()=>{ if(T.cats.has(c)){ if(T.cats.size>1) T.cats.delete(c); } else T.cats.add(c); renderTrainCats(); }); r.appendChild(b); });
-  const n=SHORTCUTS.filter(s=>T.cats.has(s.c)).length; $('#trainCount').textContent='Сочетаний в выборке: '+n;
+const T={active:false,topic:'all',tm:'free',pool:[],cur:null,score:0,ok:0,bad:0,streak:0,hinted:false,wrongs:0,locked:false,time:60,timer:null,count:0,total:0,history:[]};
+const TM_NAMES={free:'🧘 Спокойный',marathon:'⏱ Марафон 60 с',ten:'🎯 10 заданий'};
+const bestKey=()=>T.tm+':'+T.topic;
+function topicStats(c){ const list=c==='all'?SHORTCUTS:(BYCAT[c]||[]); let ok=0,mastered=0; list.forEach(s=>{ const st=S.stats[s.id]; if(st){ ok+=st.ok; if(st.ok>0) mastered++; } }); return {n:list.length,ok,mastered}; }
+function bestText(c){ const parts=[]; ['marathon','ten'].forEach(tm=>{ const b=S.best[tm+':'+c]; if(b) parts.push((tm==='marathon'?'⏱':'🎯')+' '+b); }); return parts.join(' · '); }
+function renderTrainGrid(){
+  const g=$('#traingrid'); g.innerHTML='';
+  const mk=(c)=>{ const st=topicStats(c); const all=c==='all'; const d=document.createElement('div'); d.className='catcard'+(all?' all':'')+(st.mastered===st.n&&st.n?' done':'');
+    const info=CATS[c]||{e:'✨',n:'Общий тренажёр',d:'Все темы вперемешку — '+SHORTCUTS.length+' сочетаний'};
+    const best=bestText(c);
+    d.innerHTML=(all?'<div class="em">'+info.e+'</div><div style="flex:1"><div class="nm">'+info.n+'</div><div class="ds">'+info.d+'</div><div class="pr"><i style="width:'+(st.n?st.mastered/st.n*100:0)+'%"></i></div><div class="cnt">'+st.mastered+' / '+st.n+' освоено · верных ответов: '+st.ok+'</div></div><div class="go">🚀 Начать</div>'
+      :'<div class="em">'+info.e+'</div><div class="nm">'+info.n+'</div><div class="ds">'+info.d+'</div><div class="pr"><i style="width:'+(st.n?st.mastered/st.n*100:0)+'%"></i></div><div class="cnt">'+st.mastered+' / '+st.n+' освоено · верных: '+st.ok+'</div>')
+      +(best&&!all?'<div class="best">🏆 '+best+'</div>':'');
+    if(all&&best) d.querySelector('.cnt').insertAdjacentHTML('beforeend',' · 🏆 '+best);
+    d.addEventListener('click',()=>{ unlockAudio(); T.topic=c; startTrain(); }); g.appendChild(d); };
+  mk('all'); Object.keys(CATS).forEach(mk);
 }
 $$('[data-tm]').forEach(b=>b.addEventListener('click',()=>{ $$('[data-tm]').forEach(x=>x.classList.remove('on')); b.classList.add('on'); T.tm=b.dataset.tm; }));
 function startTrain(){
-  T.pool=SHORTCUTS.filter(s=>T.cats.has(s.c)); if(!T.pool.length) return;
+  T.pool=T.topic==='all'?SHORTCUTS.slice():(BYCAT[T.topic]||[]).slice(); if(!T.pool.length) return;
   T.active=true; T.score=0;T.ok=0;T.bad=0;T.streak=0;T.count=0;T.history=[]; T.total=T.tm==='ten'?10:0; T.time=60;
   $('#trainSetup').style.display='none'; $('#trainResult').style.display='none'; $('#trainView').style.display='block'; updateKb();
-  $('#tBest').textContent=T.tm==='marathon'?S.best.marathon:(T.tm==='ten'?S.best.ten:'—');
+  $('#trainTopic').textContent=T.topic==='all'?'✨ Общий тренажёр':CATS[T.topic].e+' '+CATS[T.topic].n; $('#trainMode').textContent=TM_NAMES[T.tm];
+  $('#tBest').textContent=T.tm==='free'?'—':(S.best[bestKey()]||0);
   $('#tTimeBox').style.display=T.tm==='marathon'?'':'none'; $('#timerbar').style.display=T.tm==='marathon'?'':'none'; $('#timerfill').style.width='100%'; $('#tTime').textContent=60;
   if(T.tm==='marathon'){ clearInterval(T.timer); T.timer=setInterval(()=>{ T.time--; $('#tTime').textContent=T.time; $('#timerfill').style.width=(T.time/60*100)+'%'; if(T.time<=10) snd.tick(); if(T.time<=0) endTrain(); },1000); }
   updateStats(); nextTask();
@@ -1059,15 +1080,16 @@ function trainInput(s,mods,code,opts){
 function endTrain(){
   if(!T.active) return; T.active=false; clearInterval(T.timer); clearTargets();
   $('#trainView').style.display='none'; $('#trainResult').style.display='block'; updateKb();
-  let rec=false; if(T.tm==='marathon'&&T.score>S.best.marathon){ S.best.marathon=T.score; rec=true; } if(T.tm==='ten'&&T.score>S.best.ten){ S.best.ten=T.score; rec=true; } save();
+  let rec=false; if(T.tm!=='free'&&T.score>(S.best[bestKey()]||0)){ S.best[bestKey()]=T.score; rec=true; } save();
   const acc=T.ok+T.bad?Math.round(T.ok/(T.ok+T.bad)*100):0;
   $('#rScore').textContent=T.score+' очков'; $('#rEmoji').textContent=rec?'🏆':(acc>=80?'🌟':'👍'); $('#rTitle').textContent=rec?'Новый рекорд!':(acc>=80?'Отличная работа!':'Хорошая тренировка!');
-  $('#rText').textContent='Верно: '+T.ok+', ошибок: '+T.bad+', точность: '+acc+'%. '+(T.tm==='marathon'?'Рекорд марафона: '+S.best.marathon+'.':'')+(T.tm==='ten'?'Рекорд серии: '+S.best.ten+'.':'');
+  $('#rText').textContent=($('#trainTopic').textContent)+' · '+TM_NAMES[T.tm]+'. Верно: '+T.ok+', ошибок: '+T.bad+', точность: '+acc+'%. '+(T.tm!=='free'?'Рекорд: '+S.best[bestKey()]+'.':'');
   if(T.ok>0){ confetti(rec?250:120); snd.win(); } speak(rec?'Новый рекорд! Поздравляю!':'Тренировка окончена. Верно: '+T.ok);
 }
-$('#trainStart').addEventListener('click',()=>{unlockAudio();startTrain()});
 $('#rAgain').addEventListener('click',startTrain);
-$('#rBack').addEventListener('click',()=>{ $('#trainResult').style.display='none'; $('#trainSetup').style.display='block'; renderTrainCats(); });
+function trainHome(){ if(T.active){ T.active=false; clearInterval(T.timer); clearTargets(); } $('#trainResult').style.display='none'; $('#trainView').style.display='none'; $('#trainSetup').style.display='block'; renderTrainGrid(); updateKb(); }
+$('#rBack').addEventListener('click',trainHome);
+$('#trainBack').addEventListener('click',trainHome);
 
 /* =====================================================================
    РЕЖИМ «КЛАВИШИ»
@@ -1119,12 +1141,12 @@ document.addEventListener('fullscreenchange',()=>{ if(!document.fullscreenElemen
 $('#btnHelp').addEventListener('click',()=>$('#help').classList.add('open'));
 $('#helpClose').addEventListener('click',()=>$('#help').classList.remove('open'));
 $('#help').addEventListener('click',e=>{ if(e.target.id==='help') $('#help').classList.remove('open'); });
-$('#resetProgress').addEventListener('click',()=>{ if(confirm('Сбросить все звёзды и прогресс?')){ const set=S.set; S={stars:0,learned:{},stats:{},best:{marathon:0,ten:0},set}; save(); renderStars(); renderCats(); toast('Прогресс сброшен'); } });
+$('#resetProgress').addEventListener('click',()=>{ if(confirm('Сбросить все звёзды и прогресс?')){ const set=S.set; S={stars:0,learned:{},stats:{},best:{},set}; save(); renderStars(); renderCats(); renderTrainGrid(); toast('Прогресс сброшен'); } });
 
 /* =====================================================================
    СТАРТ
    ===================================================================== */
-buildKeyboard(); applySettings(); renderStars(); renderCats(); renderTrainCats(); renderRefCats(); renderRef(); pressedCombo(); updateKb();
+buildKeyboard(); applySettings(); renderStars(); renderCats(); renderTrainGrid(); renderRefCats(); renderRef(); pressedCombo(); updateKb();
 addEventListener('pointerdown',unlockAudio,{once:true});
 window.KM={get T(){return T},get LN(){return LN},get S(){return S},SHORTCUTS,CATS,comboHTML,MODCODES,sig,parseKeys};
 if('serviceWorker' in navigator&&location.protocol.startsWith('http')){ navigator.serviceWorker.register('sw.js').catch(()=>{}); }
