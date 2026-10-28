@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>КлавиМастер — тренажёр горячих клавиш</title>
+<meta name="description" content="Интерактивный тренажёр горячих клавиш Windows для школьников: урок, тренажёр, справочник, экранная клавиатура.">
+<meta name="theme-color" content="#6a5cff">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ============ ТЕМА ============ */
+:root{
+  --text:#1e2140; --muted:#6b6f8a; --card:#ffffff; --card2:#f4f6ff; --line:#e3e6f3;
+  --accent:#6a5cff; --accent2:#38b6ff; --ok:#22c55e; --bad:#ef4444; --star:#f59e0b;
+  --ctrl:#3b82f6; --shift:#22c55e; --alt:#f97316; --win:#a855f7; --fn:#14b8a6; --nav:#ec4899; --digit:#f59e0b; --sys:#64748b; --enter:#6366f1;
+  --kbbg:rgba(255,255,255,.55); --keybg:#ffffff; --keybd:#c9cde0; --keytext:#1e2140; --keysub:#8a8fa8;
+  --shadow:0 10px 30px rgba(30,33,64,.10);
+  --u:48px;
+}
+:root[data-theme="dark"]{
+  --text:#eef0ff; --muted:#a2a7c7; --card:#1b1f3a; --card2:#232849; --line:#33395f;
+  --kbbg:rgba(10,12,30,.45); --keybg:#2a2f55; --keybd:#151834; --keytext:#f2f3ff; --keysub:#9aa0c8;
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Nunito','Segoe UI',system-ui,sans-serif;color:var(--text);
+  background:linear-gradient(135deg,#eef2ff 0%,#e0f2fe 45%,#fdf4ff 100%);
+  display:grid;grid-template-rows:auto 1fr auto;height:100vh;overflow:hidden;user-select:none;
+}
+:root[data-theme="dark"] body{background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 50%,#172554 100%)}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+input{font-family:inherit}
+
+/* ============ ШАПКА ============ */
+header{display:flex;align-items:center;gap:10px;padding:8px 16px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;font-weight:900;font-size:1.3rem;letter-spacing:.2px;white-space:nowrap}
+.logo .ico{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;font-size:1.4rem;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 6px 18px rgba(106,92,255,.35);color:#fff}
+.logo small{display:block;font-size:.66rem;font-weight:700;color:var(--muted);letter-spacing:.5px}
+.tabs{display:flex;gap:6px;margin-left:6px;flex-wrap:wrap}
+.tab{padding:9px 15px;border-radius:999px;font-weight:800;font-size:.98rem;background:var(--card);box-shadow:var(--shadow);transition:.2s;display:flex;align-items:center;gap:7px;border:2px solid transparent;white-space:nowrap}
+.hdr-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+@media(max-width:1100px){.logo small{display:none}.logo{font-size:1.15rem}}
+.tab:hover{transform:translateY(-2px)}
+.tab.active{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 8px 20px rgba(106,92,255,.4)}
+.spacer{flex:1}
+.pill{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:var(--card);box-shadow:var(--shadow);font-weight:800}
+.pill.stars{color:var(--star);font-size:1.1rem}
+.pill.level{color:var(--accent)}
+.iconbtn{width:42px;height:42px;border-radius:12px;background:var(--card);box-shadow:var(--shadow);font-size:1.2rem;display:grid;place-items:center;transition:.2s;position:relative}
+.iconbtn:hover{transform:translateY(-2px)}
+.iconbtn.off{opacity:.45;filter:grayscale(1)}
+.iconbtn[title]:hover::after{content:attr(title);position:absolute;top:110%;right:0;background:var(--text);color:var(--card);font-size:.75rem;font-weight:700;padding:5px 9px;border-radius:8px;white-space:nowrap;z-index:5}
+
+/* ============ ОСНОВНАЯ ОБЛАСТЬ ============ */
+main{overflow:auto;padding:6px 18px 10px}
+.panel{display:none;animation:fade .3s}
+.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.card{background:var(--card);border-radius:24px;box-shadow:var(--shadow);padding:20px 24px}
+.grid{display:grid;gap:14px}
+h2{font-size:1.5rem;font-weight:900;margin-bottom:6px}
+h3{font-size:1.15rem;font-weight:900}
+p.lead{color:var(--muted);font-weight:700}
+.btn{padding:12px 22px;border-radius:14px;font-weight:900;font-size:1.05rem;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 8px 20px rgba(106,92,255,.35);transition:.15s;display:inline-flex;align-items:center;gap:8px}
+.btn:hover{transform:translateY(-2px)}.btn:active{transform:translateY(1px)}
+.btn.ghost{background:var(--card2);color:var(--text);box-shadow:none;border:2px solid var(--line)}
+.btn.ok{background:linear-gradient(135deg,#22c55e,#14b8a6);box-shadow:0 8px 20px rgba(34,197,94,.35)}
+.btn.warn{background:linear-gradient(135deg,#f59e0b,#f97316);box-shadow:0 8px 20px rgba(245,158,11,.35)}
+.btn.sm{padding:8px 14px;font-size:.95rem;border-radius:11px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.chip{padding:8px 14px;border-radius:999px;font-weight:800;background:var(--card2);border:2px solid var(--line);transition:.15s;display:inline-flex;align-items:center;gap:6px}
+.chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip:hover{transform:translateY(-1px)}
+
+/* клавиши-чипы */
+.combo{display:inline-flex;align-items:center;flex-wrap:wrap;gap:4px}
+.kc{display:inline-flex;align-items:center;justify-content:center;min-width:2.4em;padding:.2em .55em;border-radius:.45em;background:var(--keybg);border:2px solid var(--keybd);border-bottom-width:5px;font-weight:900;font-size:1.25em;color:var(--keytext);line-height:1.2;white-space:nowrap}
+.kc small{font-size:.6em;color:var(--keysub);margin-left:.35em;font-weight:800}
+.kc.ctrl{background:var(--ctrl);border-color:#1d4ed8;color:#fff}
+.kc.shift{background:var(--shift);border-color:#15803d;color:#fff}
+.kc.alt{background:var(--alt);border-color:#c2410c;color:#fff}
+.kc.meta{background:var(--win);border-color:#7e22ce;color:#fff}
+.kc.fn{background:var(--fn);border-color:#0f766e;color:#fff}
+.kc.nav{background:var(--nav);border-color:#be185d;color:#fff}
+.kc.big{font-size:2.1em;min-width:2.2em;padding:.18em .5em}
+.plus{font-weight:900;margin:0 .3em;color:var(--muted);font-size:1.3em}
+
+/* ============ УРОК ============ */
+.catgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.catcard{background:var(--card);border-radius:22px;padding:18px;box-shadow:var(--shadow);cursor:pointer;transition:.2s;border:3px solid transparent;position:relative;overflow:hidden}
+.catcard:hover{transform:translateY(-4px);border-color:var(--accent)}
+.catcard .em{font-size:2.4rem}
+.catcard .nm{font-weight:900;font-size:1.15rem;margin-top:6px}
+.catcard .ds{color:var(--muted);font-weight:700;font-size:.9rem;margin-top:2px}
+.catcard .pr{margin-top:10px;height:9px;background:var(--card2);border-radius:99px;overflow:hidden}
+.catcard .pr i{display:block;height:100%;background:linear-gradient(90deg,var(--ok),var(--accent2));border-radius:99px;transition:.4s}
+.catcard .cnt{font-size:.8rem;font-weight:800;color:var(--muted);margin-top:5px}
+.catcard.done::after{content:'✅';position:absolute;top:12px;right:14px;font-size:1.4rem}
+.lesson{display:grid;grid-template-columns:1.3fr 1fr;gap:16px}
+@media(max-width:900px){.lesson{grid-template-columns:1fr}}
+.stepcard{text-align:center;position:relative;border:4px solid transparent;transition:.3s}
+.stepcard.good{border-color:var(--ok);box-shadow:0 0 0 6px rgba(34,197,94,.2)}
+.stepcard{padding:14px 24px}
+.stepcard .em{font-size:2.6rem;line-height:1.1}
+.stepcard .ttl{font-size:1.8rem;font-weight:900;margin:2px 0}
+.stepcard .dsc{font-size:1.1rem;font-weight:700;color:var(--muted);max-width:640px;margin:0 auto 8px}
+.stepcard .combo{justify-content:center;margin:6px 0 8px}
+.progress{height:14px;background:var(--card2);border-radius:99px;overflow:hidden;margin:10px 0}
+.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px;transition:.4s}
+.hintline{font-weight:800;color:var(--accent);font-size:1.05rem;min-height:1.6em}
+.feedback{font-size:1.3rem;font-weight:900;min-height:1.6em;margin-top:8px}
+.feedback.good{color:var(--ok)}.feedback.bad{color:var(--bad)}
+.shake{animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
+.pop{animation:pop .5s}
+@keyframes pop{0%{transform:scale(.9)}50%{transform:scale(1.04)}100%{transform:scale(1)}}
+.notice{background:#fff7ed;border:2px dashed #fb923c;color:#9a3412;border-radius:14px;padding:10px 14px;font-weight:800;margin-top:10px;font-size:.95rem}
+:root[data-theme="dark"] .notice{background:#3a2412;color:#fdba74}
+
+/* ============ ТРЕНАЖЁР ============ */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+.stat{background:var(--card2);border-radius:16px;padding:10px 12px;text-align:center}
+.stat b{display:block;font-size:1.7rem;font-weight:900}
+.stat span{font-size:.8rem;font-weight:800;color:var(--muted)}
+.timerbar{height:12px;background:var(--card2);border-radius:99px;overflow:hidden;margin-top:8px}
+.timerbar i{display:block;height:100%;background:linear-gradient(90deg,#f59e0b,#ef4444);transition:1s linear;border-radius:99px}
+.result{text-align:center}
+.result .big{font-size:4rem}
+.result .score{font-size:3rem;font-weight:900;color:var(--accent)}
+
+/* ============ КЛАВИШИ ============ */
+.explore{display:grid;grid-template-columns:1fr 1.2fr;gap:16px}
+@media(max-width:900px){.explore{grid-template-columns:1fr}}
+.keyinfo .name{font-size:2rem;font-weight:900}
+.keyinfo .desc{font-size:1.15rem;font-weight:700;color:var(--muted);margin-top:6px}
+.related{display:flex;flex-direction:column;gap:8px;max-height:260px;overflow:auto;padding-right:6px}
+.rel{display:flex;align-items:center;gap:12px;background:var(--card2);padding:8px 12px;border-radius:14px;cursor:pointer;transition:.15s;font-weight:800}
+.rel:hover{transform:translateX(4px);background:var(--line)}
+.rel .combo{font-size:.78em}
+.rel .t{flex:1}
+
+/* ============ СПРАВОЧНИК ============ */
+.search{width:100%;padding:12px 18px;border-radius:14px;border:2px solid var(--line);background:var(--card2);font-size:1.1rem;font-weight:800;color:var(--text);outline:none}
+.search:focus{border-color:var(--accent)}
+.refgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px;margin-top:12px}
+.refcard{background:var(--card);border-radius:18px;padding:14px 16px;box-shadow:var(--shadow);cursor:pointer;transition:.2s;border:3px solid transparent}
+.refcard:hover{transform:translateY(-3px)}
+.refcard.flash{border-color:var(--ok);box-shadow:0 0 0 5px rgba(34,197,94,.25)}
+.refcard .top{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.refcard .combo{font-size:.85em}
+.refcard .em{font-size:1.5rem;margin-left:auto}
+.refcard .t{font-weight:900;font-size:1.05rem}
+.refcard .d{color:var(--muted);font-weight:700;font-size:.9rem}
+.refcard .cat{font-size:.72rem;font-weight:900;color:var(--accent);text-transform:uppercase;letter-spacing:.5px;margin-top:6px}
+.refhead{display:flex;align-items:center;gap:10px;margin:16px 0 4px;font-weight:900;font-size:1.2rem}
+.refhead i{font-style:normal;font-size:.85rem;color:var(--muted);font-weight:800}
+
+/* ============ КЛАВИАТУРА ============ */
+.kb-wrap{padding:6px 14px 12px;background:var(--kbbg);backdrop-filter:blur(10px);border-top:1px solid rgba(255,255,255,.4);animation:kbin .35s}
+.kb-wrap.hidden{display:none}
+@keyframes kbin{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+.kbhint{display:flex;align-items:center;gap:10px;justify-content:center;padding:10px;color:var(--muted);font-weight:800;font-size:.95rem}
+.kb-top{display:flex;align-items:center;gap:12px;margin-bottom:6px;flex-wrap:wrap}
+.pressedstrip{display:flex;align-items:center;gap:6px;min-height:2.3em;font-weight:900;color:var(--muted)}
+.pressedstrip .combo{font-size:.95em}
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin-left:auto;font-size:.8rem;font-weight:800;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.legend i{width:14px;height:14px;border-radius:4px;display:inline-block}
+.kb{display:flex;justify-content:center;gap:calc(var(--u)*.5);width:100%}
+.kblock{display:flex;flex-direction:column}
+.krow{display:flex;gap:calc(var(--u)*.1);margin-bottom:calc(var(--u)*.1);height:calc(var(--u)*.95)}
+.key{
+  flex:0 0 calc(var(--u)*var(--w,1) - var(--u)*.1);height:calc(var(--u)*.95);
+  border-radius:calc(var(--u)*.17);background:var(--keybg);color:var(--keytext);
+  border:2px solid var(--keybd);border-bottom-width:calc(var(--u)*.09);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-weight:900;position:relative;cursor:pointer;transition:transform .08s,background .12s,box-shadow .12s;
+  --col:var(--accent);
+}
+.key .main{font-size:calc(var(--u)*.38);line-height:1}
+.key .sub{position:absolute;top:calc(var(--u)*.07);left:calc(var(--u)*.12);font-size:calc(var(--u)*.2);color:var(--keysub);font-weight:800}
+.key.lbl .main{font-size:calc(var(--u)*.25)}
+.key.lbl.small .main{font-size:calc(var(--u)*.2)}
+.gap{flex:0 0 calc(var(--u)*var(--w,1) - var(--u)*.1);visibility:hidden}
+.key:hover{filter:brightness(1.05)}
+.key.g-ctrl{--col:var(--ctrl);--tint:#dbeafe;--tint2:#93c5fd;--glow:rgba(59,130,246,.55)}
+.key.g-shift{--col:var(--shift);--tint:#dcfce7;--tint2:#86efac;--glow:rgba(34,197,94,.55)}
+.key.g-alt{--col:var(--alt);--tint:#ffedd5;--tint2:#fdba74;--glow:rgba(249,115,22,.55)}
+.key.g-win{--col:var(--win);--tint:#f3e8ff;--tint2:#d8b4fe;--glow:rgba(168,85,247,.55)}
+.key.g-fn{--col:var(--fn);--tint:#ccfbf1;--tint2:#5eead4;--glow:rgba(20,184,166,.55)}
+.key.g-nav{--col:var(--nav);--tint:#fdf2f8;--tint2:#f9a8d4;--glow:rgba(236,72,153,.55)}
+.key.g-digit{--col:var(--digit);--tint:var(--keybg);--tint2:#fde68a;--glow:rgba(245,158,11,.55)}
+.key.g-sys{--col:var(--sys);--tint:#f1f5f9;--tint2:#cbd5e1;--glow:rgba(100,116,139,.55)}
+.key.g-enter{--col:var(--enter);--tint:#e0e7ff;--tint2:#a5b4fc;--glow:rgba(99,102,241,.55)}
+.key.g-space{--col:var(--accent2);--tint:var(--keybg);--tint2:#bae6fd;--glow:rgba(56,182,255,.55)}
+.key.g-letter{--col:var(--accent);--tint:var(--keybg);--tint2:#c7d2fe;--glow:rgba(106,92,255,.55)}
+:root[data-theme="dark"] .key.g-ctrl{--tint:#1e3a8a;--tint2:#1d4ed8}
+:root[data-theme="dark"] .key.g-shift{--tint:#14532d;--tint2:#15803d}
+:root[data-theme="dark"] .key.g-alt{--tint:#7c2d12;--tint2:#c2410c}
+:root[data-theme="dark"] .key.g-win{--tint:#581c87;--tint2:#7e22ce}
+:root[data-theme="dark"] .key.g-fn{--tint:#134e4a;--tint2:#0f766e}
+:root[data-theme="dark"] .key.g-nav{--tint:#3b1a2e;--tint2:#9d174d}
+:root[data-theme="dark"] .key.g-digit{--tint2:#b45309}
+:root[data-theme="dark"] .key.g-sys{--tint:#334155;--tint2:#475569}
+:root[data-theme="dark"] .key.g-enter{--tint:#312e81;--tint2:#4338ca}
+:root[data-theme="dark"] .key.g-space{--tint2:#0369a1}
+:root[data-theme="dark"] .key.g-letter{--tint2:#4338ca}
+.key.g-ctrl,.key.g-shift,.key.g-alt,.key.g-win,.key.g-fn,.key.g-enter,.key.g-nav,.key.g-sys{background:var(--tint)}
+.key.pressed,.key.sticky,.key.flash{
+  background:var(--col)!important;color:#fff;border-color:var(--col)!important;filter:saturate(1.1);
+  transform:translateY(calc(var(--u)*.06));border-bottom-width:2px;
+  box-shadow:0 0 0 4px var(--glow),0 0 24px var(--col);
+}
+.key.pressed .sub,.key.sticky .sub,.key.flash .sub{color:rgba(255,255,255,.85)}
+.key.target{animation:pulse 1s infinite;border-color:var(--col)!important;background:var(--tint2)}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 var(--glow)}50%{box-shadow:0 0 0 9px rgba(0,0,0,0)}}
+.key.good{background:var(--ok)!important;color:#fff;border-color:#15803d!important;animation:none;box-shadow:0 0 24px var(--ok)}
+.key.bad{background:var(--bad)!important;color:#fff;border-color:#991b1b!important;animation:none}
+.numpad{display:grid;grid-template-columns:repeat(4,calc(var(--u)*.92));grid-auto-rows:calc(var(--u)*.95);gap:calc(var(--u)*.1);margin-top:calc(var(--u)*1.05)}
+.numpad .key{flex:none;width:auto}
+.key.tall{grid-row:span 2;height:auto}
+.key.wide{grid-column:span 2}
+.kb.nonum .numblock{display:none}
+
+/* ============ ПРОЧЕЕ ============ */
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:50}
+#toast{position:fixed;left:50%;bottom:28%;transform:translateX(-50%) translateY(20px);background:var(--text);color:var(--card);padding:12px 22px;border-radius:14px;font-weight:900;font-size:1.1rem;opacity:0;transition:.3s;pointer-events:none;z-index:60;box-shadow:var(--shadow)}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.modal{position:fixed;inset:0;background:rgba(10,12,30,.55);display:none;place-items:center;z-index:70;padding:20px}
+.modal.open{display:grid}
+.modal .card{max-width:760px;width:100%;max-height:90vh;overflow:auto}
+.modal ul{padding-left:22px;line-height:1.7;font-weight:700}
+.modal li{margin:4px 0}
+.stepdot{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--line);margin:2px}
+.stepdot.done{background:var(--ok)}.stepdot.cur{background:var(--accent);transform:scale(1.3)}
+::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px}
+</style>
+</head>
+<body>
+
+<!-- ============ ШАПКА ============ -->
+<header>
+  <div class="logo"><div class="ico">⌨️</div><div>КлавиМастер<small>ТРЕНАЖЁР ГОРЯЧИХ КЛАВИШ</small></div></div>
+  <nav class="tabs">
+    <button class="tab active" data-mode="learn">📚 Урок</button>
+    <button class="tab" data-mode="train">🎮 Тренажёр</button>
+    <button class="tab" data-mode="explore">🔎 Клавиши</button>
+    <button class="tab" data-mode="ref">📖 Справочник</button>
+  </nav>
+  <div class="spacer"></div>
+  <div class="hdr-right">
+    <div class="pill stars">⭐ <span id="stars">0</span></div>
+    <div class="pill level" id="level">🥉 Новичок</div>
+    <button class="iconbtn" id="btnSound" title="Звук">🔊</button>
+    <button class="iconbtn" id="btnVoice" title="Озвучивание (голос)">🗣️</button>
+    <button class="iconbtn" id="btnNum" title="Цифровой блок">🔢</button>
+    <button class="iconbtn" id="btnTheme" title="Тема">🌙</button>
+    <button class="iconbtn" id="btnFull" title="Полный экран + захват клавиш">⛶</button>
+    <button class="iconbtn" id="btnHelp" title="Как пользоваться">❓</button>
+  </div>
+</header>
+
+<!-- ============ ОСНОВНАЯ ОБЛАСТЬ ============ -->
+<main>
+
+  <!-- ---- УРОК ---- -->
+  <section class="panel active" id="panel-learn">
+    <div id="learnHome">
+      <div class="card" style="margin-bottom:14px">
+        <h2>📚 Выбери тему урока</h2>
+        <p class="lead">Я покажу каждое сочетание на клавиатуре, объясню, что оно делает, а ты повторишь его сам. За каждый шаг — ⭐!</p>
+        <p class="lead" style="margin-top:6px;font-size:.9rem">⌨️ Клавиатура появится внизу, как только ты выберешь тему.</p>
+      </div>
+      <div class="catgrid" id="catgrid"></div>
+    </div>
+    <div id="learnView" style="display:none">
+      <div class="row" style="margin-bottom:10px">
+        <button class="btn ghost sm" id="learnBack">⬅ К темам</button>
+        <div class="pill" id="learnTitle">—</div>
+        <div class="spacer"></div>
+        <div class="pill" id="learnStep">Шаг 1 из 10</div>
+      </div>
+      <div class="progress"><i id="learnBar" style="width:0%"></i></div>
+      <div class="lesson">
+        <div class="card stepcard" id="stepcard">
+          <div class="em" id="lEmoji">📋</div>
+          <div class="ttl" id="lTitle">Копировать</div>
+          <div class="combo" id="lCombo"></div>
+          <div class="dsc" id="lDesc"></div>
+          <div class="hintline" id="lHint">👉 Теперь нажми это сочетание сам!</div>
+          <div class="feedback" id="lFeedback"></div>
+          <div id="lNotice" class="notice" style="display:none"></div>
+          <div class="row" style="justify-content:center;margin-top:14px">
+            <button class="btn ghost sm" id="lSpeak">🔊 Озвучить</button>
+            <button class="btn ghost sm" id="lPrev">⬅ Назад</button>
+            <button class="btn sm" id="lSkip">Дальше ➡</button>
+          </div>
+        </div>
+        <div class="card">
+          <h3>💡 Как это работает</h3>
+          <p class="lead" id="lHow" style="margin:8px 0 12px"></p>
+          <h3>🗺️ Шаги урока</h3>
+          <div id="lDots" style="margin:8px 0 12px"></div>
+          <h3>🏆 Твой прогресс в теме</h3>
+          <p class="lead" id="lProg"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---- ТРЕНАЖЁР ---- -->
+  <section class="panel" id="panel-train">
+    <div id="trainSetup">
+      <div class="card" style="margin-bottom:14px">
+        <h2>🎮 Тренажёр</h2>
+        <p class="lead">Я говорю задание — ты нажимаешь правильное сочетание. Без подсказки ⭐⭐⭐, с подсказкой ⭐. ⌨️ Клавиатура появится после нажатия «Начать».</p>
+        <h3 style="margin-top:14px">Темы</h3>
+        <div class="row" id="trainCats" style="margin:8px 0 14px"></div>
+        <h3>Режим</h3>
+        <div class="row" style="margin:8px 0 14px">
+          <button class="chip on" data-tm="free">🧘 Спокойный (без времени)</button>
+          <button class="chip" data-tm="marathon">⏱ Марафон — 60 секунд</button>
+          <button class="chip" data-tm="ten">🎯 10 заданий</button>
+        </div>
+        <div class="row">
+          <button class="btn" id="trainStart">🚀 Начать!</button>
+          <span class="lead" id="trainCount"></span>
+        </div>
+      </div>
+    </div>
+    <div id="trainView" style="display:none">
+      <div class="stats" style="margin-bottom:12px">
+        <div class="stat"><b id="tScore">0</b><span>ОЧКИ</span></div>
+        <div class="stat"><b id="tOk">0</b><span>ВЕРНО</span></div>
+        <div class="stat"><b id="tBad">0</b><span>ОШИБКИ</span></div>
+        <div class="stat"><b id="tStreak">0</b><span>🔥 СЕРИЯ</span></div>
+        <div class="stat" id="tTimeBox"><b id="tTime">60</b><span>СЕКУНД</span></div>
+        <div class="stat"><b id="tBest">0</b><span>РЕКОРД</span></div>
+      </div>
+      <div class="timerbar" id="timerbar" style="display:none"><i id="timerfill" style="width:100%"></i></div>
+      <div class="card stepcard" id="taskcard" style="margin-top:10px">
+        <div class="em" id="tEmoji">🎯</div>
+        <div style="font-weight:900;color:var(--muted);letter-spacing:1px">ЗАДАНИЕ</div>
+        <div class="ttl" id="tTask">…</div>
+        <div class="combo" id="tCombo" style="min-height:2.6em"></div>
+        <div class="feedback" id="tFeedback"></div>
+        <div id="tNotice" class="notice" style="display:none"></div>
+        <div class="row" style="justify-content:center;margin-top:12px">
+          <button class="btn warn sm" id="tHint">💡 Подсказка</button>
+          <button class="btn ghost sm" id="tSpeak">🔊 Повторить</button>
+          <button class="btn ghost sm" id="tSkipBtn">⏭ Пропустить</button>
+          <button class="btn ghost sm" id="tStop">⏹ Закончить</button>
+        </div>
+      </div>
+    </div>
+    <div id="trainResult" style="display:none">
+      <div class="card result">
+        <div class="big" id="rEmoji">🏆</div>
+        <h2 id="rTitle">Молодец!</h2>
+        <div class="score" id="rScore">0</div>
+        <p class="lead" id="rText"></p>
+        <div class="row" style="justify-content:center;margin-top:16px">
+          <button class="btn" id="rAgain">🔁 Ещё раз</button>
+          <button class="btn ghost" id="rBack">⚙ Настройки</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---- КЛАВИШИ ---- -->
+  <section class="panel" id="panel-explore">
+    <div class="explore">
+      <div class="card keyinfo">
+        <h2>🔎 Изучаем клавиши</h2>
+        <p class="lead">Нажми любую клавишу на настоящей клавиатуре или на экране — и узнай, что она делает.</p>
+        <div style="margin:16px 0 8px" id="eCombo"><span class="kc big">?</span></div>
+        <div class="name" id="eName">Нажми клавишу…</div>
+        <div class="desc" id="eDesc">Каждая клавиша — это маленький помощник. Давай познакомимся с ними!</div>
+      </div>
+      <div class="card">
+        <h3>⚡ Сочетания с этой клавишей</h3>
+        <p class="lead" style="margin-bottom:10px;font-size:.9rem">Нажми на сочетание — я подсвечу его на клавиатуре и озвучу.</p>
+        <div class="related" id="eRelated"><div class="lead">Пока пусто…</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---- СПРАВОЧНИК ---- -->
+  <section class="panel" id="panel-ref">
+    <div class="card">
+      <h2>📖 Справочник горячих клавиш</h2>
+      <div class="row" style="margin:10px 0">
+        <input class="search" id="refSearch" placeholder="🔍 Поиск: например «копировать», «Ctrl+Z», «окно»…">
+      </div>
+      <div class="row" id="refCats"></div>
+      <p class="lead" style="margin-top:8px;font-size:.9rem">Всего сочетаний: <b id="refTotal"></b>. Нажми на карточку — покажу на клавиатуре.</p>
+    </div>
+    <div id="refList"></div>
+  </section>
+</main>
+
+<!-- ============ КЛАВИАТУРА ============ -->
+<div class="kb-wrap">
+  <div class="kb-top">
+    <div class="pressedstrip" id="pressedstrip"><span style="opacity:.6">Нажато:</span> <span class="combo" id="pressedcombo"><span style="opacity:.5">—</span></span></div>
+    <div class="legend">
+      <span><i style="background:var(--ctrl)"></i>Ctrl</span>
+      <span><i style="background:var(--shift)"></i>Shift</span>
+      <span><i style="background:var(--alt)"></i>Alt</span>
+      <span><i style="background:var(--win)"></i>Win</span>
+      <span><i style="background:var(--fn)"></i>F1–F12</span>
+      <span><i style="background:var(--nav)"></i>Навигация</span>
+      <span><i style="background:var(--enter)"></i>Enter</span>
+    </div>
+  </div>
+  <div class="kb" id="kb"></div>
+</div>
+
+<canvas id="confetti"></canvas>
+<div id="toast"></div>
+
+<!-- ============ ПОМОЩЬ ============ -->
+<div class="modal" id="help">
+  <div class="card">
+    <h2>❓ Как пользоваться КлавиМастером</h2>
+    <ul>
+      <li><b>📚 Урок</b> — выбери тему. Каждое сочетание подсвечивается на клавиатуре и объясняется. Нажми его сам — и переходи дальше.</li>
+      <li><b>🎮 Тренажёр</b> — задания вразнобой. Есть спокойный режим, марафон на 60 секунд и серия из 10 заданий.</li>
+      <li><b>🔎 Клавиши</b> — нажми любую клавишу и узнай, что она делает и в каких сочетаниях участвует.</li>
+      <li><b>📖 Справочник</b> — все сочетания с поиском. Нажми карточку — покажу на клавиатуре.</li>
+      <li><b>👆 Экранная клавиатура</b> — работает на интерактивной доске: нажми модификатор (Ctrl, Shift, Alt, Win) — он «прилипнет», затем нажми вторую клавишу.</li>
+      <li><b>⛶ Полный экран</b> — браузер попробует «захватить» клавиши Windows, Alt+Tab и другие, чтобы их можно было нажимать по-настоящему. Иначе такие сочетания выполняй на экранной клавиатуре (они помечены 👆).</li>
+      <li><b>⚠️ Осторожно:</b> некоторые сочетания (Win+L, Alt+F4, Ctrl+Alt+Del) выполняются самой системой. На настоящей клавиатуре их лучше не нажимать во время урока — используй экранную.</li>
+      <li><b>⭐ Звёзды</b> сохраняются в этом браузере. Уровни: Новичок → Ученик → Знаток → Мастер → Гуру клавиатуры.</li>
+    </ul>
+    <div class="row" style="justify-content:flex-end;margin-top:14px">
+      <button class="btn ghost sm" id="resetProgress">🗑 Сбросить прогресс</button>
+      <button class="btn" id="helpClose">Понятно!</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   ДАННЫЕ: РАСКЛАДКА
+   ===================================================================== */
+const RU={KeyQ:'Й',KeyW:'Ц',KeyE:'У',KeyR:'К',KeyT:'Е',KeyY:'Н',KeyU:'Г',KeyI:'Ш',KeyO:'Щ',KeyP:'З',BracketLeft:'Х',BracketRight:'Ъ',KeyA:'Ф',KeyS:'Ы',KeyD:'В',KeyF:'А',KeyG:'П',KeyH:'Р',KeyJ:'О',KeyK:'Л',KeyL:'Д',Semicolon:'Ж',Quote:'Э',KeyZ:'Я',KeyX:'Ч',KeyC:'С',KeyV:'М',KeyB:'И',KeyN:'Т',KeyM:'Ь',Comma:'Б',Period:'Ю',Slash:'.',Backquote:'Ё'};
+const EN={BracketLeft:'[',BracketRight:']',Semicolon:';',Quote:"'",Comma:',',Period:'.',Slash:'/',Backquote:'`',Backslash:'\\'};
+const DIG={Digit1:['1','!'],Digit2:['2','"'],Digit3:['3','№'],Digit4:['4',';'],Digit5:['5','%'],Digit6:['6',':'],Digit7:['7','?'],Digit8:['8','*'],Digit9:['9','('],Digit0:['0',')'],Minus:['-','_'],Equal:['=','+']};
+
+const MODCODES={ControlLeft:'ctrl',ShiftLeft:'shift',AltLeft:'alt',MetaLeft:'meta'};
+const MODCODE={ctrl:'ControlLeft',shift:'ShiftLeft',alt:'AltLeft',meta:'MetaLeft'};
+const MODLABEL={ctrl:'Ctrl',shift:'Shift',alt:'Alt',meta:'⊞ Win'};
+const MODORDER=['ctrl','shift','alt','meta'];
+const LR={ControlRight:'ControlLeft',ShiftRight:'ShiftLeft',AltRight:'AltLeft',MetaRight:'MetaLeft'};
+const NUMN={NumpadEnter:'Enter',NumpadAdd:'Equal',NumpadSubtract:'Minus',NumpadDecimal:'Period',Numpad0:'Digit0',Numpad1:'Digit1',Numpad2:'Digit2',Numpad3:'Digit3',Numpad4:'Digit4',Numpad5:'Digit5',Numpad6:'Digit6',Numpad7:'Digit7',Numpad8:'Digit8',Numpad9:'Digit9'};
+const norm=c=>{c=LR[c]||c;return NUMN[c]||c};
+const normLR=c=>LR[c]||c;
+
+const TOK={Ctrl:'ControlLeft',Shift:'ShiftLeft',Alt:'AltLeft',Win:'MetaLeft',Tab:'Tab',Esc:'Escape',Enter:'Enter',Space:'Space',Backspace:'Backspace',Delete:'Delete',Del:'Delete',Insert:'Insert',Ins:'Insert',Home:'Home',End:'End',PgUp:'PageUp',PgDn:'PageDown','←':'ArrowLeft','→':'ArrowRight','↑':'ArrowUp','↓':'ArrowDown',PrtScn:'PrintScreen',ScrLk:'ScrollLock',Pause:'Pause',Caps:'CapsLock',NumLock:'NumLock',Menu:'ContextMenu',Plus:'Equal',Minus:'Minus','.':'Period',',':'Comma','>':'Period','<':'Comma','[':'BracketLeft',']':'BracketRight'};
+const TOKLABEL={Plus:'+',Minus:'−',Caps:'Caps Lock',Win:'⊞ Win',Menu:'☰ Menu',Delete:'Del',Insert:'Ins',Space:'Пробел ␣',Backspace:'⌫ Backspace',Enter:'Enter ↵',Tab:'Tab ↹',Esc:'Esc'};
+const CODELABEL={Escape:'Esc',Tab:'Tab ↹',CapsLock:'Caps Lock',ShiftLeft:'Shift',ControlLeft:'Ctrl',AltLeft:'Alt',MetaLeft:'⊞ Win',Space:'Пробел ␣',Enter:'Enter ↵',Backspace:'⌫ Backspace',Delete:'Del',Insert:'Ins',Home:'Home',End:'End',PageUp:'PgUp',PageDown:'PgDn',ArrowLeft:'←',ArrowRight:'→',ArrowUp:'↑',ArrowDown:'↓',PrintScreen:'PrtScn',ScrollLock:'ScrLk',Pause:'Pause',NumLock:'NumLock',ContextMenu:'☰ Menu',Equal:'+ / =',Minus:'−',Period:'.',Comma:',',BracketLeft:'[',BracketRight:']',Backslash:'\\',Semicolon:';',Quote:"'",Slash:'/',Backquote:'Ё',NumpadDivide:'/',NumpadMultiply:'*',NumpadEnter:'Enter'};
+
+function tokCode(t){ if(TOK[t]) return TOK[t]; if(/^[A-Z]$/.test(t)) return 'Key'+t; if(/^[0-9]$/.test(t)) return 'Digit'+t; if(/^F\d{1,2}$/.test(t)) return t; return t; }
+function codeLabel(c){ c=normLR(c); if(CODELABEL[c]) return CODELABEL[c]; if(/^Key[A-Z]$/.test(c)) return c[3]; if(/^Digit\d$/.test(c)) return c[5]; if(/^Numpad\d$/.test(c)) return c[6]; return c; }
+function codeRu(c){ return RU[c]||''; }
+function codeGroup(c){ c=normLR(c); if(c==='ControlLeft')return 'ctrl'; if(c==='ShiftLeft')return 'shift'; if(c==='AltLeft')return 'alt'; if(c==='MetaLeft')return 'meta'; if(/^F\d{1,2}$/.test(c))return 'fn'; if(/^(Arrow|Home|End|Page|Insert|Delete|Backspace|Tab|CapsLock)/.test(c))return 'nav'; return ''; }
+
+function parseKeys(k){
+  const toks=k.split('+'); const mods=new Set(); let code=null;
+  toks.forEach((t,i)=>{ const c=tokCode(t); if(i<toks.length-1) mods.add(MODCODES[c]||c); else code=c; });
+  return {toks,mods,code};
+}
+function sig(mods,code){
+  const n=norm(code); const m=new Set(mods);
+  if(MODCODES[n]){ m.add(MODCODES[n]); return MODORDER.filter(x=>m.has(x)).join('+')+'|MOD'; }
+  return MODORDER.filter(x=>m.has(x)).join('+')+'|'+n;
+}
+
+/* =====================================================================
+   ДАННЫЕ: КАТЕГОРИИ И СОЧЕТАНИЯ
+   ===================================================================== */
+const CATS={
+  base:{n:'Основные',e:'⭐',d:'Самые важные сочетания с Ctrl'},
+  text:{n:'Текст и Word',e:'📝',d:'Оформление и редактирование текста'},
+  win:{n:'Клавиша Windows',e:'🪟',d:'Управление окнами и системой'},
+  alt:{n:'Клавиша Alt',e:'🔀',d:'Окна, меню, переключение'},
+  fn:{n:'F1–F12',e:'🎛️',d:'Функциональные клавиши'},
+  nav:{n:'Навигация',e:'🧭',d:'Курсор, выделение, стрелки'},
+  browser:{n:'Браузер',e:'🌐',d:'Вкладки, страницы, закладки'},
+  explorer:{n:'Проводник',e:'📁',d:'Файлы и папки'},
+  sys:{n:'Система',e:'🛡️',d:'Безопасность и экстренные'}
+};
+// [категория, клавиши, название, описание, задание, эмодзи, s=перехватывает система]
+const RAW=[
+// ---- ОСНОВНЫЕ ----
+['base','Ctrl+C','Копировать','Копирует выделенный текст, картинку или файл в буфер обмена. Оригинал остаётся на месте.','Скопируй выделенный текст','📋'],
+['base','Ctrl+V','Вставить','Вставляет то, что лежит в буфере обмена, туда, где стоит курсор.','Вставь скопированное','📥'],
+['base','Ctrl+X','Вырезать','Убирает выделенное и кладёт его в буфер обмена, чтобы вставить в другое место.','Вырежи выделенный фрагмент','✂️'],
+['base','Ctrl+Z','Отменить','Отменяет последнее действие. Эта клавиша спасла миллионы документов!','Отмени последнее действие','↩️'],
+['base','Ctrl+Y','Повторить','Возвращает действие, которое ты только что отменил.','Верни отменённое действие','↪️'],
+['base','Ctrl+A','Выделить всё','Выделяет весь текст в документе или все файлы в папке.','Выдели весь текст','🔲'],
+['base','Ctrl+S','Сохранить','Сохраняет документ. Нажимай почаще, чтобы ничего не потерять!','Сохрани документ','💾'],
+['base','Ctrl+O','Открыть','Открывает окно выбора файла.','Открой файл','📂'],
+['base','Ctrl+N','Создать новый','Создаёт новый документ или открывает новое окно программы.','Создай новый документ','🆕',1],
+['base','Ctrl+P','Печать','Открывает окно печати документа.','Распечатай документ','🖨️'],
+['base','Ctrl+F','Найти','Открывает строку поиска по тексту или по странице.','Найди слово в тексте','🔍'],
+['base','Ctrl+W','Закрыть','Закрывает текущий документ, вкладку или окно.','Закрой текущую вкладку','❌',1],
+['base','Ctrl+Shift+V','Вставить без форматирования','Вставляет только текст — без цветов, шрифтов и размеров.','Вставь текст без форматирования','📄'],
+['base','Ctrl+Home','В начало документа','Перемещает курсор в самое начало документа.','Перейди в начало документа','⏫'],
+['base','Ctrl+End','В конец документа','Перемещает курсор в самый конец документа.','Перейди в конец документа','⏬'],
+['base','Ctrl+Backspace','Удалить слово слева','Удаляет целое слово перед курсором, а не одну букву.','Удали слово слева от курсора','🧹'],
+['base','Ctrl+Delete','Удалить слово справа','Удаляет целое слово после курсора.','Удали слово справа от курсора','🧹'],
+['base','Ctrl+Plus','Увеличить масштаб','Делает текст или страницу крупнее.','Увеличь масштаб','🔎'],
+['base','Ctrl+Minus','Уменьшить масштаб','Делает текст или страницу мельче.','Уменьши масштаб','🔎'],
+['base','Ctrl+0','Обычный масштаб','Возвращает масштаб 100%.','Верни обычный масштаб','💯'],
+['base','Ctrl+Esc','Открыть «Пуск»','Открывает меню «Пуск» — так же, как клавиша Windows.','Открой меню «Пуск» через Ctrl','🪟',1],
+// ---- ТЕКСТ ----
+['text','Ctrl+B','Жирный','Делает выделенный текст жирным (Bold).','Сделай текст жирным','🅱️'],
+['text','Ctrl+I','Курсив','Делает текст наклонным (Italic).','Сделай текст курсивом','✍️'],
+['text','Ctrl+U','Подчёркнутый','Подчёркивает текст (Underline).','Подчеркни текст','📏'],
+['text','Ctrl+E','По центру','Выравнивает абзац по центру страницы.','Выровняй текст по центру','↔️'],
+['text','Ctrl+L','По левому краю','Выравнивает абзац по левому краю.','Выровняй текст по левому краю','⬅️'],
+['text','Ctrl+R','По правому краю','Выравнивает абзац по правому краю.','Выровняй текст по правому краю','➡️'],
+['text','Ctrl+J','По ширине','Растягивает строки на всю ширину страницы.','Выровняй текст по ширине','📐'],
+['text','Ctrl+K','Вставить ссылку','Превращает выделенный текст в гиперссылку.','Вставь ссылку','🔗'],
+['text','Ctrl+D','Окно «Шрифт»','Открывает окно настройки шрифта в Word.','Открой окно «Шрифт»','🔤'],
+['text','Ctrl+G','Перейти к…','Переход к нужной странице или строке в Word.','Перейди на нужную страницу','🎯'],
+['text','Ctrl+H','Заменить','Находит слово и заменяет его на другое.','Замени слово в тексте','🔁'],
+['text','Ctrl+Enter','Разрыв страницы','Начинает текст с новой страницы.','Вставь разрыв страницы','📃'],
+['text','Shift+Enter','Новая строка','Переносит текст на новую строку без нового абзаца.','Перенеси текст на новую строку','↵'],
+['text','Ctrl+Space','Убрать форматирование','Снимает жирный, курсив и другое оформление с текста.','Убери оформление текста','🧼'],
+['text','Ctrl+Shift+>','Увеличить шрифт','Делает буквы крупнее.','Увеличь размер шрифта','🔼'],
+['text','Ctrl+Shift+<','Уменьшить шрифт','Делает буквы мельче.','Уменьши размер шрифта','🔽'],
+['text','Ctrl+]','Шрифт +1 пункт','Увеличивает размер шрифта на один пункт.','Увеличь шрифт на 1 пункт','➕'],
+['text','Ctrl+[','Шрифт −1 пункт','Уменьшает размер шрифта на один пункт.','Уменьши шрифт на 1 пункт','➖'],
+['text','Shift+F3','Изменить регистр','Меняет БОЛЬШИЕ и маленькие буквы по кругу.','Измени регистр букв','🔠'],
+['text','Ctrl+Shift+C','Копировать формат','Копирует оформление текста — как кисточка «Формат по образцу».','Скопируй формат текста','🖌️'],
+['text','Ctrl+Shift+Plus','Надстрочный знак','Поднимает текст вверх, как в x².','Сделай надстрочный знак','🔝'],
+['text','Ctrl+1','Одинарный интервал','Ставит обычное расстояние между строками.','Поставь одинарный интервал','1️⃣'],
+['text','Ctrl+2','Двойной интервал','Делает расстояние между строками в два раза больше.','Поставь двойной интервал','2️⃣'],
+['text','Ctrl+M','Отступ абзаца','Сдвигает абзац вправо.','Сделай отступ абзаца','↪️'],
+['text','Ctrl+Shift+L','Маркированный список','Превращает абзацы в список с точками.','Создай маркированный список','•'],
+['text','Ctrl+Shift+Space','Неразрывный пробел','Пробел, который не разрывает слова на разные строки.','Вставь неразрывный пробел','🔗'],
+// ---- WINDOWS ----
+['win','Win','Меню «Пуск»','Открывает или закрывает меню «Пуск».','Открой меню «Пуск»','🪟',1],
+['win','Win+D','Показать рабочий стол','Сворачивает все окна и показывает рабочий стол. Нажми ещё раз — окна вернутся.','Покажи рабочий стол','🖥️',1],
+['win','Win+E','Проводник','Открывает Проводник — программу для просмотра папок и файлов.','Открой Проводник','📁',1],
+['win','Win+L','Заблокировать компьютер','Блокирует компьютер. Чтобы войти снова, нужен пароль.','Заблокируй компьютер','🔒',1],
+['win','Win+R','Окно «Выполнить»','Открывает окно для запуска программ по имени (например, calc).','Открой окно «Выполнить»','▶️',1],
+['win','Win+I','Параметры','Открывает настройки Windows.','Открой Параметры Windows','⚙️',1],
+['win','Win+A','Быстрые настройки','Wi-Fi, звук, яркость и другие быстрые настройки.','Открой быстрые настройки','📶',1],
+['win','Win+S','Поиск','Открывает поиск по компьютеру и интернету.','Открой поиск Windows','🔎',1],
+['win','Win+X','Меню быстрых ссылок','Открывает меню с важными системными программами.','Открой меню быстрых ссылок','🧰',1],
+['win','Win+Tab','Представление задач','Показывает все открытые окна и рабочие столы.','Покажи все открытые окна','🗂️',1],
+['win','Win+M','Свернуть все окна','Сворачивает все окна на панель задач.','Сверни все окна','⬇️',1],
+['win','Win+Shift+M','Развернуть окна','Возвращает все свёрнутые окна.','Верни свёрнутые окна','⬆️',1],
+['win','Win+←','Окно влево','Прикрепляет окно к левой половине экрана.','Прикрепи окно к левому краю','⬅️',1],
+['win','Win+→','Окно вправо','Прикрепляет окно к правой половине экрана.','Прикрепи окно к правому краю','➡️',1],
+['win','Win+↑','Развернуть окно','Разворачивает окно на весь экран.','Разверни окно на весь экран','🔼',1],
+['win','Win+↓','Свернуть окно','Сворачивает текущее окно.','Сверни текущее окно','🔽',1],
+['win','Win+Shift+S','Снимок части экрана','Открывает «Ножницы»: выдели область — и она скопируется.','Сделай снимок части экрана','✂️',1],
+['win','Win+PrtScn','Снимок экрана в файл','Делает скриншот и сохраняет его в папку «Изображения → Снимки экрана».','Сохрани снимок экрана в файл','📸',1],
+['win','Win+V','История буфера обмена','Показывает всё, что ты копировал недавно.','Открой историю буфера обмена','📋',1],
+['win','Win+.','Панель эмодзи','Открывает окно с эмодзи и символами 😀','Открой панель эмодзи','😀',1],
+['win','Win+P','Проецирование','Выбор режима для второго экрана или проектора.','Открой настройки проектора','📽️',1],
+['win','Win+1','Запустить 1-ю программу','Запускает первую программу на панели задач. Win+2 — вторую, и так далее.','Запусти первую программу с панели задач','1️⃣',1],
+['win','Win+Space','Сменить язык','Переключает язык ввода (RU ⇄ EN).','Переключи язык ввода','🌍',1],
+['win','Win+Ctrl+D','Новый рабочий стол','Создаёт виртуальный рабочий стол.','Создай новый рабочий стол','🆕',1],
+['win','Win+Ctrl+→','Следующий рабочий стол','Переключает на следующий виртуальный рабочий стол.','Перейди на следующий рабочий стол','➡️',1],
+['win','Win+Ctrl+←','Предыдущий рабочий стол','Переключает на предыдущий виртуальный рабочий стол.','Перейди на предыдущий рабочий стол','⬅️',1],
+['win','Win+Ctrl+F4','Закрыть рабочий стол','Закрывает текущий виртуальный рабочий стол.','Закрой виртуальный рабочий стол','❌',1],
+['win','Win+Home','Свернуть остальные','Сворачивает все окна, кроме активного.','Сверни все окна, кроме текущего','🎯',1],
+['win','Win+Shift+←','Окно на другой экран','Переносит окно на другой монитор.','Перенеси окно на другой монитор','🖥️',1],
+['win','Win+Plus','Лупа','Включает экранную лупу и увеличивает экран.','Включи экранную лупу','🔍',1],
+['win','Win+Esc','Выключить лупу','Закрывает экранную лупу.','Выключи лупу','🚫',1],
+['win','Win+U','Специальные возможности','Открывает настройки для людей с особыми потребностями.','Открой специальные возможности','♿',1],
+['win','Win+K','Подключение к экрану','Подключение к беспроводному экрану или устройству.','Открой подключение к экрану','📡',1],
+['win','Win+G','Игровая панель','Запись экрана и игровые настройки.','Открой игровую панель','🎮',1],
+['win','Win+H','Голосовой ввод','Печатай голосом — Windows запишет слова.','Включи голосовой ввод','🎤',1],
+['win','Win+Z','Макеты окон','Варианты расположения окна на экране (Windows 11).','Покажи макеты окон','🧩',1],
+['win','Win+W','Виджеты','Погода, новости, календарь (Windows 11).','Открой виджеты','🧱',1],
+['win','Win+N','Центр уведомлений','Открывает уведомления и календарь (Windows 11).','Открой центр уведомлений','🔔',1],
+['win','Win+T','Панель задач','Переключение по значкам панели задач.','Перейди на панель задач','📌',1],
+['win','Win+B','Область уведомлений','Переход к значкам справа внизу экрана.','Перейди в область уведомлений','🔽',1],
+['win','Win+Pause','О системе','Показывает сведения о компьютере.','Покажи сведения о системе','ℹ️',1],
+['win','Win+,','Взглянуть на рабочий стол','Пока держишь — показывает рабочий стол, отпустил — окна вернулись.','Взгляни на рабочий стол','👀',1],
+// ---- ALT ----
+['alt','Alt+Tab','Переключить окно','Переключает между открытыми окнами. Держи Alt и нажимай Tab.','Переключись на другое окно','🔀',1],
+['alt','Alt+F4','Закрыть программу','Закрывает активную программу. На рабочем столе — выключает компьютер.','Закрой программу','🚪',1],
+['alt','Alt+Enter','Свойства','Показывает свойства файла. В играх — полноэкранный режим.','Открой свойства файла','📋'],
+['alt','Alt+Space','Меню окна','Открывает меню окна: свернуть, развернуть, переместить, закрыть.','Открой системное меню окна','📑',1],
+['alt','Alt+Esc','Следующее окно','Переключает окна по порядку их открытия.','Переключись на следующее окно','🔁',1],
+['alt','Alt+PrtScn','Снимок окна','Копирует снимок только активного окна.','Сделай снимок активного окна','📸'],
+['alt','Alt+Shift','Сменить язык','Переключает язык клавиатуры (RU ⇄ EN).','Переключи язык клавиатуры','🌍'],
+['alt','Alt+←','Назад','Возвращает назад в браузере и Проводнике.','Вернись назад','⬅️'],
+['alt','Alt+→','Вперёд','Переходит вперёд в браузере и Проводнике.','Перейди вперёд','➡️'],
+['alt','Alt+↑','На уровень вверх','В Проводнике открывает папку на уровень выше.','Поднимись на папку выше','⬆️'],
+['alt','Alt+D','Адресная строка','Переход в адресную строку браузера или Проводника.','Перейди в адресную строку','🔗'],
+['alt','Alt+F','Меню «Файл»','Открывает меню «Файл» в программах.','Открой меню «Файл»','📂',1],
+['alt','Alt','Активировать меню','Одно нажатие Alt подсвечивает буквы-подсказки в меню программы.','Активируй меню программы','🔤'],
+['alt','Alt+Home','Домашняя страница','Открывает домашнюю страницу в браузере.','Открой домашнюю страницу','🏠'],
+// ---- F1–F12 ----
+['fn','F1','Справка','Открывает справку (помощь) в любой программе.','Открой справку','❓'],
+['fn','F2','Переименовать','Переименовывает выделенный файл или папку.','Переименуй файл','✏️'],
+['fn','F3','Поиск','Открывает поиск в Проводнике или на странице.','Открой поиск клавишей F','🔍'],
+['fn','F4','Адресная строка','В Проводнике показывает список адресов.','Открой список адресов','📍'],
+['fn','F5','Обновить','Обновляет страницу или содержимое папки.','Обнови страницу','🔄'],
+['fn','F6','Переход по элементам','Перемещает фокус между частями окна (в браузере — к адресной строке).','Перейди к следующей части окна','🔃'],
+['fn','F7','Проверка орфографии','Проверяет ошибки в тексте (Word).','Проверь орфографию','✅'],
+['fn','F8','Расширить выделение','В Word расширяет выделение. При запуске компьютера — безопасный режим.','Расширь выделение','📐'],
+['fn','F9','Обновить поля','В Word обновляет поля: оглавление, даты.','Обнови поля документа','🔁'],
+['fn','F10','Строка меню','Активирует меню программы.','Активируй строку меню','📋'],
+['fn','F11','Полноэкранный режим','Разворачивает браузер или Проводник на весь экран.','Включи полноэкранный режим','🖥️',1],
+['fn','F12','Сохранить как','В Word — «Сохранить как». В браузере — инструменты разработчика.','Открой «Сохранить как»','💾',1],
+['fn','Shift+F10','Контекстное меню','Открывает меню правой кнопки мыши.','Открой контекстное меню','🖱️'],
+['fn','Ctrl+F2','Предварительный просмотр','Показывает, как документ будет выглядеть при печати (Word).','Открой предварительный просмотр','👁️'],
+['fn','Ctrl+F5','Полное обновление','Обновляет страницу, заново загружая все файлы.','Полностью обнови страницу','🔄'],
+['fn','Ctrl+F4','Закрыть документ','Закрывает текущий документ, но не саму программу.','Закрой документ','📕',1],
+// ---- НАВИГАЦИЯ ----
+['nav','Home','В начало строки','Переносит курсор в начало строки.','Перейди в начало строки','⏮️'],
+['nav','End','В конец строки','Переносит курсор в конец строки.','Перейди в конец строки','⏭️'],
+['nav','PgUp','Страница вверх','Листает на один экран вверх.','Пролистай на экран вверх','⬆️'],
+['nav','PgDn','Страница вниз','Листает на один экран вниз.','Пролистай на экран вниз','⬇️'],
+['nav','Ctrl+→','На слово вправо','Прыгает через целое слово вправо.','Перепрыгни слово вправо','➡️'],
+['nav','Ctrl+←','На слово влево','Прыгает через целое слово влево.','Перепрыгни слово влево','⬅️'],
+['nav','Shift+→','Выделить символ справа','Выделяет одну букву справа. Держи Shift и нажимай стрелку.','Выдели одну букву справа','🔡'],
+['nav','Shift+←','Выделить символ слева','Выделяет одну букву слева.','Выдели одну букву слева','🔡'],
+['nav','Shift+↓','Выделить строку вниз','Выделяет текст до той же позиции на строке ниже.','Выдели строку вниз','🔡'],
+['nav','Shift+↑','Выделить строку вверх','Выделяет текст до той же позиции на строке выше.','Выдели строку вверх','🔡'],
+['nav','Ctrl+Shift+→','Выделить слово справа','Выделяет целое слово справа.','Выдели слово справа','🔠'],
+['nav','Ctrl+Shift+←','Выделить слово слева','Выделяет целое слово слева.','Выдели слово слева','🔠'],
+['nav','Shift+Home','Выделить до начала строки','Выделяет от курсора до начала строки.','Выдели до начала строки','⏮️'],
+['nav','Shift+End','Выделить до конца строки','Выделяет от курсора до конца строки.','Выдели до конца строки','⏭️'],
+['nav','Ctrl+Shift+Home','Выделить до начала документа','Выделяет всё от курсора до начала документа.','Выдели до начала документа','⏫'],
+['nav','Ctrl+Shift+End','Выделить до конца документа','Выделяет всё от курсора до конца документа.','Выдели до конца документа','⏬'],
+['nav','Tab','Табуляция','Делает отступ в тексте или переходит к следующему полю.','Перейди к следующему полю','↹'],
+['nav','Shift+Tab','Назад по полям','Переходит к предыдущему полю.','Перейди к предыдущему полю','↹'],
+['nav','Enter','Ввод','Подтверждает команду или начинает новый абзац.','Подтверди ввод','↵'],
+['nav','Esc','Отмена','Закрывает меню, окно или отменяет действие.','Отмени действие','🚫'],
+['nav','Backspace','Удалить слева','Удаляет символ перед курсором.','Удали символ слева','⌫'],
+['nav','Delete','Удалить справа','Удаляет символ после курсора или выделенный файл.','Удали символ справа','⌦'],
+['nav','Insert','Режим замены','Переключает режим вставки/замены текста.','Переключи режим замены','🔁'],
+['nav','Caps','Caps Lock','Включает режим ЗАГЛАВНЫХ БУКВ.','Включи Caps Lock','🔠'],
+['nav','Shift','Заглавная буква','Пока держишь Shift — буквы заглавные. Нажми 5 раз подряд — Windows предложит залипание клавиш.','Нажми Shift один раз','⇧'],
+['nav','Space','Пробел','Ставит пробел. В браузере листает вниз, в видео — пауза.','Нажми пробел','␣'],
+['nav','Shift+Space','Листать вверх','В браузере листает страницу вверх.','Пролистай страницу вверх','⬆️'],
+['nav','Ctrl+Shift','Сменить раскладку','В некоторых настройках переключает язык клавиатуры.','Переключи раскладку через Ctrl','🌍'],
+// ---- БРАУЗЕР ----
+['browser','Ctrl+T','Новая вкладка','Открывает новую пустую вкладку.','Открой новую вкладку','🆕',1],
+['browser','Ctrl+W','Закрыть вкладку','Закрывает текущую вкладку.','Закрой вкладку','❌',1],
+['browser','Ctrl+Shift+T','Восстановить вкладку','Открывает последнюю закрытую вкладку.','Восстанови закрытую вкладку','♻️',1],
+['browser','Ctrl+Tab','Следующая вкладка','Переключает на следующую вкладку.','Перейди на следующую вкладку','➡️',1],
+['browser','Ctrl+Shift+Tab','Предыдущая вкладка','Переключает на предыдущую вкладку.','Перейди на предыдущую вкладку','⬅️',1],
+['browser','Ctrl+1','Первая вкладка','Ctrl+1…8 — переход на вкладку по номеру.','Перейди на первую вкладку','1️⃣',1],
+['browser','Ctrl+9','Последняя вкладка','Переходит на самую последнюю вкладку.','Перейди на последнюю вкладку','9️⃣',1],
+['browser','Ctrl+L','Адресная строка','Выделяет адресную строку, чтобы ввести адрес сайта.','Перейди в адресную строку','🔗'],
+['browser','Ctrl+D','Добавить в закладки','Сохраняет страницу в закладки.','Добавь страницу в закладки','⭐'],
+['browser','Ctrl+H','История','Показывает историю посещённых сайтов.','Открой историю браузера','🕘'],
+['browser','Ctrl+J','Загрузки','Показывает скачанные файлы.','Открой загрузки','⬇️'],
+['browser','Ctrl+R','Обновить страницу','Перезагружает страницу (как F5).','Обнови страницу через Ctrl','🔄'],
+['browser','Ctrl+N','Новое окно','Открывает новое окно браузера.','Открой новое окно','🪟',1],
+['browser','Ctrl+Shift+N','Режим инкогнито','Окно, которое не сохраняет историю.','Открой окно инкогнито','🕵️',1],
+['browser','Ctrl+Shift+Delete','Очистить историю','Открывает окно очистки истории и данных.','Очисти историю','🧹'],
+['browser','Ctrl+Shift+B','Панель закладок','Показывает или скрывает панель закладок.','Покажи панель закладок','📚'],
+['browser','Ctrl+U','Исходный код','Показывает HTML-код страницы.','Покажи код страницы','💻'],
+['browser','Ctrl+E','Поиск в адресной строке','Переводит курсор в адресную строку для поиска.','Начни поиск в адресной строке','🔎'],
+['browser','Ctrl+Enter','Добавить www и .com','Дописывает к слову www. и .com и открывает сайт.','Дополни адрес до сайта','🌐'],
+['browser','Ctrl+Shift+W','Закрыть окно','Закрывает всё окно браузера со всеми вкладками.','Закрой окно браузера','🚪',1],
+['browser','Shift+Esc','Диспетчер задач браузера','Показывает, какие вкладки нагружают компьютер.','Открой диспетчер задач браузера','📊',1],
+['browser','Esc','Остановить загрузку','Останавливает загрузку страницы.','Останови загрузку страницы','⏹'],
+// ---- ПРОВОДНИК ----
+['explorer','Win+E','Открыть Проводник','Запускает Проводник Windows.','Открой Проводник','📁',1],
+['explorer','Ctrl+Shift+N','Новая папка','Создаёт новую папку.','Создай новую папку','📁'],
+['explorer','F2','Переименовать','Переименовывает файл или папку.','Переименуй папку','✏️'],
+['explorer','Enter','Открыть','Открывает выделенный файл или папку.','Открой выделенный файл','📂'],
+['explorer','Delete','В корзину','Удаляет файл в корзину — его можно вернуть.','Удали файл в корзину','🗑️'],
+['explorer','Shift+Delete','Удалить навсегда','Удаляет файл, минуя корзину. Осторожно!','Удали файл навсегда','⚠️'],
+['explorer','Ctrl+A','Выделить все файлы','Выделяет все файлы в папке.','Выдели все файлы','🔲'],
+['explorer','Ctrl+C','Копировать файл','Копирует выделенные файлы.','Скопируй файл','📋'],
+['explorer','Ctrl+V','Вставить файл','Вставляет скопированные файлы в папку.','Вставь файл в папку','📥'],
+['explorer','Ctrl+X','Вырезать файл','Вырезает файл для переноса в другую папку.','Вырежи файл','✂️'],
+['explorer','Ctrl+Z','Отменить','Отменяет удаление, переименование или перемещение.','Отмени последнее действие с файлом','↩️'],
+['explorer','Alt+Enter','Свойства файла','Показывает свойства файла: размер, дату, тип.','Открой свойства файла','📋'],
+['explorer','Alt+↑','На уровень вверх','Открывает папку на уровень выше.','Поднимись на уровень вверх','⬆️'],
+['explorer','Alt+←','Назад','Возвращает в предыдущую папку.','Вернись в предыдущую папку','⬅️'],
+['explorer','Backspace','Назад (папка)','Возврат в предыдущую папку.','Вернись назад клавишей Backspace','⬅️'],
+['explorer','Alt+P','Панель просмотра','Показывает содержимое файла сбоку.','Включи панель просмотра','👁️'],
+['explorer','Alt+D','Адресная строка','Переход в адресную строку Проводника.','Перейди в адресную строку','🔗'],
+['explorer','Ctrl+E','Поиск в папке','Переводит курсор в поле поиска.','Начни поиск в папке','🔍'],
+['explorer','Ctrl+N','Новое окно','Открывает ещё одно окно Проводника.','Открой новое окно Проводника','🪟',1],
+['explorer','Ctrl+W','Закрыть окно','Закрывает окно Проводника.','Закрой окно Проводника','❌',1],
+['explorer','Ctrl+Shift+E','Показать все папки','Раскрывает дерево папок слева.','Раскрой дерево папок','🌳'],
+['explorer','Ctrl+Shift+2','Крупные значки','Показывает файлы крупными значками.','Включи крупные значки','🖼️'],
+['explorer','Ctrl+Shift+6','Вид «Таблица»','Показывает файлы таблицей с датами и размерами.','Включи вид «Таблица»','📊'],
+['explorer','F5','Обновить папку','Обновляет содержимое папки.','Обнови папку','🔄'],
+['explorer','F11','Во весь экран','Разворачивает Проводник на весь экран.','Разверни Проводник на весь экран','🖥️',1],
+// ---- СИСТЕМА ----
+['sys','Ctrl+Alt+Delete','Экран безопасности','Открывает экран: заблокировать, сменить пользователя, диспетчер задач.','Открой экран безопасности','🛡️',1],
+['sys','Ctrl+Shift+Esc','Диспетчер задач','Показывает программы и позволяет закрыть зависшую.','Открой диспетчер задач','📊',1],
+['sys','PrtScn','Снимок экрана','Копирует весь экран в буфер обмена. Вставь в Paint через Ctrl+V.','Сделай снимок всего экрана','📸'],
+['sys','Alt+PrtScn','Снимок окна','Снимок только активного окна.','Сделай снимок окна','🪟'],
+['sys','Win+Shift+S','Ножницы','Снимок выбранной части экрана.','Вырежи часть экрана','✂️',1],
+['sys','Win+L','Заблокировать','Блокирует компьютер, когда отходишь.','Заблокируй компьютер','🔒',1],
+['sys','Win+Ctrl+Shift+B','Перезапуск видеодрайвера','Если экран завис или почернел — это помогает.','Перезапусти видеодрайвер','🩹',1],
+['sys','Win+Ctrl+Enter','Экранный диктор','Включает чтение экрана вслух.','Включи экранный диктор','🗣️',1],
+['sys','Win+Ctrl+O','Экранная клавиатура','Показывает клавиатуру на экране.','Открой экранную клавиатуру','⌨️',1],
+['sys','Alt+Shift+PrtScn','Высокая контрастность','Включает режим высокой контрастности.','Включи высокую контрастность','🌓'],
+['sys','Alt+F4','Выключить компьютер','На рабочем столе открывает окно «Завершение работы».','Открой окно выключения','🔌',1],
+['sys','Win+X','Системное меню','Меню с диспетчером задач, параметрами, завершением работы.','Открой системное меню','🧰',1],
+['sys','Shift+F10','Контекстное меню','Меню правой кнопки мыши без мыши.','Открой контекстное меню','🖱️'],
+['sys','NumLock','Num Lock','Включает/выключает цифры на правом блоке клавиатуры.','Переключи Num Lock','🔢'],
+['sys','ScrLk','Scroll Lock','Старинная клавиша: в Excel меняет прокрутку стрелками.','Нажми Scroll Lock','📜'],
+['sys','Pause','Pause','Останавливает выполнение программы (почти не используется).','Нажми Pause','⏸️'],
+['sys','Menu','Клавиша Menu','Открывает контекстное меню, как правая кнопка мыши.','Нажми клавишу Menu','☰'],
+['sys','Win+Pause','Сведения о системе','Показывает информацию о компьютере.','Покажи сведения о компьютере','ℹ️',1],
+];
+const SHORTCUTS=RAW.map((r,i)=>{ const p=parseKeys(r[1]); return {id:r[0]+':'+r[1], idx:i, c:r[0], k:r[1], t:r[2], d:r[3], q:r[4]||('Выполни команду: «'+r[2]+'»'), e:r[5]||'⌨️', s:!!r[6], toks:p.toks, mods:p.mods, code:p.code, sig:sig(p.mods,p.code)}; });
+const BYCAT={}; SHORTCUTS.forEach(s=>{(BYCAT[s.c]=BYCAT[s.c]||[]).push(s)});
+
+/* =====================================================================
+   ДАННЫЕ: ОПИСАНИЯ КЛАВИШ (режим «Клавиши»)
+   ===================================================================== */
+const KEYINFO={
+  Escape:['Esc — Escape','Клавиша отмены. Закрывает меню и окна, выходит из полноэкранного режима, останавливает загрузку страницы.'],
+  F1:['F1','Справка. Нажми в любой программе — откроется помощь.'],F2:['F2','Переименовать файл или папку.'],F3:['F3','Поиск в Проводнике или на странице.'],F4:['F4','Адресная строка в Проводнике. Alt+F4 — закрыть программу.'],F5:['F5','Обновить страницу или папку.'],F6:['F6','Переход между частями окна.'],F7:['F7','Проверка орфографии в Word.'],F8:['F8','Расширить выделение в Word.'],F9:['F9','Обновить поля в Word.'],F10:['F10','Активировать меню программы.'],F11:['F11','Полноэкранный режим.'],F12:['F12','«Сохранить как» в Word; инструменты разработчика в браузере.'],
+  Backquote:['Ё / `','Печатает букву Ё. В английской раскладке — знак ` и ~.'],
+  Tab:['Tab — табуляция','Делает отступ в тексте или переходит к следующему полю. Shift+Tab — назад. Alt+Tab — переключение окон.'],
+  CapsLock:['Caps Lock','Включает режим ЗАГЛАВНЫХ БУКВ. Нажми ещё раз — выключит. Горит лампочка — значит включён.'],
+  ShiftLeft:['Shift','Пока держишь Shift — буквы заглавные, а на цифрах печатаются символы (! " № ; % :). Со стрелками — выделяет текст.'],
+  ControlLeft:['Ctrl — Control','Главная клавиша-помощник. Сама ничего не делает, но вместе с другими даёт команды: Ctrl+C, Ctrl+V, Ctrl+Z…'],
+  MetaLeft:['Win — Windows','Открывает меню «Пуск». В сочетаниях управляет самой Windows: Win+D, Win+E, Win+L…'],
+  AltLeft:['Alt — Alternate','Открывает меню программы. В сочетаниях: Alt+Tab, Alt+F4, Alt+Shift…'],
+  Space:['Пробел','Ставит пробел между словами. В браузере листает страницу вниз, в видео — ставит паузу.'],
+  ContextMenu:['Menu — контекстное меню','Открывает меню, как правая кнопка мыши.'],
+  Enter:['Enter — ввод','Подтверждает команду, открывает файл, начинает новый абзац.'],
+  Backspace:['Backspace','Удаляет символ слева от курсора. В Проводнике — назад.'],
+  Delete:['Delete','Удаляет символ справа от курсора или выделенный файл.'],
+  Insert:['Insert','Переключает режим вставки и замены текста.'],
+  Home:['Home','Переносит курсор в начало строки. Ctrl+Home — в начало документа.'],
+  End:['End','Переносит курсор в конец строки. Ctrl+End — в конец документа.'],
+  PageUp:['Page Up','Листает на один экран вверх.'],PageDown:['Page Down','Листает на один экран вниз.'],
+  ArrowLeft:['Стрелка влево','Двигает курсор влево. С Shift — выделяет, с Ctrl — прыгает через слово.'],ArrowRight:['Стрелка вправо','Двигает курсор вправо. С Shift — выделяет, с Ctrl — прыгает через слово.'],ArrowUp:['Стрелка вверх','Двигает курсор на строку вверх.'],ArrowDown:['Стрелка вниз','Двигает курсор на строку вниз.'],
+  PrintScreen:['Print Screen','Делает снимок всего экрана и кладёт в буфер обмена.'],ScrollLock:['Scroll Lock','Старинная клавиша. В Excel меняет работу стрелок.'],Pause:['Pause / Break','Останавливает программу. Win+Pause — сведения о системе.'],
+  NumLock:['Num Lock','Включает цифры на правом блоке клавиатуры. Выключен — стрелки.'],
+  NumpadDivide:['Цифровой блок: /','Знак деления.'],NumpadMultiply:['Цифровой блок: *','Знак умножения.'],NumpadSubtract:['Цифровой блок: −','Знак минус.'],NumpadAdd:['Цифровой блок: +','Знак плюс.'],NumpadEnter:['Цифровой блок: Enter','Такой же Enter, но справа.'],NumpadDecimal:['Цифровой блок: .','Точка (запятая) в числах.'],
+  Backslash:['\\ / |','Обратная косая черта. В русской раскладке — тоже \\ и /.'],
+  Minus:['− / _','Минус (дефис). С Shift — подчёркивание _.'],Equal:['= / +','Равно. С Shift — плюс. Ctrl + «+» увеличивает масштаб.'],
+  BracketLeft:['Х / [','Буква Х. В английской раскладке — [ и {.'],BracketRight:['Ъ / ]','Буква Ъ. В английской раскладке — ] и }.'],Semicolon:['Ж / ;','Буква Ж. В английской раскладке — ; и :.'],Quote:['Э / \'','Буква Э. В английской раскладке — \' и ".'],Comma:['Б / ,','Буква Б. В английской раскладке — запятая и <.'],Period:['Ю / .','Буква Ю. В английской раскладке — точка и >.'],Slash:['. , / /','Точка и запятая (с Shift) в русской раскладке. В английской — / и ?.'],
+};
+function keyInfo(code){
+  const n=normLR(code);
+  if(KEYINFO[n]) return KEYINFO[n];
+  if(/^Key[A-Z]$/.test(n)) return ['Буква '+RU[n]+' (латинская '+n[3]+')','Печатает букву '+RU[n]+'. В английской раскладке — '+n[3]+'. С Shift — заглавная '+RU[n]+'.'];
+  if(/^Digit\d$/.test(n)) return ['Цифра '+DIG[n][0],'Печатает '+DIG[n][0]+'. С Shift — символ '+DIG[n][1]+'.'];
+  if(/^Numpad\d$/.test(n)) return ['Цифровой блок: '+n[6],'Печатает '+n[6]+', если включён Num Lock.'];
+  return [n,'Клавиша '+n];
+}
+
+/* =====================================================================
+   СОСТОЯНИЕ И НАСТРОЙКИ
+   ===================================================================== */
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+let S=load();
+function load(){ try{ const d=JSON.parse(localStorage.getItem('km_state')||'{}'); return Object.assign({stars:0,learned:{},stats:{},best:{marathon:0,ten:0},set:{sound:true,voice:true,numpad:true,theme:'light'}},d); }catch(e){ return {stars:0,learned:{},stats:{},best:{marathon:0,ten:0},set:{sound:true,voice:true,numpad:true,theme:'light'}}; } }
+function save(){ localStorage.setItem('km_state',JSON.stringify(S)); }
+const LEVELS=[[0,'🥉 Новичок'],[30,'🥈 Ученик'],[100,'🥇 Знаток'],[250,'🏆 Мастер'],[500,'👑 Гуру клавиатуры']];
+function addStars(n){ S.stars+=n; save(); renderStars(); }
+function renderStars(){ $('#stars').textContent=S.stars; let lv=LEVELS[0]; LEVELS.forEach(l=>{ if(S.stars>=l[0]) lv=l; }); $('#level').textContent=lv[1]; }
+function applySettings(){
+  $('#btnSound').classList.toggle('off',!S.set.sound); $('#btnVoice').classList.toggle('off',!S.set.voice);
+  $('#btnNum').classList.toggle('off',!S.set.numpad); $('#kb').classList.toggle('nonum',!S.set.numpad);
+  document.documentElement.dataset.theme=S.set.theme; $('#btnTheme').textContent=S.set.theme==='dark'?'☀️':'🌙';
+  fitKeyboard();
+}
+
+/* =====================================================================
+   ЗВУК, ГОЛОС, КОНФЕТТИ, TOAST
+   ===================================================================== */
+let AC=null; function unlockAudio(){ if(!AC){ try{ AC=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } if(AC&&AC.state==='suspended') AC.resume(); }
+function tone(f,d=.08,type='sine',vol=.15,t0=0){ if(!S.set.sound||!AC) return; const o=AC.createOscillator(),g=AC.createGain(); o.type=type;o.frequency.value=f; g.gain.setValueAtTime(vol,AC.currentTime+t0); g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+t0+d); o.connect(g);g.connect(AC.destination); o.start(AC.currentTime+t0); o.stop(AC.currentTime+t0+d+.02); }
+const snd={click:()=>tone(520,.05,'triangle',.08), ok:()=>{tone(523,.12,'sine',.15);tone(659,.12,'sine',.15,.1);tone(784,.2,'sine',.15,.2)}, bad:()=>{tone(200,.18,'sawtooth',.08);tone(160,.2,'sawtooth',.08,.12)}, win:()=>{[523,659,784,1047].forEach((f,i)=>tone(f,.25,'sine',.15,i*.12))}, tick:()=>tone(880,.04,'square',.04)};
+let voices=[]; function loadVoices(){ voices=speechSynthesis.getVoices(); } if('speechSynthesis' in window){ loadVoices(); speechSynthesis.onvoiceschanged=loadVoices; }
+function speak(text,force){ if(!('speechSynthesis' in window)) return; if(!S.set.voice&&!force) return; speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text); u.lang='ru-RU'; u.rate=.95; const v=voices.find(v=>/^ru/i.test(v.lang)); if(v) u.voice=v; speechSynthesis.speak(u); }
+function comboSpeech(sc){ return sc.toks.map(t=>({Ctrl:'Контрол',Shift:'Шифт',Alt:'Альт',Win:'Виндовс',Esc:'Эскейп',Tab:'Таб',Enter:'Энтер',Space:'Пробел',Backspace:'Бэкспейс',Delete:'Делит',Del:'Делит',Home:'Хоум',End:'Энд',PgUp:'Пейдж ап',PgDn:'Пейдж даун','←':'стрелка влево','→':'стрелка вправо','↑':'стрелка вверх','↓':'стрелка вниз',PrtScn:'Принт скрин',Plus:'плюс',Minus:'минус',Caps:'Капс лок',Menu:'Меню','.':'точка',',':'запятая','>':'больше','<':'меньше','[':'левая скобка',']':'правая скобка',Insert:'Инсерт',NumLock:'Нам лок',ScrLk:'Скролл лок',Pause:'Пауза'})[t] || (/^[A-Z]$/.test(t)? 'латинская '+t : t)).join(' плюс '); }
+function toast(msg,ms=1600){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),ms); }
+// Конфетти
+const cv=$('#confetti'),cx=cv.getContext('2d'); let parts=[]; function sizeCanvas(){cv.width=innerWidth;cv.height=innerHeight} sizeCanvas(); addEventListener('resize',sizeCanvas);
+function confetti(n=120){ const cols=['#6a5cff','#38b6ff','#22c55e','#f59e0b','#ec4899','#f97316']; for(let i=0;i<n;i++) parts.push({x:innerWidth/2+(Math.random()-.5)*300,y:innerHeight*.45,vx:(Math.random()-.5)*14,vy:-Math.random()*14-4,g:.35,r:Math.random()*7+4,c:cols[i%cols.length],a:Math.random()*6,va:(Math.random()-.5)*.3,life:90+Math.random()*40}); if(!confetti.run){confetti.run=true;requestAnimationFrame(tickC)} }
+function tickC(){ cx.clearRect(0,0,cv.width,cv.height); parts=parts.filter(p=>p.life>0); parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=p.g;p.vx*=.98;p.a+=p.va;p.life--; cx.save();cx.translate(p.x,p.y);cx.rotate(p.a);cx.fillStyle=p.c;cx.globalAlpha=Math.min(1,p.life/30);cx.fillRect(-p.r/2,-p.r/2,p.r,p.r*.6);cx.restore();}); if(parts.length) requestAnimationFrame(tickC); else confetti.run=false; }
+
+/* =====================================================================
+   ЭКРАННАЯ КЛАВИАТУРА
+   ===================================================================== */
+function K(code,label,w,g){ return {code,label,w:w||1,g}; }
+function G(w){ return {gap:true,w}; }
+const L=(c)=>K(c);
+const MAIN=[
+  [K('Escape','Esc',1,'sys'),G(1),L('F1'),L('F2'),L('F3'),L('F4'),G(.5),L('F5'),L('F6'),L('F7'),L('F8'),G(.5),L('F9'),L('F10'),L('F11'),L('F12')],
+  [L('Backquote'),L('Digit1'),L('Digit2'),L('Digit3'),L('Digit4'),L('Digit5'),L('Digit6'),L('Digit7'),L('Digit8'),L('Digit9'),L('Digit0'),L('Minus'),L('Equal'),K('Backspace','⌫ Backspace',2,'nav')],
+  [K('Tab','Tab ↹',1.5,'nav'),L('KeyQ'),L('KeyW'),L('KeyE'),L('KeyR'),L('KeyT'),L('KeyY'),L('KeyU'),L('KeyI'),L('KeyO'),L('KeyP'),L('BracketLeft'),L('BracketRight'),K('Backslash','\\',1.5,'letter')],
+  [K('CapsLock','Caps Lock',1.75,'nav'),L('KeyA'),L('KeyS'),L('KeyD'),L('KeyF'),L('KeyG'),L('KeyH'),L('KeyJ'),L('KeyK'),L('KeyL'),L('Semicolon'),L('Quote'),K('Enter','Enter ↵',2.25,'enter')],
+  [K('ShiftLeft','⇧ Shift',2.25,'shift'),L('KeyZ'),L('KeyX'),L('KeyC'),L('KeyV'),L('KeyB'),L('KeyN'),L('KeyM'),L('Comma'),L('Period'),L('Slash'),K('ShiftRight','⇧ Shift',2.75,'shift')],
+  [K('ControlLeft','Ctrl',1.25,'ctrl'),K('MetaLeft','⊞ Win',1.25,'win'),K('AltLeft','Alt',1.25,'alt'),K('Space','',6.25,'space'),K('AltRight','Alt',1.25,'alt'),K('MetaRight','⊞ Win',1.25,'win'),K('ContextMenu','☰',1.25,'sys'),K('ControlRight','Ctrl',1.25,'ctrl')]
+];
+const NAV=[
+  [K('PrintScreen','PrtScn',1,'sys'),K('ScrollLock','ScrLk',1,'sys'),K('Pause','Pause',1,'sys')],
+  [K('Insert','Ins',1,'nav'),K('Home','Home',1,'nav'),K('PageUp','PgUp',1,'nav')],
+  [K('Delete','Del',1,'nav'),K('End','End',1,'nav'),K('PageDown','PgDn',1,'nav')],
+  [],
+  [G(1),K('ArrowUp','↑',1,'nav'),G(1)],
+  [K('ArrowLeft','←',1,'nav'),K('ArrowDown','↓',1,'nav'),K('ArrowRight','→',1,'nav')]
+];
+const NUM=[K('NumLock','Num',1,'sys'),K('NumpadDivide','/',1,'digit'),K('NumpadMultiply','*',1,'digit'),K('NumpadSubtract','−',1,'digit'),
+  K('Numpad7','7',1,'digit'),K('Numpad8','8',1,'digit'),K('Numpad9','9',1,'digit'),Object.assign(K('NumpadAdd','+',1,'digit'),{tall:1}),
+  K('Numpad4','4',1,'digit'),K('Numpad5','5',1,'digit'),K('Numpad6','6',1,'digit'),
+  K('Numpad1','1',1,'digit'),K('Numpad2','2',1,'digit'),K('Numpad3','3',1,'digit'),Object.assign(K('NumpadEnter','Enter',1,'enter'),{tall:1}),
+  Object.assign(K('Numpad0','0',1,'digit'),{wide:1}),K('NumpadDecimal','.',1,'digit')];
+
+function keyEl(k){
+  const el=document.createElement('div'); const c=k.code;
+  let g=k.g, main=k.label, sub='';
+  if(!g){ if(/^F\d/.test(c)) g='fn'; else if(/^Key/.test(c)) g='letter'; else if(DIG[c]) g='digit'; else g='letter'; }
+  if(main===undefined){ if(/^Key/.test(c)){ main=RU[c]; sub=c[3]; } else if(DIG[c]){ main=DIG[c][0]; sub=DIG[c][1]; } else if(RU[c]){ main=RU[c]; sub=EN[c]||''; } else if(/^F\d/.test(c)) main=c; else main=c; }
+  el.className='key g-'+g+(k.tall?' tall':'')+(k.wide?' wide':''); el.dataset.code=c; el.dataset.norm=normLR(c); el.style.setProperty('--w',k.w);
+  if(main.length>1 && !/^F\d/.test(c)) el.classList.add('lbl'); if(main.length>7) el.classList.add('small');
+  el.innerHTML=(sub?'<span class="sub">'+sub+'</span>':'')+'<span class="main">'+main+'</span>';
+  el.addEventListener('pointerdown',e=>{ e.preventDefault(); el.classList.add('pressed'); unlockAudio(); snd.click(); });
+  const up=()=>el.classList.remove('pressed'); el.addEventListener('pointerup',up); el.addEventListener('pointerleave',up); el.addEventListener('pointercancel',up);
+  el.addEventListener('click',()=>screenPress(c));
+  return el;
+}
+function buildKeyboard(){
+  const kb=$('#kb'); kb.innerHTML='';
+  const mk=(rows,cls)=>{ const b=document.createElement('div'); b.className='kblock '+cls; rows.forEach(r=>{ const row=document.createElement('div'); row.className='krow'; r.forEach(k=>{ if(k.gap){ const g=document.createElement('div'); g.className='gap'; g.style.setProperty('--w',k.w); row.appendChild(g);} else row.appendChild(keyEl(k)); }); b.appendChild(row); }); return b; };
+  kb.appendChild(mk(MAIN,'mainblock')); kb.appendChild(mk(NAV,'navblock'));
+  const nb=document.createElement('div'); nb.className='kblock numblock'; const grid=document.createElement('div'); grid.className='numpad'; NUM.forEach(k=>grid.appendChild(keyEl(k))); nb.appendChild(grid); kb.appendChild(nb);
+}
+function fitKeyboard(){ const w=$('.kb-wrap').clientWidth-28; const units=S.set.numpad?23.9:19.5; const u=Math.max(22,Math.min(74,w/units,innerHeight*0.064)); document.documentElement.style.setProperty('--u',u.toFixed(1)+'px'); }
+addEventListener('resize',fitKeyboard);
+const keyEls=code=>$$('.key[data-code="'+code+'"]');
+const keyElsNorm=n=>$$('.key[data-norm="'+n+'"]');
+function clearTargets(){ $$('.key.target').forEach(e=>e.classList.remove('target')); }
+function showTarget(sc){ clearTargets(); if(!sc) return; sc.mods.forEach(m=>keyElsNorm(MODCODE[m]).forEach(e=>e.classList.add('target'))); keyElsNorm(normLR(sc.code)).forEach(e=>e.classList.add('target')); }
+function flashKeys(sc,cls='good',ms=900){ const els=[]; sc.mods.forEach(m=>els.push(...keyElsNorm(MODCODE[m]))); els.push(...keyElsNorm(normLR(sc.code))); els.forEach(e=>e.classList.add(cls)); setTimeout(()=>els.forEach(e=>e.classList.remove(cls)),ms); }
+function flashCombo(mods,code,cls,ms){ flashKeys({mods,code},cls,ms); }
+
+/* --- чипы сочетаний --- */
+function comboHTML(sc,big){
+  const parts=[]; sc.mods && MODORDER.forEach(m=>{ if(sc.mods.has(m)) parts.push('<span class="kc '+m+(big?' big':'')+'">'+MODLABEL[m]+'</span>'); });
+  const n=norm(sc.code); const g=codeGroup(n); let lab=codeLabel(n);
+  if(sc.toks){ const last=sc.toks[sc.toks.length-1]; if(TOKLABEL[last]) lab=TOKLABEL[last]; else if(/^[A-Z]$/.test(last)||/^F\d/.test(last)||/^[0-9]$/.test(last)) lab=last; else if(TOK[last]&&!CODELABEL[TOK[last]]) lab=last; else if(['>','<','[',']','.',','].includes(last)) lab=last; }
+  const ru=RU[n]&&/^Key/.test(n)?'<small>'+RU[n]+'</small>':'';
+  parts.push('<span class="kc '+(MODCODES[n]?MODCODES[n]:g)+(big?' big':'')+'">'+lab+ru+'</span>');
+  return '<span class="combo">'+parts.join('<span class="plus">+</span>')+'</span>';
+}
+function pressedCombo(){
+  const held=new Set(); pressed.forEach(c=>held.add(norm(c))); sticky.forEach(m=>held.add(MODCODE[m]));
+  const mods=new Set(); let main=null; held.forEach(c=>{ if(MODCODES[c]) mods.add(MODCODES[c]); else main=c; });
+  const el=$('#pressedcombo'); if(!held.size){ el.innerHTML='<span style="opacity:.5">—</span>'; return; }
+  const parts=[]; MODORDER.forEach(m=>{ if(mods.has(m)) parts.push('<span class="kc '+m+'">'+MODLABEL[m]+'</span>'); });
+  if(main){ const g=codeGroup(main); parts.push('<span class="kc '+g+'">'+codeLabel(main)+(RU[main]&&/^Key/.test(main)?'<small>'+RU[main]+'</small>':'')+'</span>'); }
+  el.innerHTML=parts.join('<span class="plus">+</span>');
+}
+
+/* =====================================================================
+   ВВОД: ФИЗИЧЕСКАЯ КЛАВИАТУРА
+   ===================================================================== */
+const pressed=new Set(); const sticky=new Set(); let modDown=null, otherSinceMod=false; let mode='learn';
+function setPressed(code,on){ if(on) pressed.add(code); else pressed.delete(code); keyEls(code).forEach(e=>e.classList.toggle('pressed',on)); pressedCombo(); }
+function clearPressed(){ pressed.forEach(c=>keyEls(c).forEach(e=>e.classList.remove('pressed'))); pressed.clear(); pressedCombo(); }
+function modsFromEvent(e,n){ const m=new Set(); if(e.ctrlKey&&n!=='ControlLeft')m.add('ctrl'); if(e.shiftKey&&n!=='ShiftLeft')m.add('shift'); if(e.altKey&&n!=='AltLeft')m.add('alt'); if(e.metaKey&&n!=='MetaLeft')m.add('meta'); return m; }
+const inField=e=>!!(e.target&&e.target.closest&&e.target.closest('input,textarea,[contenteditable]'));
+addEventListener('keydown',e=>{
+  if(inField(e)){ if(e.key==='Escape') e.target.blur(); return; }
+  const code=e.code; if(!code) return;
+  if($('#help').classList.contains('open')){ if(e.key==='Escape') $('#help').classList.remove('open'); e.preventDefault(); return; }
+  e.preventDefault(); unlockAudio();
+  setPressed(code,true); if(e.repeat) return; snd.click();
+  const n=norm(code); const mods=modsFromEvent(e,n);
+  if(mode==='explore'){ exploreShow(n,mods); return; }
+  if(MODCODES[n]){ modDown=n; otherSinceMod=false; if(mods.size) handleCombo(mods,n,{src:'kb'}); }
+  else { otherSinceMod=true; handleCombo(mods,n,{src:'kb'}); }
+});
+addEventListener('keyup',e=>{
+  const code=e.code; if(!code) return; setPressed(code,false);
+  if(inField(e)) return;
+  const n=norm(code);
+  if(MODCODES[n]){ if(modDown===n&&!otherSinceMod&&mode!=='explore'){ const mods=modsFromEvent(e,n); if(!mods.size) handleCombo(mods,n,{src:'kb',lone:true}); } modDown=null; }
+});
+addEventListener('blur',clearPressed); document.addEventListener('visibilitychange',()=>{ if(document.hidden) clearPressed(); });
+document.addEventListener('contextmenu',e=>{ if(!inField(e)) e.preventDefault(); });
+
+/* =====================================================================
+   ВВОД: ЭКРАННАЯ КЛАВИАТУРА
+   ===================================================================== */
+function toggleSticky(m){ if(sticky.has(m)) sticky.delete(m); else sticky.add(m); renderSticky(); }
+function clearSticky(){ sticky.clear(); renderSticky(); }
+function renderSticky(){ $$('.key.sticky').forEach(e=>e.classList.remove('sticky')); sticky.forEach(m=>keyElsNorm(MODCODE[m]).forEach(e=>e.classList.add('sticky'))); pressedCombo(); }
+function screenPress(code){
+  const n=norm(code);
+  if(mode==='explore'){ exploreShow(n,new Set(sticky)); if(MODCODES[n]) toggleSticky(MODCODES[n]); else clearSticky(); return; }
+  if(MODCODES[n]){
+    const m=MODCODES[n];
+    if(sticky.has(m)){ toggleSticky(m); return; }
+    const mods=new Set(sticky);
+    if(handleCombo(mods,n,{src:'screen',lone:true})){ clearSticky(); return; }
+    toggleSticky(m); return;
+  }
+  handleCombo(new Set(sticky),n,{src:'screen'}); clearSticky();
+}
+
+/* =====================================================================
+   ОБЩИЙ ОБРАБОТЧИК СОЧЕТАНИЙ
+   ===================================================================== */
+function handleCombo(mods,code,opts){
+  const s=sig(mods,code);
+  if(mode==='learn') return learnInput(s,mods,code,opts);
+  if(mode==='train') return trainInput(s,mods,code,opts);
+  if(mode==='ref'){ refFlash(s); return false; }
+  return false;
+}
+function describePressed(mods,code){ const parts=MODORDER.filter(m=>mods.has(m)).map(m=>MODLABEL[m]); const n=norm(code); if(!MODCODES[n]||!mods.size) parts.push(codeLabel(n)+(/^Key/.test(n)?' ('+RU[n]+')':'')); return parts.join(' + '); }
+
+/* =====================================================================
+   РЕЖИМЫ / ВКЛАДКИ
+   ===================================================================== */
+// Клавиатура показывается только внутри раздела: в уроке, в тренировке, в «Клавишах» и «Справочнике»
+function updateKb(){
+  const show=(mode==='learn'&&LN.active)||(mode==='train'&&T.active)||mode==='explore'||mode==='ref';
+  const kw=$('.kb-wrap'); const was=!kw.classList.contains('hidden');
+  kw.classList.toggle('hidden',!show);
+  if(show&&!was){ fitKeyboard(); clearPressed(); }
+}
+function setMode(m){
+  mode=m; $$('.tab').forEach(t=>t.classList.toggle('active',t.dataset.mode===m)); $$('.panel').forEach(p=>p.classList.toggle('active',p.id==='panel-'+m));
+  clearTargets(); clearSticky(); if(window.speechSynthesis) speechSynthesis.cancel(); updateKb();
+  if(m==='learn'&&LN.active) showTarget(LN.cur());
+  if(m==='train'&&T.active&&T.hinted) showTarget(T.cur);
+}
+$$('.tab').forEach(t=>t.addEventListener('click',()=>{unlockAudio();setMode(t.dataset.mode)}));
+
+/* =====================================================================
+   РЕЖИМ «УРОК»
+   ===================================================================== */
+const LN={active:false,cat:null,list:[],i:0,done:false,cur(){return this.list[this.i]}};
+function renderCats(){
+  const g=$('#catgrid'); g.innerHTML='';
+  Object.keys(CATS).forEach(c=>{ const list=BYCAT[c]||[]; const learned=list.filter(s=>S.learned[s.id]).length; const d=document.createElement('div'); d.className='catcard'+(learned===list.length&&list.length?' done':''); d.innerHTML='<div class="em">'+CATS[c].e+'</div><div class="nm">'+CATS[c].n+'</div><div class="ds">'+CATS[c].d+'</div><div class="pr"><i style="width:'+(list.length?learned/list.length*100:0)+'%"></i></div><div class="cnt">'+learned+' / '+list.length+' изучено</div>'; d.addEventListener('click',()=>startLesson(c)); g.appendChild(d); });
+}
+function startLesson(c){
+  LN.active=true; LN.cat=c; LN.list=BYCAT[c]; LN.i=0; LN.done=false;
+  const first=LN.list.findIndex(s=>!S.learned[s.id]); if(first>0) LN.i=first;
+  $('#learnHome').style.display='none'; $('#learnView').style.display='block'; $('#learnTitle').textContent=CATS[c].e+' '+CATS[c].n; updateKb();
+  $('#lHow').textContent='Посмотри на клавиатуру внизу — нужные клавиши мигают. Сначала нажми и держи клавишу-модификатор (Ctrl, Shift, Alt или Win), потом нажми вторую клавишу. На экранной клавиатуре: нажми модификатор — он «прилипнет», затем вторую клавишу.';
+  renderStep();
+}
+function renderStep(){
+  const sc=LN.cur(); if(!sc) return; LN.done=false;
+  $('#lEmoji').textContent=sc.e; $('#lTitle').textContent=sc.t; $('#lCombo').innerHTML=comboHTML(sc,true); $('#lDesc').textContent=sc.d;
+  $('#lHint').textContent='👉 Теперь нажми это сочетание сам!'; $('#lFeedback').textContent=''; $('#lFeedback').className='feedback';
+  $('#stepcard').classList.remove('good');
+  $('#learnStep').textContent='Шаг '+(LN.i+1)+' из '+LN.list.length; $('#learnBar').style.width=((LN.i)/LN.list.length*100)+'%';
+  const nt=$('#lNotice'); if(sc.s){ nt.style.display='block'; nt.innerHTML='👆 Это сочетание выполняет сама система — на настоящей клавиатуре оно может открыть окно или свернуть программу. <b>Нажми его на экранной клавиатуре</b>'+(kbLocked?' (или на настоящей — клавиши захвачены 🔒)':'')+'.'; } else nt.style.display='none';
+  $('#lDots').innerHTML=LN.list.map((s,i)=>'<span class="stepdot'+(S.learned[s.id]?' done':'')+(i===LN.i?' cur':'')+'"></span>').join('');
+  const learned=LN.list.filter(s=>S.learned[s.id]).length; $('#lProg').textContent=learned+' из '+LN.list.length+' сочетаний изучено. '+(learned===LN.list.length?'Тема пройдена полностью! 🎉':'Продолжай!');
+  showTarget(sc); $('#lPrev').style.visibility=LN.i>0?'visible':'hidden';
+  speak(sc.t+'. '+sc.d+' Нажми: '+comboSpeech(sc));
+}
+function learnInput(s,mods,code,opts){
+  if(!LN.active||LN.done) return false; const sc=LN.cur(); if(!sc) return false;
+  if(s===sc.sig){
+    LN.done=true; snd.ok(); flashKeys(sc,'good',1000); $('#stepcard').classList.add('good'); $('#stepcard').classList.add('pop'); setTimeout(()=>$('#stepcard').classList.remove('pop'),500);
+    $('#lFeedback').textContent=['Отлично! ✅','Верно! 🌟','Молодец! 🎉','Супер! 💪','Точно! 👏'][Math.floor(Math.random()*5)]; $('#lFeedback').className='feedback good';
+    if(!S.learned[sc.id]){ S.learned[sc.id]=1; addStars(1); toast('+1 ⭐'); } save();
+    speak(['Отлично!','Верно!','Молодец!','Супер!'][Math.floor(Math.random()*4)]);
+    const stepAt=LN.i; setTimeout(()=>{ if(LN.done&&LN.active&&LN.i===stepAt&&LN.i<LN.list.length) nextStep(); },1500); return true;
+  }
+  if(opts.lone||MODCODES[norm(code)]) return false;
+  snd.bad(); flashCombo(mods,code,'bad',500); $('#stepcard').classList.add('shake'); setTimeout(()=>$('#stepcard').classList.remove('shake'),400);
+  $('#lFeedback').textContent='Ты нажал: '+describePressed(mods,code)+'. Попробуй ещё раз! 💪'; $('#lFeedback').className='feedback bad'; return false;
+}
+function nextStep(){
+  if(LN.i<LN.list.length-1){ LN.i++; renderStep(); }
+  else { // конец темы
+    LN.done=true; clearTargets(); $('#learnBar').style.width='100%'; confetti(200); snd.win(); addStars(5);
+    $('#lEmoji').textContent='🏆'; $('#lTitle').textContent='Тема пройдена!'; $('#lCombo').innerHTML=''; $('#lDesc').textContent='Ты изучил все сочетания темы «'+CATS[LN.cat].n+'». +5 ⭐ бонус! Выбери следующую тему или потренируйся в Тренажёре.'; $('#lHint').textContent=''; $('#lFeedback').textContent=''; $('#lNotice').style.display='none'; $('#lSkip').textContent='К темам ➡';
+    speak('Поздравляю! Тема пройдена!'); LN.i=LN.list.length;
+  }
+}
+$('#lSkip').addEventListener('click',()=>{ if(LN.i>=LN.list.length){ backToCats(); return; } LN.done=true; nextStep(); });
+$('#lPrev').addEventListener('click',()=>{ if(LN.i>0&&LN.i<LN.list.length){ LN.i--; renderStep(); } });
+$('#lSpeak').addEventListener('click',()=>{ const sc=LN.cur(); if(sc) speak(sc.t+'. '+sc.d+' Нажми: '+comboSpeech(sc),true); });
+function backToCats(){ LN.active=false; clearTargets(); $('#lSkip').textContent='Дальше ➡'; $('#learnView').style.display='none'; $('#learnHome').style.display='block'; renderCats(); updateKb(); }
+$('#learnBack').addEventListener('click',backToCats);
+
+/* =====================================================================
+   РЕЖИМ «ТРЕНАЖЁР»
+   ===================================================================== */
+const T={active:false,cats:new Set(Object.keys(CATS)),tm:'free',pool:[],cur:null,score:0,ok:0,bad:0,streak:0,hinted:false,wrongs:0,locked:false,time:60,timer:null,count:0,total:0,history:[]};
+function renderTrainCats(){
+  const r=$('#trainCats'); r.innerHTML='';
+  const all=document.createElement('button'); all.className='chip'+(T.cats.size===Object.keys(CATS).length?' on':''); all.textContent='✨ Все темы'; all.addEventListener('click',()=>{ T.cats=new Set(Object.keys(CATS)); renderTrainCats(); }); r.appendChild(all);
+  Object.keys(CATS).forEach(c=>{ const b=document.createElement('button'); b.className='chip'+(T.cats.has(c)?' on':''); b.textContent=CATS[c].e+' '+CATS[c].n; b.addEventListener('click',()=>{ if(T.cats.has(c)){ if(T.cats.size>1) T.cats.delete(c); } else T.cats.add(c); renderTrainCats(); }); r.appendChild(b); });
+  const n=SHORTCUTS.filter(s=>T.cats.has(s.c)).length; $('#trainCount').textContent='Сочетаний в выборке: '+n;
+}
+$$('[data-tm]').forEach(b=>b.addEventListener('click',()=>{ $$('[data-tm]').forEach(x=>x.classList.remove('on')); b.classList.add('on'); T.tm=b.dataset.tm; }));
+function startTrain(){
+  T.pool=SHORTCUTS.filter(s=>T.cats.has(s.c)); if(!T.pool.length) return;
+  T.active=true; T.score=0;T.ok=0;T.bad=0;T.streak=0;T.count=0;T.history=[]; T.total=T.tm==='ten'?10:0; T.time=60;
+  $('#trainSetup').style.display='none'; $('#trainResult').style.display='none'; $('#trainView').style.display='block'; updateKb();
+  $('#tBest').textContent=T.tm==='marathon'?S.best.marathon:(T.tm==='ten'?S.best.ten:'—');
+  $('#tTimeBox').style.display=T.tm==='marathon'?'':'none'; $('#timerbar').style.display=T.tm==='marathon'?'':'none'; $('#timerfill').style.width='100%'; $('#tTime').textContent=60;
+  if(T.tm==='marathon'){ clearInterval(T.timer); T.timer=setInterval(()=>{ T.time--; $('#tTime').textContent=T.time; $('#timerfill').style.width=(T.time/60*100)+'%'; if(T.time<=10) snd.tick(); if(T.time<=0) endTrain(); },1000); }
+  updateStats(); nextTask();
+}
+function updateStats(){ $('#tScore').textContent=T.score; $('#tOk').textContent=T.ok; $('#tBad').textContent=T.bad; $('#tStreak').textContent=T.streak; }
+function pickTask(){
+  // Реже повторяем недавние, чаще — те, где были ошибки
+  const recent=T.history.slice(-6); let cand=T.pool.filter(s=>!recent.includes(s.id)); if(!cand.length) cand=T.pool;
+  const w=cand.map(s=>{ const st=S.stats[s.id]||{ok:0,bad:0}; return 1+st.bad*2+(st.ok?0:1.5); }); let r=Math.random()*w.reduce((a,b)=>a+b,0);
+  for(let i=0;i<cand.length;i++){ r-=w[i]; if(r<=0) return cand[i]; } return cand[cand.length-1];
+}
+function nextTask(){
+  if(T.total&&T.count>=T.total){ endTrain(); return; }
+  T.cur=pickTask(); T.history.push(T.cur.id); T.hinted=false; T.wrongs=0; T.locked=false; T.count++;
+  clearTargets(); $('#taskcard').classList.remove('good');
+  $('#tEmoji').textContent=T.cur.e; $('#tTask').textContent=T.cur.q+(T.total?'  ('+T.count+'/'+T.total+')':''); $('#tCombo').innerHTML=''; $('#tFeedback').textContent=''; $('#tFeedback').className='feedback';
+  const nt=$('#tNotice'); if(T.cur.s&&!kbLocked){ nt.style.display='block'; nt.innerHTML='👆 Это системное сочетание — нажми его на <b>экранной клавиатуре</b>.'; } else nt.style.display='none';
+  $('#tHint').style.display=''; speak(T.cur.q);
+}
+function showHint(){ if(!T.cur||T.hinted) return; T.hinted=true; showTarget(T.cur); $('#tCombo').innerHTML=comboHTML(T.cur,true); $('#tHint').style.display='none'; }
+$('#tHint').addEventListener('click',showHint);
+$('#tSpeak').addEventListener('click',()=>{ if(T.cur) speak(T.cur.q,true); });
+$('#tSkipBtn').addEventListener('click',()=>{ if(!T.cur||T.locked) return; T.streak=0; T.locked=true; showTarget(T.cur); $('#tCombo').innerHTML=comboHTML(T.cur,true); $('#tFeedback').textContent='Правильный ответ: '+T.cur.toks.join(' + '); $('#tFeedback').className='feedback bad'; updateStats(); setTimeout(nextTask,1800); });
+$('#tStop').addEventListener('click',endTrain);
+function trainInput(s,mods,code,opts){
+  if(!T.active||!T.cur||T.locked) return false;
+  if(s===T.cur.sig){
+    T.locked=true; const pts=T.hinted?1:3; T.score+=pts+Math.min(T.streak,5); T.ok++; T.streak++; addStars(T.hinted?1:2);
+    const st=S.stats[T.cur.id]=S.stats[T.cur.id]||{ok:0,bad:0}; st.ok++; save();
+    snd.ok(); flashKeys(T.cur,'good',900); $('#taskcard').classList.add('good','pop'); setTimeout(()=>$('#taskcard').classList.remove('pop'),500);
+    $('#tCombo').innerHTML=comboHTML(T.cur,true); $('#tFeedback').textContent=['Верно! ✅','Отлично! 🌟','Молодец! 🎉','Супер! 💪','Так держать! 🔥'][Math.floor(Math.random()*5)]+(T.streak>=3?' Серия '+T.streak+'!':''); $('#tFeedback').className='feedback good';
+    if(T.streak&&T.streak%5===0) confetti(80);
+    updateStats(); setTimeout(nextTask,T.tm==='marathon'?700:1300); return true;
+  }
+  if(opts.lone||MODCODES[norm(code)]) return false;
+  T.bad++; T.streak=0; T.wrongs++; const st=S.stats[T.cur.id]=S.stats[T.cur.id]||{ok:0,bad:0}; st.bad++; save();
+  snd.bad(); flashCombo(mods,code,'bad',500); $('#taskcard').classList.add('shake'); setTimeout(()=>$('#taskcard').classList.remove('shake'),400);
+  $('#tFeedback').textContent='Ты нажал: '+describePressed(mods,code)+'. Попробуй ещё раз!'; $('#tFeedback').className='feedback bad'; updateStats();
+  if(T.wrongs>=2&&!T.hinted){ showHint(); $('#tFeedback').textContent+=' Вот подсказка 💡'; }
+  return false;
+}
+function endTrain(){
+  if(!T.active) return; T.active=false; clearInterval(T.timer); clearTargets();
+  $('#trainView').style.display='none'; $('#trainResult').style.display='block'; updateKb();
+  let rec=false; if(T.tm==='marathon'&&T.score>S.best.marathon){ S.best.marathon=T.score; rec=true; } if(T.tm==='ten'&&T.score>S.best.ten){ S.best.ten=T.score; rec=true; } save();
+  const acc=T.ok+T.bad?Math.round(T.ok/(T.ok+T.bad)*100):0;
+  $('#rScore').textContent=T.score+' очков'; $('#rEmoji').textContent=rec?'🏆':(acc>=80?'🌟':'👍'); $('#rTitle').textContent=rec?'Новый рекорд!':(acc>=80?'Отличная работа!':'Хорошая тренировка!');
+  $('#rText').textContent='Верно: '+T.ok+', ошибок: '+T.bad+', точность: '+acc+'%. '+(T.tm==='marathon'?'Рекорд марафона: '+S.best.marathon+'.':'')+(T.tm==='ten'?'Рекорд серии: '+S.best.ten+'.':'');
+  if(T.ok>0){ confetti(rec?250:120); snd.win(); } speak(rec?'Новый рекорд! Поздравляю!':'Тренировка окончена. Верно: '+T.ok);
+}
+$('#trainStart').addEventListener('click',()=>{unlockAudio();startTrain()});
+$('#rAgain').addEventListener('click',startTrain);
+$('#rBack').addEventListener('click',()=>{ $('#trainResult').style.display='none'; $('#trainSetup').style.display='block'; renderTrainCats(); });
+
+/* =====================================================================
+   РЕЖИМ «КЛАВИШИ»
+   ===================================================================== */
+function exploreShow(n,mods){
+  const info=keyInfo(n); const g=codeGroup(n);
+  $('#eCombo').innerHTML='<span class="kc big '+(MODCODES[n]||g)+'">'+codeLabel(n)+(RU[n]&&/^Key/.test(n)?'<small>'+RU[n]+'</small>':'')+'</span>';
+  $('#eName').textContent=info[0]; $('#eDesc').textContent=info[1];
+  const rel=SHORTCUTS.filter(s=>norm(s.code)===n||(MODCODES[n]&&s.mods.has(MODCODES[n])));
+  const seen=new Set(); const uniq=rel.filter(s=>{ if(seen.has(s.sig+s.t)) return false; seen.add(s.sig+s.t); return true; });
+  $('#eRelated').innerHTML=uniq.length?uniq.map(s=>'<div class="rel" data-id="'+s.id+'">'+comboHTML(s)+'<span class="t">'+s.e+' '+s.t+'</span></div>').join(''):'<div class="lead">Эта клавиша работает сама по себе 🙂</div>';
+  $$('#eRelated .rel').forEach(el=>el.addEventListener('click',()=>{ const s=SHORTCUTS.find(x=>x.id===el.dataset.id); showTarget(s); flashKeys(s,'good',1200); toast(s.toks.join(' + ')+' — '+s.t); speak(s.t+'. '+s.d+' Нажми: '+comboSpeech(s),true); }));
+  speak(info[0]+'. '+info[1]);
+}
+
+/* =====================================================================
+   РЕЖИМ «СПРАВОЧНИК»
+   ===================================================================== */
+let refCat='all';
+function renderRefCats(){ const r=$('#refCats'); r.innerHTML=''; const mk=(c,l)=>{ const b=document.createElement('button'); b.className='chip'+(refCat===c?' on':''); b.textContent=l; b.addEventListener('click',()=>{ refCat=c; renderRefCats(); renderRef(); }); r.appendChild(b); }; mk('all','✨ Все'); Object.keys(CATS).forEach(c=>mk(c,CATS[c].e+' '+CATS[c].n)); }
+function renderRef(){
+  const q=$('#refSearch').value.trim().toLowerCase().replace(/\s*\+\s*/g,'+');
+  const list=SHORTCUTS.filter(s=>(refCat==='all'||s.c===refCat)&&(!q||(s.k+' '+s.t+' '+s.d+' '+s.q).toLowerCase().includes(q)));
+  const out=[]; const cats=refCat==='all'?Object.keys(CATS):[refCat];
+  cats.forEach(c=>{ const items=list.filter(s=>s.c===c); if(!items.length) return; out.push('<div class="refhead">'+CATS[c].e+' '+CATS[c].n+' <i>'+items.length+'</i></div><div class="refgrid">'+items.map(s=>'<div class="refcard" data-id="'+s.id+'" data-sig="'+s.sig+'"><div class="top">'+comboHTML(s)+'<span class="em">'+s.e+'</span></div><div class="t">'+s.t+(s.s?' <span title="Системное сочетание">👆</span>':'')+'</div><div class="d">'+s.d+'</div></div>').join('')+'</div>'); });
+  $('#refList').innerHTML=out.join('')||'<div class="card" style="margin-top:12px"><p class="lead">Ничего не найдено 🤔 Попробуй другое слово.</p></div>';
+  $$('.refcard').forEach(el=>el.addEventListener('click',()=>{ const s=SHORTCUTS.find(x=>x.id===el.dataset.id); showTarget(s); flashKeys(s,'good',1200); $$('.refcard.flash').forEach(x=>x.classList.remove('flash')); el.classList.add('flash'); toast(s.toks.join(' + ')+' — '+s.t); speak(s.t+'. '+s.d+' Нажми: '+comboSpeech(s)); }));
+}
+function refFlash(s){ const els=$$('.refcard[data-sig="'+s+'"]'); if(!els.length) return; $$('.refcard.flash').forEach(x=>x.classList.remove('flash')); els.forEach(e=>e.classList.add('flash')); els[0].scrollIntoView({behavior:'smooth',block:'center'}); const sc=SHORTCUTS.find(x=>x.sig===s); if(sc){ snd.ok(); toast(sc.toks.join(' + ')+' — '+sc.t); } }
+$('#refSearch').addEventListener('input',renderRef);
+$('#refTotal').textContent=SHORTCUTS.length;
+
+/* =====================================================================
+   НАСТРОЙКИ, ПОЛНЫЙ ЭКРАН, ПОМОЩЬ
+   ===================================================================== */
+let kbLocked=false;
+$('#btnSound').addEventListener('click',()=>{ S.set.sound=!S.set.sound; save(); applySettings(); unlockAudio(); if(S.set.sound) snd.ok(); });
+$('#btnVoice').addEventListener('click',()=>{ S.set.voice=!S.set.voice; save(); applySettings(); if(S.set.voice) speak('Голос включён',true); else if(window.speechSynthesis) speechSynthesis.cancel(); });
+document.addEventListener('click',e=>{ const b=e.target.closest('button'); if(b) b.blur(); });
+$('#btnNum').addEventListener('click',()=>{ S.set.numpad=!S.set.numpad; save(); applySettings(); });
+$('#btnTheme').addEventListener('click',()=>{ S.set.theme=S.set.theme==='dark'?'light':'dark'; save(); applySettings(); });
+$('#btnFull').addEventListener('click',async()=>{
+  try{
+    if(!document.fullscreenElement){ await document.documentElement.requestFullscreen(); if(navigator.keyboard&&navigator.keyboard.lock){ await navigator.keyboard.lock(); kbLocked=true; toast('🔒 Клавиши захвачены: Win, Alt+Tab и другие теперь работают здесь',3000); } else toast('Полный экран. Захват клавиш не поддерживается этим браузером',2500); }
+    else { await document.exitFullscreen(); }
+  }catch(e){ toast('Не удалось включить полный экран'); }
+});
+document.addEventListener('fullscreenchange',()=>{ if(!document.fullscreenElement){ kbLocked=false; if(navigator.keyboard&&navigator.keyboard.unlock) navigator.keyboard.unlock(); } $('#btnFull').textContent=document.fullscreenElement?'🗗':'⛶'; });
+$('#btnHelp').addEventListener('click',()=>$('#help').classList.add('open'));
+$('#helpClose').addEventListener('click',()=>$('#help').classList.remove('open'));
+$('#help').addEventListener('click',e=>{ if(e.target.id==='help') $('#help').classList.remove('open'); });
+$('#resetProgress').addEventListener('click',()=>{ if(confirm('Сбросить все звёзды и прогресс?')){ const set=S.set; S={stars:0,learned:{},stats:{},best:{marathon:0,ten:0},set}; save(); renderStars(); renderCats(); toast('Прогресс сброшен'); } });
+
+/* =====================================================================
+   СТАРТ
+   ===================================================================== */
+buildKeyboard(); applySettings(); renderStars(); renderCats(); renderTrainCats(); renderRefCats(); renderRef(); pressedCombo(); updateKb();
+addEventListener('pointerdown',unlockAudio,{once:true});
+window.KM={get T(){return T},get LN(){return LN},get S(){return S},SHORTCUTS,CATS,comboHTML,MODCODES,sig,parseKeys};
+if('serviceWorker' in navigator&&location.protocol.startsWith('http')){ navigator.serviceWorker.register('sw.js').catch(()=>{}); }
+</script>
+</body>
+</html>

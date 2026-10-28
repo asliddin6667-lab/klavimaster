@@ -1,0 +1,12 @@
+{
+  "name": "КлавиМастер — тренажёр горячих клавиш",
+  "short_name": "КлавиМастер",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#eef2ff",
+  "theme_color": "#6a5cff",
+  "lang": "ru",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
