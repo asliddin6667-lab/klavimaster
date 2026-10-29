@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>КлавиМастер — тренажёр горячих клавиш</title>
-<meta name="description" content="Интерактивный тренажёр горячих клавиш Windows для школьников: урок, тренажёр, справочник, экранная клавиатура.">
+<meta name="description" content="Интерактивный тренажёр горячих клавиш и печати для школьников: урок, тренажёр, набор текста на время, справочник, экранная клавиатура.">
 <meta name="theme-color" content="#6a5cff">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
@@ -193,6 +193,8 @@ p.lead{color:var(--muted);font-weight:700}
 }
 .key .main{font-size:calc(var(--u)*.38);line-height:1}
 .key .sub{position:absolute;top:calc(var(--u)*.07);left:calc(var(--u)*.12);font-size:calc(var(--u)*.2);color:var(--keysub);font-weight:800}
+.key .sub.ru{left:auto;right:calc(var(--u)*.11);font-size:calc(var(--u)*.23);color:var(--accent);opacity:.8}
+:root[data-theme="dark"] .key .sub.ru{color:#a5b4fc}
 .key.lbl .main{font-size:calc(var(--u)*.25)}
 .key.lbl.small .main{font-size:calc(var(--u)*.2)}
 .gap{flex:0 0 calc(var(--u)*var(--w,1) - var(--u)*.1);visibility:hidden}
@@ -225,7 +227,7 @@ p.lead{color:var(--muted);font-weight:700}
   transform:translateY(calc(var(--u)*.06));border-bottom-width:2px;
   box-shadow:0 0 0 4px var(--glow),0 0 24px var(--col);
 }
-.key.pressed .sub,.key.sticky .sub,.key.flash .sub{color:rgba(255,255,255,.85)}
+.key.pressed .sub,.key.sticky .sub,.key.flash .sub,.key.good .sub,.key.bad .sub{color:rgba(255,255,255,.9);opacity:1}
 .key.target{animation:pulse 1s infinite;border-color:var(--col)!important;background:var(--tint2)}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 var(--glow)}50%{box-shadow:0 0 0 9px rgba(0,0,0,0)}}
 .key.good{background:var(--ok)!important;color:#fff;border-color:#15803d!important;animation:none;box-shadow:0 0 24px var(--ok)}
@@ -235,6 +237,44 @@ p.lead{color:var(--muted);font-weight:700}
 .key.tall{grid-row:span 2;height:auto}
 .key.wide{grid-column:span 2}
 .kb.nonum .numblock{display:none}
+
+/* ============ ПЕЧАТЬ ============ */
+.typecard{margin-top:10px;padding:14px 22px 12px;border:4px solid transparent;transition:.3s;position:relative;overflow:hidden}
+.typecard.good{border-color:var(--ok);box-shadow:0 0 0 6px rgba(34,197,94,.2)}
+.typehead{display:flex;align-items:center;gap:12px;margin-bottom:8px;min-height:2.3em}
+.gauge{font-size:2.1rem;line-height:1;filter:drop-shadow(0 4px 8px rgba(0,0,0,.15))}
+.gauge.bump{animation:pop .4s}
+.typehint{flex:1;font-weight:800;color:var(--muted);font-size:1rem}
+.streak{font-weight:900;color:var(--alt);font-size:1.1rem;min-width:6em;text-align:right}
+.streak.hot{animation:pop .4s}
+.typetext{font-size:clamp(1.3rem,2.3vw,2.05rem);line-height:1.8;font-weight:800;letter-spacing:.2px;overflow-wrap:anywhere;padding:12px 14px;border-radius:16px;background:var(--card2);border:2px solid var(--line);min-height:4.4em}
+.typetext .ch{display:inline;border-radius:.22em;padding:0 .03em;color:var(--muted);opacity:.7;transition:background .08s,color .08s}
+.typetext .ch.sp{padding:0 .14em}
+.typetext .ch.ok{color:#16a34a;opacity:1}
+:root[data-theme="dark"] .typetext .ch.ok{color:#4ade80}
+.typetext .ch.bad{color:#fff;background:var(--bad);opacity:1;text-decoration:underline wavy rgba(255,255,255,.7)}
+.typetext .ch.cur{color:#fff;background:var(--accent);opacity:1;animation:caret 1s infinite}
+@keyframes caret{0%,100%{box-shadow:0 .16em 0 var(--accent2)}50%{box-shadow:0 .16em 0 transparent}}
+.typetext .ch.wrong{background:var(--bad)!important;animation:none}
+.tstats .stat b{font-size:1.55rem}
+.rstats{margin:14px auto 6px;max-width:720px}
+.typecard .fly{position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);font-size:3rem;pointer-events:none;animation:fly .9s forwards;opacity:0}
+@keyframes fly{0%{opacity:0;transform:translate(-50%,-30%) scale(.6)}30%{opacity:1}100%{opacity:0;transform:translate(-50%,-140%) scale(1.3)}}
+.catcard .lvl{display:inline-flex;gap:2px;margin-top:8px;font-size:.85rem}
+.catcard .lvl i{opacity:.25}.catcard .lvl i.on{opacity:1}
+
+/* ============ ФОН ============ */
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.bg i{position:absolute;border-radius:50%;animation:float 22s ease-in-out infinite;will-change:transform}
+.bg i:nth-child(1){width:48vw;height:48vw;left:-14vw;top:-16vw;background:radial-gradient(circle,rgba(167,139,250,.5),transparent 70%)}
+.bg i:nth-child(2){width:44vw;height:44vw;right:-12vw;top:6vh;background:radial-gradient(circle,rgba(103,232,249,.45),transparent 70%);animation-delay:-8s}
+.bg i:nth-child(3){width:46vw;height:46vw;left:28vw;bottom:-26vw;background:radial-gradient(circle,rgba(249,168,212,.45),transparent 70%);animation-delay:-15s}
+@keyframes float{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(4vw,3vh) scale(1.1)}}
+:root[data-theme="dark"] .bg i{opacity:.55}
+.tab .em{display:inline-block;transition:transform .25s}
+.tab:hover .em{transform:scale(1.25) rotate(-8deg)}
+.stat b{transition:transform .15s}
+.stat b.tick{transform:scale(1.18)}
 
 /* ============ ПРОЧЕЕ ============ */
 #confetti{position:fixed;inset:0;pointer-events:none;z-index:50}
@@ -251,15 +291,17 @@ p.lead{color:var(--muted);font-weight:700}
 </style>
 </head>
 <body>
+<div class="bg"><i></i><i></i><i></i></div>
 
 <!-- ============ ШАПКА ============ -->
 <header>
   <div class="logo"><div class="ico">⌨️</div><div>КлавиМастер<small>ТРЕНАЖЁР ГОРЯЧИХ КЛАВИШ</small></div></div>
   <nav class="tabs">
-    <button class="tab active" data-mode="learn">📚 Урок</button>
-    <button class="tab" data-mode="train">🎮 Тренажёр</button>
-    <button class="tab" data-mode="explore">🔎 Клавиши</button>
-    <button class="tab" data-mode="ref">📖 Справочник</button>
+    <button class="tab active" data-mode="learn"><span class="em">📚</span> Урок</button>
+    <button class="tab" data-mode="train"><span class="em">🎮</span> Тренажёр</button>
+    <button class="tab" data-mode="type"><span class="em">⌨️</span> Печать</button>
+    <button class="tab" data-mode="explore"><span class="em">🔎</span> Клавиши</button>
+    <button class="tab" data-mode="ref"><span class="em">📖</span> Справочник</button>
   </nav>
   <div class="spacer"></div>
   <div class="hdr-right">
@@ -382,6 +424,65 @@ p.lead{color:var(--muted);font-weight:700}
     </div>
   </section>
 
+  <!-- ---- ПЕЧАТЬ ---- -->
+  <section class="panel" id="panel-type">
+    <div id="typeSetup">
+      <div class="card" style="margin-bottom:14px">
+        <h2>⌨️ Печатаем на время</h2>
+        <p class="lead">На экране появится текст — набирай его быстро и без ошибок. Я посчитаю слова, нажатия, ошибки и скорость. Время пойдёт с первой буквы. Печатать можно на настоящей клавиатуре или на экранной.</p>
+        <div class="row" style="margin-top:12px">
+          <b style="font-size:1.05rem">Время:</b>
+          <button class="chip" data-tt="30">⚡ 30 секунд</button>
+          <button class="chip on" data-tt="60">⏱ 1 минута</button>
+          <button class="chip" data-tt="120">🕑 2 минуты</button>
+          <button class="chip" data-tt="0">🧘 Без времени</button>
+          <span class="spacer"></span>
+          <button class="chip on" id="tpStrict" title="Ошибка не пропускается — нужно нажать правильную букву">✋ Стоп на ошибке</button>
+          <button class="chip on" id="tpHints" title="Следующая клавиша подсвечивается на клавиатуре">💡 Подсказка клавиш</button>
+        </div>
+      </div>
+      <div class="catgrid" id="typegrid"></div>
+    </div>
+    <div id="typeView" style="display:none">
+      <div class="row" style="margin-bottom:10px">
+        <button class="btn ghost sm" id="typeBack">⬅ К выбору</button>
+        <div class="pill" id="typeTitle">—</div>
+        <div class="spacer"></div>
+        <div class="pill" id="typeTimePill">⏱ 60</div>
+      </div>
+      <div class="stats tstats" style="margin-bottom:8px">
+        <div class="stat"><b id="pWords">0</b><span>СЛОВ</span></div>
+        <div class="stat"><b id="pKeys">0</b><span>НАЖАТИЙ</span></div>
+        <div class="stat"><b id="pErr">0</b><span>ОШИБОК</span></div>
+        <div class="stat"><b id="pSpeed">0</b><span>ЗНАКОВ/МИН</span></div>
+        <div class="stat"><b id="pAcc">100%</b><span>ТОЧНОСТЬ</span></div>
+        <div class="stat"><b id="pBest">—</b><span>РЕКОРД</span></div>
+      </div>
+      <div class="timerbar"><i id="typeFill" style="width:100%"></i></div>
+      <div class="card typecard" id="typecard">
+        <div class="typehead"><span class="gauge" id="pGauge">🐣</span><span class="typehint" id="typeHint">Начни печатать — время пойдёт с первой буквы!</span><span class="streak" id="pStreak"></span></div>
+        <div class="typetext" id="typeText"></div>
+        <div class="row" style="justify-content:center;margin-top:10px">
+          <button class="btn ghost sm" id="typeSkip">⏭ Другой текст</button>
+          <button class="btn ghost sm" id="typeStop">⏹ Закончить</button>
+        </div>
+      </div>
+    </div>
+    <div id="typeResult" style="display:none">
+      <div class="card result">
+        <div class="big" id="pREmoji">🏆</div>
+        <h2 id="pRTitle">Отлично!</h2>
+        <div class="score" id="pRScore">0</div>
+        <div class="stats rstats" id="pRStats"></div>
+        <p class="lead" id="pRText"></p>
+        <div class="row" style="justify-content:center;margin-top:16px">
+          <button class="btn" id="pRAgain">🔁 Ещё раз</button>
+          <button class="btn ghost" id="pRBack">⬅ К выбору</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ---- КЛАВИШИ ---- -->
   <section class="panel" id="panel-explore">
     <div class="explore">
@@ -441,6 +542,7 @@ p.lead{color:var(--muted);font-weight:700}
     <ul>
       <li><b>📚 Урок</b> — выбери тему. Каждое сочетание подсвечивается на клавиатуре и объясняется. Нажми его сам — и переходи дальше.</li>
       <li><b>🎮 Тренажёр</b> — задания вразнобой. Есть спокойный режим, марафон на 60 секунд и серия из 10 заданий.</li>
+      <li><b>⌨️ Печать</b> — набирай текст на время. Я считаю слова, нажатия, ошибки, точность и скорость (знаков в минуту). Нужная клавиша подсвечивается внизу. На клавишах латинская буква большая, русская — маленькая.</li>
       <li><b>🔎 Клавиши</b> — нажми любую клавишу и узнай, что она делает и в каких сочетаниях участвует.</li>
       <li><b>📖 Справочник</b> — все сочетания с поиском. Нажми карточку — покажу на клавиатуре.</li>
       <li><b>👆 Экранная клавиатура</b> — работает на интерактивной доске: нажми модификатор (Ctrl, Shift, Alt, Win) — он «прилипнет», затем нажми вторую клавишу.</li>
@@ -474,11 +576,12 @@ const normLR=c=>LR[c]||c;
 
 const TOK={Ctrl:'ControlLeft',Shift:'ShiftLeft',Alt:'AltLeft',Win:'MetaLeft',Tab:'Tab',Esc:'Escape',Enter:'Enter',Space:'Space',Backspace:'Backspace',Delete:'Delete',Del:'Delete',Insert:'Insert',Ins:'Insert',Home:'Home',End:'End',PgUp:'PageUp',PgDn:'PageDown','←':'ArrowLeft','→':'ArrowRight','↑':'ArrowUp','↓':'ArrowDown',PrtScn:'PrintScreen',ScrLk:'ScrollLock',Pause:'Pause',Caps:'CapsLock',NumLock:'NumLock',Menu:'ContextMenu',Plus:'Equal',Minus:'Minus','.':'Period',',':'Comma','>':'Period','<':'Comma','[':'BracketLeft',']':'BracketRight'};
 const TOKLABEL={Plus:'+',Minus:'−',Caps:'Caps Lock',Win:'⊞ Win',Menu:'☰ Menu',Delete:'Del',Insert:'Ins',Space:'Пробел ␣',Backspace:'⌫ Backspace',Enter:'Enter ↵',Tab:'Tab ↹',Esc:'Esc'};
-const CODELABEL={Escape:'Esc',Tab:'Tab ↹',CapsLock:'Caps Lock',ShiftLeft:'Shift',ControlLeft:'Ctrl',AltLeft:'Alt',MetaLeft:'⊞ Win',Space:'Пробел ␣',Enter:'Enter ↵',Backspace:'⌫ Backspace',Delete:'Del',Insert:'Ins',Home:'Home',End:'End',PageUp:'PgUp',PageDown:'PgDn',ArrowLeft:'←',ArrowRight:'→',ArrowUp:'↑',ArrowDown:'↓',PrintScreen:'PrtScn',ScrollLock:'ScrLk',Pause:'Pause',NumLock:'NumLock',ContextMenu:'☰ Menu',Equal:'+ / =',Minus:'−',Period:'.',Comma:',',BracketLeft:'[',BracketRight:']',Backslash:'\\',Semicolon:';',Quote:"'",Slash:'/',Backquote:'Ё',NumpadDivide:'/',NumpadMultiply:'*',NumpadEnter:'Enter'};
+const CODELABEL={Escape:'Esc',Tab:'Tab ↹',CapsLock:'Caps Lock',ShiftLeft:'Shift',ControlLeft:'Ctrl',AltLeft:'Alt',MetaLeft:'⊞ Win',Space:'Пробел ␣',Enter:'Enter ↵',Backspace:'⌫ Backspace',Delete:'Del',Insert:'Ins',Home:'Home',End:'End',PageUp:'PgUp',PageDown:'PgDn',ArrowLeft:'←',ArrowRight:'→',ArrowUp:'↑',ArrowDown:'↓',PrintScreen:'PrtScn',ScrollLock:'ScrLk',Pause:'Pause',NumLock:'NumLock',ContextMenu:'☰ Menu',Equal:'+ / =',Minus:'−',Period:'.',Comma:',',BracketLeft:'[',BracketRight:']',Backslash:'\\',Semicolon:';',Quote:"'",Slash:'/',Backquote:'`',NumpadDivide:'/',NumpadMultiply:'*',NumpadEnter:'Enter'};
 
 function tokCode(t){ if(TOK[t]) return TOK[t]; if(/^[A-Z]$/.test(t)) return 'Key'+t; if(/^[0-9]$/.test(t)) return 'Digit'+t; if(/^F\d{1,2}$/.test(t)) return t; return t; }
 function codeLabel(c){ c=normLR(c); if(CODELABEL[c]) return CODELABEL[c]; if(/^Key[A-Z]$/.test(c)) return c[3]; if(/^Digit\d$/.test(c)) return c[5]; if(/^Numpad\d$/.test(c)) return c[6]; return c; }
 function codeRu(c){ return RU[c]||''; }
+const ruSmall=n=>RU[n]&&RU[n]!==codeLabel(n)?'<small>'+RU[n]+'</small>':'';
 function codeGroup(c){ c=normLR(c); if(c==='ControlLeft')return 'ctrl'; if(c==='ShiftLeft')return 'shift'; if(c==='AltLeft')return 'alt'; if(c==='MetaLeft')return 'meta'; if(/^F\d{1,2}$/.test(c))return 'fn'; if(/^(Arrow|Home|End|Page|Insert|Delete|Backspace|Tab|CapsLock)/.test(c))return 'nav'; return ''; }
 
 function parseKeys(k){
@@ -834,12 +937,12 @@ const NUM=[K('NumLock','Num',1,'sys'),K('NumpadDivide','/',1,'digit'),K('NumpadM
 
 function keyEl(k){
   const el=document.createElement('div'); const c=k.code;
-  let g=k.g, main=k.label, sub='';
+  let g=k.g, main=k.label, sub='', ru=false;
   if(!g){ if(/^F\d/.test(c)) g='fn'; else if(/^Key/.test(c)) g='letter'; else if(DIG[c]) g='digit'; else g='letter'; }
-  if(main===undefined){ if(/^Key/.test(c)){ main=RU[c]; sub=c[3]; } else if(DIG[c]){ main=DIG[c][0]; sub=DIG[c][1]; } else if(RU[c]){ main=RU[c]; sub=EN[c]||''; } else if(/^F\d/.test(c)) main=c; else main=c; }
+  if(main===undefined){ if(/^Key/.test(c)){ main=c[3]; sub=RU[c]; ru=true; } else if(DIG[c]){ main=DIG[c][0]; sub=DIG[c][1]; } else if(RU[c]){ main=EN[c]||c; sub=RU[c]; ru=true; } else if(/^F\d/.test(c)) main=c; else main=c; }
   el.className='key g-'+g+(k.tall?' tall':'')+(k.wide?' wide':''); el.dataset.code=c; el.dataset.norm=normLR(c); el.style.setProperty('--w',k.w);
   if(main.length>1 && !/^F\d/.test(c)) el.classList.add('lbl'); if(main.length>7) el.classList.add('small');
-  el.innerHTML=(sub?'<span class="sub">'+sub+'</span>':'')+'<span class="main">'+main+'</span>';
+  el.innerHTML=(sub?'<span class="sub'+(ru?' ru':'')+'">'+sub+'</span>':'')+'<span class="main">'+main+'</span>';
   el.addEventListener('pointerdown',e=>{ e.preventDefault(); el.classList.add('pressed'); unlockAudio(); snd.click(); });
   const up=()=>el.classList.remove('pressed'); el.addEventListener('pointerup',up); el.addEventListener('pointerleave',up); el.addEventListener('pointercancel',up);
   el.addEventListener('click',()=>screenPress(c));
@@ -865,7 +968,7 @@ function comboHTML(sc,big){
   const parts=[]; sc.mods && MODORDER.forEach(m=>{ if(sc.mods.has(m)) parts.push('<span class="kc '+m+(big?' big':'')+'">'+MODLABEL[m]+'</span>'); });
   const n=norm(sc.code); const g=codeGroup(n); let lab=codeLabel(n);
   if(sc.toks){ const last=sc.toks[sc.toks.length-1]; if(TOKLABEL[last]) lab=TOKLABEL[last]; else if(/^[A-Z]$/.test(last)||/^F\d/.test(last)||/^[0-9]$/.test(last)) lab=last; else if(TOK[last]&&!CODELABEL[TOK[last]]) lab=last; else if(['>','<','[',']','.',','].includes(last)) lab=last; }
-  const ru=RU[n]&&/^Key/.test(n)?'<small>'+RU[n]+'</small>':'';
+  const ru=ruSmall(n);
   parts.push('<span class="kc '+(MODCODES[n]?MODCODES[n]:g)+(big?' big':'')+'">'+lab+ru+'</span>');
   return '<span class="combo">'+parts.join('<span class="plus">+</span>')+'</span>';
 }
@@ -874,7 +977,7 @@ function pressedCombo(){
   const mods=new Set(); let main=null; held.forEach(c=>{ if(MODCODES[c]) mods.add(MODCODES[c]); else main=c; });
   const el=$('#pressedcombo'); if(!held.size){ el.innerHTML='<span style="opacity:.5">—</span>'; return; }
   const parts=[]; MODORDER.forEach(m=>{ if(mods.has(m)) parts.push('<span class="kc '+m+'">'+MODLABEL[m]+'</span>'); });
-  if(main){ const g=codeGroup(main); parts.push('<span class="kc '+g+'">'+codeLabel(main)+(RU[main]&&/^Key/.test(main)?'<small>'+RU[main]+'</small>':'')+'</span>'); }
+  if(main){ const g=codeGroup(main); parts.push('<span class="kc '+g+'">'+codeLabel(main)+ruSmall(main)+'</span>'); }
   el.innerHTML=parts.join('<span class="plus">+</span>');
 }
 
@@ -893,6 +996,7 @@ addEventListener('keydown',e=>{
   e.preventDefault(); unlockAudio();
   setPressed(code,true); if(e.repeat) return; snd.click();
   const n=norm(code); const mods=modsFromEvent(e,n);
+  if(mode==='type'){ typeKey(e,n); return; }
   if(mode==='explore'){ exploreShow(n,mods); return; }
   if(MODCODES[n]){ modDown=n; otherSinceMod=false; if(mods.size) handleCombo(mods,n,{src:'kb'}); }
   else { otherSinceMod=true; handleCombo(mods,n,{src:'kb'}); }
@@ -901,7 +1005,7 @@ addEventListener('keyup',e=>{
   const code=e.code; if(!code) return; setPressed(code,false);
   if(inField(e)) return;
   const n=norm(code);
-  if(MODCODES[n]){ if(modDown===n&&!otherSinceMod&&mode!=='explore'){ const mods=modsFromEvent(e,n); if(!mods.size) handleCombo(mods,n,{src:'kb',lone:true}); } modDown=null; }
+  if(MODCODES[n]){ if(modDown===n&&!otherSinceMod&&mode!=='explore'&&mode!=='type'){ const mods=modsFromEvent(e,n); if(!mods.size) handleCombo(mods,n,{src:'kb',lone:true}); } modDown=null; }
 });
 addEventListener('blur',clearPressed); document.addEventListener('visibilitychange',()=>{ if(document.hidden) clearPressed(); });
 document.addEventListener('contextmenu',e=>{ if(!inField(e)) e.preventDefault(); });
@@ -914,6 +1018,7 @@ function clearSticky(){ sticky.clear(); renderSticky(); }
 function renderSticky(){ $$('.key.sticky').forEach(e=>e.classList.remove('sticky')); sticky.forEach(m=>keyElsNorm(MODCODE[m]).forEach(e=>e.classList.add('sticky'))); pressedCombo(); }
 function screenPress(code){
   const n=norm(code);
+  if(mode==='type'){ typeScreen(n); return; }
   if(mode==='explore'){ exploreShow(n,new Set(sticky)); if(MODCODES[n]) toggleSticky(MODCODES[n]); else clearSticky(); return; }
   if(MODCODES[n]){
     const m=MODCODES[n];
@@ -942,7 +1047,7 @@ function describePressed(mods,code){ const parts=MODORDER.filter(m=>mods.has(m))
    ===================================================================== */
 // Клавиатура показывается только внутри раздела: в уроке, в тренировке, в «Клавишах» и «Справочнике»
 function updateKb(){
-  const show=(mode==='learn'&&LN.active)||(mode==='train'&&T.active)||mode==='explore'||mode==='ref';
+  const show=(mode==='learn'&&LN.active)||(mode==='train'&&T.active)||(mode==='type'&&TP.active)||mode==='explore'||mode==='ref';
   const kw=$('.kb-wrap'); const was=!kw.classList.contains('hidden');
   kw.classList.toggle('hidden',!show);
   if(show&&!was){ fitKeyboard(); clearPressed(); }
@@ -952,6 +1057,7 @@ function setMode(m){
   clearTargets(); clearSticky(); if(window.speechSynthesis) speechSynthesis.cancel(); updateKb();
   if(m==='learn'&&LN.active) showTarget(LN.cur());
   if(m==='train'&&T.active&&T.hinted) showTarget(T.cur);
+  if(m==='type'&&TP.active) typeTargets();
 }
 $$('.tab').forEach(t=>t.addEventListener('click',()=>{unlockAudio();setMode(t.dataset.mode)}));
 
@@ -1096,7 +1202,7 @@ $('#trainBack').addEventListener('click',trainHome);
    ===================================================================== */
 function exploreShow(n,mods){
   const info=keyInfo(n); const g=codeGroup(n);
-  $('#eCombo').innerHTML='<span class="kc big '+(MODCODES[n]||g)+'">'+codeLabel(n)+(RU[n]&&/^Key/.test(n)?'<small>'+RU[n]+'</small>':'')+'</span>';
+  $('#eCombo').innerHTML='<span class="kc big '+(MODCODES[n]||g)+'">'+codeLabel(n)+ruSmall(n)+'</span>';
   $('#eName').textContent=info[0]; $('#eDesc').textContent=info[1];
   const rel=SHORTCUTS.filter(s=>norm(s.code)===n||(MODCODES[n]&&s.mods.has(MODCODES[n])));
   const seen=new Set(); const uniq=rel.filter(s=>{ if(seen.has(s.sig+s.t)) return false; seen.add(s.sig+s.t); return true; });
@@ -1123,6 +1229,178 @@ $('#refSearch').addEventListener('input',renderRef);
 $('#refTotal').textContent=SHORTCUTS.length;
 
 /* =====================================================================
+   РЕЖИМ «ПЕЧАТЬ» — набор текста на время
+   ===================================================================== */
+const TSETS={
+  words:{n:'Слова',e:'🐣',d:'Короткие простые слова',lvl:1},
+  sent:{n:'Предложения',e:'📝',d:'Заглавные буквы и знаки препинания',lvl:2},
+  text:{n:'Тексты',e:'📖',d:'Маленькие рассказы в несколько предложений',lvl:3},
+  latin:{n:'Латиница',e:'🔤',d:'Простые фразы английскими буквами',lvl:2}
+};
+const TWORDS='мама папа дом кот сад лес мир день ночь свет вода небо солнце луна звезда книга школа друг игра мяч рыба птица цветок дерево река море снег дождь ветер окно стол стул лампа слон тигр заяц лиса волк медведь ёжик утка конь арбуз яблоко груша слива хлеб молоко каша суп чай торт лето зима весна осень урок парта мел ручка тетрадь карандаш краски кисть песня танец музыка радость смех улыбка мечта сказка герой робот ракета планета космос гора поле трава жук кит сова мышь гусь пила нос рот ухо рука нога глаз'.split(' ');
+const TSENT=['Мама мыла раму.','Кот спит на окне.','Я люблю читать книги.','Весной тает снег.','Солнце светит ярко.','У меня есть собака.','Мы идём в школу.','Папа чинит велосипед.','В саду растут яблони.','Дети играют в мяч.','Птицы летят на юг.','Зимой выпал снег.','Бабушка печёт пироги.','Рыба плавает в реке.','Я умею быстро печатать!','Ракета летит в космос.','Робот помогает людям.','Кто рано встаёт, тому бог подаёт.','Без труда не выловишь и рыбку из пруда.','Повторение, мать учения.','Учиться всегда пригодится.','Сделал дело, гуляй смело.','Друг познаётся в беде.','Хорошая книга, лучший друг.','Как тебя зовут?','Сколько тебе лет?','Какой сегодня день?','Ура, скоро каникулы!','Тише едешь, дальше будешь.','Семь раз отмерь, один раз отрежь.'];
+const TTEXT=[
+  'Осенью листья на деревьях становятся жёлтыми и красными. Ветер срывает их и кружит над землёй. Птицы собираются в стаи и улетают в тёплые страны. А ёжик готовит себе уютную норку на зиму.',
+  'Космос огромен и загадочен. В нём миллиарды звёзд и планет. Люди уже побывали на Луне и отправили роботов на Марс. Может быть, когда ты вырастешь, ты полетишь к другим планетам!',
+  'Компьютер помогает людям учиться, работать и общаться. Чтобы работать быстро, нужно уметь печатать, не глядя на клавиатуру. Тренируйся каждый день по десять минут, и твои пальцы запомнят все клавиши.',
+  'Утром я встаю, умываюсь и делаю зарядку. Потом завтракаю и иду в школу. На уроках мы читаем, пишем и считаем. После школы я гуляю с друзьями и играю в футбол.',
+  'Дельфины живут в море и очень любят играть. Они умные и дружелюбные. Дельфины общаются друг с другом свистом и щелчками. Иногда они даже помогают людям, попавшим в беду.',
+  'Зимой наступают морозы, и реки покрываются льдом. Дети катаются на коньках, лыжах и санках. Мы лепим снеговика и играем в снежки. А вечером пьём горячий чай с мёдом.',
+  'В лесу живёт много животных. Белка собирает орехи и грибы. Медведь ищет сладкие ягоды. Заяц меняет серую шубку на белую, чтобы спрятаться в снегу.',
+  'Моего друга зовут Тимур. Он любит рисовать и собирать роботов. Вчера мы вместе построили из коробок настоящий корабль. Теперь мы капитаны и плывём к далёким островам!'
+];
+const TLAT=['The cat sits on the mat.','I like to read books.','The sun is bright today.','My dog can run fast.','We go to school every day.','Birds fly in the sky.','Apples are red and sweet.','I can type very fast!','The robot helps people.','Rockets fly to space.','Practice makes perfect.','Winter is cold and snowy.','Fish swim in the river.','Mom bakes a tasty cake.','The moon shines at night.','Trees grow in the garden.','Kids play with a ball.','What is your name?','I am ten years old.','Hello, my friend!'];
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function genText(set){
+  if(set==='words') return shuffle(TWORDS).slice(0,14).join(' ');
+  if(set==='sent') return shuffle(TSENT).slice(0,3).join(' ');
+  if(set==='text') return TTEXT[Math.floor(Math.random()*TTEXT.length)];
+  return shuffle(TLAT).slice(0,3).join(' ');
+}
+const TP={active:false,set:'words',limit:60,strict:true,hints:true,text:'',pos:0,marks:[],lang:'ru',keys:0,err:0,okDone:0,wordsDone:0,streak:0,maxStreak:0,started:0,elapsed:0,timer:null,texts:0,lastGauge:''};
+const RU_INV={}; Object.keys(RU).forEach(c=>{ RU_INV[RU[c]]=c; });
+const RU_SHIFT={',':'Slash','!':'Digit1','"':'Digit2','№':'Digit3',';':'Digit4','%':'Digit5',':':'Digit6','?':'Digit7','*':'Digit8','(':'Digit9',')':'Digit0','_':'Minus','+':'Equal'};
+const EN_PUNCT={'[':'BracketLeft',']':'BracketRight',';':'Semicolon',"'":'Quote',',':'Comma','.':'Period','/':'Slash','`':'Backquote','\\':'Backslash','-':'Minus','=':'Equal'};
+const EN_SHIFT={'!':'Digit1','@':'Digit2','#':'Digit3','$':'Digit4','%':'Digit5','^':'Digit6','&':'Digit7','*':'Digit8','(':'Digit9',')':'Digit0','_':'Minus','+':'Equal','?':'Slash',':':'Semicolon','"':'Quote','<':'Comma','>':'Period','{':'BracketLeft','}':'BracketRight','~':'Backquote','|':'Backslash'};
+const inv=o=>{ const r={}; Object.keys(o).forEach(k=>{ r[o[k]]=k; }); return r; };
+const RU_SHIFT_INV=inv(RU_SHIFT), EN_SHIFT_INV=inv(EN_SHIFT);
+const isCyr=s=>/[А-ЯЁа-яё]/.test(s);
+// какую клавишу (и нужен ли Shift) надо нажать для символа
+function charKeys(ch,lang){
+  if(ch===' ') return {code:'Space'}; if(/[0-9]/.test(ch)) return {code:'Digit'+ch};
+  const up=ch.toUpperCase(), shift=ch!==ch.toLowerCase();
+  if(isCyr(ch)&&RU_INV[up]) return {code:RU_INV[up],shift};
+  if(/[a-z]/i.test(ch)) return {code:'Key'+up,shift};
+  if(lang==='ru'){ if(ch==='.') return {code:'Slash'}; if(ch==='-') return {code:'Minus'}; if(RU_SHIFT[ch]) return {code:RU_SHIFT[ch],shift:true}; }
+  if(EN_PUNCT[ch]) return {code:EN_PUNCT[ch]}; if(EN_SHIFT[ch]) return {code:EN_SHIFT[ch],shift:true};
+  if(RU_SHIFT[ch]) return {code:RU_SHIFT[ch],shift:true};
+  return null;
+}
+// все символы, которые может означать клавиша в любой раскладке (чтобы раскладка системы не мешала)
+function codeChars(code,shift,caps){
+  const out=new Set(); const cas=s=>((!!shift)!==(!!caps))?s.toUpperCase():s.toLowerCase();
+  if(code==='Space') out.add(' ');
+  if(/^Key[A-Z]$/.test(code)) out.add(cas(code[3]));
+  if(RU[code]){ const r=RU[code]; if(isCyr(r)) out.add(cas(r)); else if(!shift) out.add(r); }
+  if(shift&&RU_SHIFT_INV[code]) out.add(RU_SHIFT_INV[code]);
+  if(EN[code]) out.add(shift?(EN_SHIFT_INV[code]||EN[code]):EN[code]);
+  if(DIG[code]){ out.add(shift?DIG[code][1]:DIG[code][0]); if(shift&&EN_SHIFT_INV[code]) out.add(EN_SHIFT_INV[code]); }
+  return out;
+}
+const tpBestKey=(set,limit)=>'type:'+set+':'+limit;
+function renderTypeHome(){
+  const g=$('#typegrid'); g.innerHTML='';
+  Object.keys(TSETS).forEach(set=>{ const info=TSETS[set]; const best=S.best[tpBestKey(set,TP.limit)]; const d=document.createElement('div'); d.className='catcard';
+    d.innerHTML='<div class="em">'+info.e+'</div><div class="nm">'+info.n+'</div><div class="ds">'+info.d+'</div><div class="lvl">'+[1,2,3].map(i=>'<i class="'+(i<=info.lvl?'on':'')+'">⭐</i>').join('')+' <span style="color:var(--muted);font-weight:800;margin-left:4px">сложность</span></div>'+(best?'<div class="best">🏆 '+best+' зн/мин</div>':'');
+    d.addEventListener('click',()=>{ unlockAudio(); TP.set=set; startType(); }); g.appendChild(d); });
+  $$('[data-tt]').forEach(b=>b.classList.toggle('on',+b.dataset.tt===TP.limit));
+  $('#tpStrict').classList.toggle('on',TP.strict); $('#tpHints').classList.toggle('on',TP.hints);
+}
+$$('[data-tt]').forEach(b=>b.addEventListener('click',()=>{ TP.limit=+b.dataset.tt; S.set.tpLimit=TP.limit; save(); renderTypeHome(); }));
+$('#tpStrict').addEventListener('click',()=>{ TP.strict=!TP.strict; S.set.tpStrict=TP.strict; save(); renderTypeHome(); });
+$('#tpHints').addEventListener('click',()=>{ TP.hints=!TP.hints; S.set.tpHints=TP.hints; save(); renderTypeHome(); if(TP.active) typeTargets(); });
+function startType(){
+  TP.active=true; TP.keys=0; TP.err=0; TP.okDone=0; TP.wordsDone=0; TP.streak=0; TP.maxStreak=0; TP.started=0; TP.elapsed=0; TP.texts=0; TP.lastGauge=''; clearInterval(TP.timer); TP.timer=null;
+  $('#typeSetup').style.display='none'; $('#typeResult').style.display='none'; $('#typeView').style.display='block';
+  $('#typeTitle').textContent=TSETS[TP.set].e+' '+TSETS[TP.set].n; $('#pBest').textContent=S.best[tpBestKey(TP.set,TP.limit)]||'—';
+  $('#typeHint').textContent='Начни печатать — время пойдёт с первой буквы!'; $('#pGauge').textContent='🐣'; $('#pStreak').textContent='';
+  $('#typecard').classList.remove('good'); updateKb(); loadText(); updateTypeClock(); updateTypeStats();
+  speak('Набирай текст на экране. Время пойдёт с первой буквы. Удачи!');
+}
+function loadText(){ TP.text=genText(TP.set); TP.lang=isCyr(TP.text)?'ru':'en'; TP.pos=0; TP.marks=[]; TP.texts++; renderTypeText(); }
+function renderTypeText(){
+  const t=TP.text; let h='';
+  for(let i=0;i<t.length;i++){ const ch=t[i]; const m=TP.marks[i]; const cls='ch'+(ch===' '?' sp':'')+(i===TP.pos?' cur':m?' '+m:''); h+='<span class="'+cls+'" data-i="'+i+'">'+(ch==='<'?'&lt;':ch==='&'?'&amp;':ch)+'</span>'; }
+  $('#typeText').innerHTML=h; typeTargets();
+}
+function typeTargets(){
+  clearTargets(); if(!TP.active||!TP.hints||mode!=='type') return; const ch=TP.text[TP.pos]; if(ch===undefined) return;
+  const k=charKeys(ch,TP.lang); if(!k) return;
+  keyElsNorm(k.code).forEach(e=>e.classList.add('target')); if(k.shift) keyElsNorm('ShiftLeft').forEach(e=>e.classList.add('target'));
+}
+function okNow(){ let n=0; TP.marks.forEach(m=>{ if(m==='ok') n++; }); return n; }
+function wordsNow(){ const done=TP.text.slice(0,TP.pos); let n=done.split(' ').filter(w=>w).length; if(TP.pos<TP.text.length&&TP.pos>0&&TP.text[TP.pos-1]!==' ') n--; return Math.max(0,n); }
+function typeSpeed(){ const sec=TP.elapsed; if(sec<1) return 0; return Math.round((TP.okDone+okNow())/(sec/60)); }
+function bump(id,val){ const el=$(id); if(el.textContent!==String(val)){ el.textContent=val; el.classList.remove('tick'); void el.offsetWidth; el.classList.add('tick'); setTimeout(()=>el.classList.remove('tick'),150); } }
+function updateTypeStats(){
+  bump('#pWords',TP.wordsDone+wordsNow()); bump('#pKeys',TP.keys); bump('#pErr',TP.err);
+  const sp=typeSpeed(); bump('#pSpeed',sp); bump('#pAcc',(TP.keys?Math.round((TP.keys-TP.err)/TP.keys*100):100)+'%');
+  const g=TP.started?(sp<30?'🐢':sp<60?'🚶':sp<100?'🚴':sp<150?'🚗':'🚀'):'🐣'; if(g!==TP.lastGauge){ TP.lastGauge=g; const el=$('#pGauge'); el.textContent=g; el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); }
+  const st=$('#pStreak'); const txt=TP.streak>=10?'🔥 '+TP.streak+' подряд!':''; if(st.textContent!==txt){ st.textContent=txt; if(txt){ st.classList.remove('hot'); void st.offsetWidth; st.classList.add('hot'); } }
+}
+function fmtTime(s){ s=Math.max(0,Math.round(s)); return Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); }
+function updateTypeClock(){
+  if(TP.limit){ const left=Math.max(0,TP.limit-TP.elapsed); $('#typeTimePill').textContent='⏱ '+fmtTime(Math.ceil(left)); $('#typeFill').style.width=(left/TP.limit*100)+'%'; $('#typeFill').style.transition=TP.started?'1s linear':'none'; }
+  else { $('#typeTimePill').textContent='⏱ '+fmtTime(TP.elapsed); $('#typeFill').style.width=(TP.pos/Math.max(1,TP.text.length)*100)+'%'; $('#typeFill').style.transition='.2s'; }
+}
+function startClock(){
+  TP.started=performance.now(); $('#typeHint').textContent=['Отлично, поехали! Смотри на подсвеченную клавишу 💡','Печатай спокойно и ровно — скорость придёт сама 😊','Пальцы на клавиши, глаза на экран! 👀'][Math.floor(Math.random()*3)];
+  let lastSec=-1;
+  TP.timer=setInterval(()=>{ TP.elapsed=(performance.now()-TP.started)/1000; updateTypeClock(); const sec=Math.floor(TP.elapsed); if(sec!==lastSec){ lastSec=sec; updateTypeStats(); if(TP.limit){ const left=TP.limit-sec; if(left<=5&&left>0) snd.tick(); } } if(TP.limit&&TP.elapsed>=TP.limit) endType(); },100);
+}
+function typeChar(cands){
+  if(!TP.active) return; const exp=TP.text[TP.pos]; if(exp===undefined) return;
+  if(!TP.started) startClock();
+  TP.keys++;
+  if(cands.has(exp)){
+    TP.marks[TP.pos]='ok'; TP.streak++; TP.maxStreak=Math.max(TP.maxStreak,TP.streak); TP.pos++; tone(660,.04,'triangle',.05);
+    if(TP.streak&&TP.streak%50===0){ confetti(60); snd.ok(); }
+    if(TP.pos>=TP.text.length){ textDone(); return; }
+    renderTypeText(); updateTypeStats(); return;
+  }
+  TP.err++; TP.streak=0; snd.bad();
+  const card=$('#typecard'); card.classList.remove('shake'); void card.offsetWidth; card.classList.add('shake');
+  const cur=$('#typeText .ch.cur'); if(cur){ cur.classList.add('wrong'); setTimeout(()=>cur.classList.remove('wrong'),280); }
+  if(!TP.strict){ TP.marks[TP.pos]='bad'; TP.pos++; if(TP.pos>=TP.text.length){ textDone(); return; } renderTypeText(); }
+  updateTypeStats();
+}
+function typeBackspace(){ if(!TP.active||TP.pos===0||TP.pos>=TP.text.length) return; TP.pos--; TP.marks.length=TP.pos; renderTypeText(); updateTypeStats(); snd.click(); }
+function textDone(){
+  TP.okDone+=okNow(); TP.wordsDone+=wordsNow(); TP.marks=[]; TP.pos=TP.text.length; renderTypeText();
+  const card=$('#typecard'); card.classList.add('good'); const f=document.createElement('div'); f.className='fly'; f.textContent=['🎉','⭐','👏','💪','🚀'][Math.floor(Math.random()*5)]; card.appendChild(f); setTimeout(()=>f.remove(),900);
+  snd.ok(); updateTypeStats();
+  if(!TP.limit){ setTimeout(endType,500); return; }
+  setTimeout(()=>{ if(!TP.active) return; card.classList.remove('good'); loadText(); updateTypeClock(); },450);
+}
+// физическая клавиатура в режиме печати
+function typeKey(e,n){
+  if(!TP.active||MODCODES[n]) return;
+  if(n==='Backspace'){ typeBackspace(); return; }
+  if(e.ctrlKey||e.altKey||e.metaKey) return;
+  if(/^(F\d|Arrow|Home|End|Page|Insert|Delete|CapsLock|Escape|PrintScreen|ScrollLock|Pause|NumLock|ContextMenu|Tab|Enter)/.test(n)) return;
+  const cands=codeChars(n,e.shiftKey,e.getModifierState&&e.getModifierState('CapsLock')); if(e.key&&e.key.length===1) cands.add(e.key);
+  if(cands.size) typeChar(cands);
+}
+// экранная клавиатура в режиме печати
+function typeScreen(n){
+  if(!TP.active) return;
+  if(MODCODES[n]){ if(n==='ShiftLeft') toggleSticky('shift'); return; }
+  if(n==='Backspace'){ typeBackspace(); clearSticky(); return; }
+  const cands=codeChars(n,sticky.has('shift'),false); if(cands.size) typeChar(cands); clearSticky();
+}
+function endType(){
+  if(!TP.active) return; TP.active=false; clearInterval(TP.timer); TP.timer=null; clearTargets(); clearSticky();
+  if(TP.started) TP.elapsed=(performance.now()-TP.started)/1000;
+  const okc=TP.okDone+okNow(), words=TP.wordsDone+wordsNow(), speed=typeSpeed(), acc=TP.keys?Math.round((TP.keys-TP.err)/TP.keys*100):100;
+  let rec=false; const bk=tpBestKey(TP.set,TP.limit); if(words>0&&speed>(S.best[bk]||0)){ S.best[bk]=speed; rec=true; }
+  let stars=0; if(words>0){ stars=1+Math.min(10,Math.floor(words/5))+(acc>=95&&words>=5?2:0); addStars(stars); } save();
+  $('#typeView').style.display='none'; $('#typeResult').style.display='block'; updateKb();
+  $('#pRScore').textContent=speed+' знаков в минуту'; $('#pREmoji').textContent=rec?'🏆':speed>=120?'🚀':speed>=60?'🌟':words>0?'👍':'🙂';
+  $('#pRTitle').textContent=rec?'Новый рекорд!':speed>=120?'Ты печатаешь как ракета!':speed>=60?'Отличная скорость!':words>0?'Хорошая тренировка!':'Попробуй ещё раз!';
+  $('#pRStats').innerHTML='<div class="stat"><b>'+words+'</b><span>СЛОВ</span></div><div class="stat"><b>'+TP.keys+'</b><span>НАЖАТИЙ</span></div><div class="stat"><b>'+okc+'</b><span>ВЕРНЫХ ЗНАКОВ</span></div><div class="stat"><b>'+TP.err+'</b><span>ОШИБОК</span></div><div class="stat"><b>'+acc+'%</b><span>ТОЧНОСТЬ</span></div><div class="stat"><b>🔥 '+TP.maxStreak+'</b><span>ЛУЧШАЯ СЕРИЯ</span></div>';
+  const doneTexts=TP.limit?Math.max(0,TP.texts-(TP.pos<TP.text.length?1:0)):1;
+  $('#pRText').textContent=TSETS[TP.set].e+' '+TSETS[TP.set].n+' · '+(TP.limit?fmtTime(TP.limit):'без времени, '+fmtTime(TP.elapsed))+' · текстов пройдено: '+doneTexts+(stars?' · +'+stars+' ⭐':'')+(S.best[bk]?' · рекорд: '+S.best[bk]+' зн/мин':'');
+  if(words>0){ confetti(rec?250:120); snd.win(); }
+  speak(rec?'Новый рекорд! '+speed+' знаков в минуту!':words>0?'Время вышло! Слов: '+words+', ошибок: '+TP.err+'.':'Попробуй ещё раз!');
+}
+function typeHome(){ if(TP.active){ TP.active=false; clearInterval(TP.timer); TP.timer=null; clearTargets(); } clearSticky(); $('#typeResult').style.display='none'; $('#typeView').style.display='none'; $('#typeSetup').style.display='block'; renderTypeHome(); updateKb(); }
+$('#typeSkip').addEventListener('click',()=>{ if(!TP.active) return; TP.okDone+=okNow(); TP.wordsDone+=wordsNow(); TP.texts--; loadText(); updateTypeClock(); updateTypeStats(); });
+$('#typeStop').addEventListener('click',()=>{ if(TP.active&&TP.started) endType(); else typeHome(); });
+$('#pRAgain').addEventListener('click',startType);
+$('#pRBack').addEventListener('click',typeHome);
+$('#typeBack').addEventListener('click',typeHome);
+
+/* =====================================================================
    НАСТРОЙКИ, ПОЛНЫЙ ЭКРАН, ПОМОЩЬ
    ===================================================================== */
 let kbLocked=false;
@@ -1141,14 +1419,15 @@ document.addEventListener('fullscreenchange',()=>{ if(!document.fullscreenElemen
 $('#btnHelp').addEventListener('click',()=>$('#help').classList.add('open'));
 $('#helpClose').addEventListener('click',()=>$('#help').classList.remove('open'));
 $('#help').addEventListener('click',e=>{ if(e.target.id==='help') $('#help').classList.remove('open'); });
-$('#resetProgress').addEventListener('click',()=>{ if(confirm('Сбросить все звёзды и прогресс?')){ const set=S.set; S={stars:0,learned:{},stats:{},best:{},set}; save(); renderStars(); renderCats(); renderTrainGrid(); toast('Прогресс сброшен'); } });
+$('#resetProgress').addEventListener('click',()=>{ if(confirm('Сбросить все звёзды и прогресс?')){ const set=S.set; S={stars:0,learned:{},stats:{},best:{},set}; save(); renderStars(); renderCats(); renderTrainGrid(); renderTypeHome(); toast('Прогресс сброшен'); } });
 
 /* =====================================================================
    СТАРТ
    ===================================================================== */
-buildKeyboard(); applySettings(); renderStars(); renderCats(); renderTrainGrid(); renderRefCats(); renderRef(); pressedCombo(); updateKb();
+if(S.set.tpLimit!==undefined) TP.limit=S.set.tpLimit; if(S.set.tpStrict!==undefined) TP.strict=S.set.tpStrict; if(S.set.tpHints!==undefined) TP.hints=S.set.tpHints;
+buildKeyboard(); applySettings(); renderStars(); renderCats(); renderTrainGrid(); renderTypeHome(); renderRefCats(); renderRef(); pressedCombo(); updateKb();
 addEventListener('pointerdown',unlockAudio,{once:true});
-window.KM={get T(){return T},get LN(){return LN},get S(){return S},SHORTCUTS,CATS,comboHTML,MODCODES,sig,parseKeys};
+window.KM={get T(){return T},get LN(){return LN},get TP(){return TP},get S(){return S},SHORTCUTS,CATS,TSETS,comboHTML,MODCODES,sig,parseKeys,codeChars,charKeys};
 if('serviceWorker' in navigator&&location.protocol.startsWith('http')){ navigator.serviceWorker.register('sw.js').catch(()=>{}); }
 </script>
 </body>
