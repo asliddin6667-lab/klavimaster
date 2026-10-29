@@ -276,6 +276,25 @@ p.lead{color:var(--muted);font-weight:700}
 .stat b{transition:transform .15s}
 .stat b.tick{transform:scale(1.18)}
 
+/* ============ НЕ ТА РАСКЛАДКА ============ */
+.langpop{position:fixed;inset:0;z-index:65;display:none;place-items:center;background:rgba(30,33,64,.5);backdrop-filter:blur(6px);padding:20px;cursor:pointer}
+.langpop.open{display:grid}
+.lp-card{background:var(--card);border-radius:32px;padding:26px 36px 22px;text-align:center;max-width:780px;width:100%;box-shadow:0 30px 80px rgba(0,0,0,.4);border:6px solid var(--alt);animation:lpin .5s cubic-bezier(.2,1.4,.4,1)}
+@keyframes lpin{from{transform:scale(.5) rotate(-6deg);opacity:0}to{transform:none;opacity:1}}
+.lp-emoji{font-size:5.5rem;line-height:1;animation:bounce 1s infinite;display:inline-block}
+@keyframes bounce{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-20px) rotate(6deg)}}
+.lp-title{font-size:2.1rem;font-weight:900;margin:10px 0 4px;color:var(--bad);line-height:1.2}
+.lp-sub{font-size:1.35rem;font-weight:800;color:var(--muted)}
+.lp-sub b{color:var(--accent)}
+.lp-keys{display:flex;justify-content:center;align-items:center;gap:14px;margin:18px 0 14px;font-size:1.35rem;flex-wrap:wrap}
+.lp-or{font-weight:900;color:var(--muted);font-size:1rem}
+.lp-tray{font-weight:800;color:var(--muted);font-size:1.05rem;display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;background:var(--card2);border-radius:16px;padding:10px 14px}
+.lp-ind{display:inline-block;padding:6px 16px;border-radius:10px;font-weight:900;font-size:1.25rem;color:#fff;border:3px solid}
+.lp-ind.bad{background:var(--bad);border-color:#991b1b;animation:shake 1.4s infinite}
+.lp-ind.ok{background:var(--ok);border-color:#15803d}
+.lp-arrow{font-size:1.6rem;font-weight:900;color:var(--accent)}
+.lp-foot{margin-top:12px;font-weight:800;color:var(--accent);font-size:1.05rem}
+
 /* ============ ПРОЧЕЕ ============ */
 #confetti{position:fixed;inset:0;pointer-events:none;z-index:50}
 #toast{position:fixed;left:50%;bottom:28%;transform:translateX(-50%) translateY(20px);background:var(--text);color:var(--card);padding:12px 22px;border-radius:14px;font-weight:900;font-size:1.1rem;opacity:0;transition:.3s;pointer-events:none;z-index:60;box-shadow:var(--shadow)}
@@ -532,6 +551,17 @@ p.lead{color:var(--muted);font-weight:700}
   <div class="kb" id="kb"></div>
 </div>
 
+<div class="langpop" id="langpop">
+  <div class="lp-card">
+    <div class="lp-emoji" id="lpEmoji">🙈</div>
+    <div class="lp-title" id="lpTitle">Ой-ой! Компьютер говорит по-английски!</div>
+    <div class="lp-sub">Переключи язык клавиатуры на <b id="lpNeed">русский</b></div>
+    <div class="lp-keys"><span class="combo"><span class="kc alt">Alt</span><span class="plus">+</span><span class="kc shift">Shift</span></span><span class="lp-or">или</span><span class="combo"><span class="kc meta">⊞ Win</span><span class="plus">+</span><span class="kc">Пробел ␣</span></span></div>
+    <div class="lp-tray">👀 Смотри в правый нижний угол экрана: <span class="lp-ind bad" id="lpFrom">ENG</span><span class="lp-arrow">➜</span><span class="lp-ind ok" id="lpTo">РУС</span></div>
+    <div class="lp-foot">Переключил? Просто продолжай печатать 😉</div>
+  </div>
+</div>
+
 <canvas id="confetti"></canvas>
 <div id="toast"></div>
 
@@ -542,7 +572,7 @@ p.lead{color:var(--muted);font-weight:700}
     <ul>
       <li><b>📚 Урок</b> — выбери тему. Каждое сочетание подсвечивается на клавиатуре и объясняется. Нажми его сам — и переходи дальше.</li>
       <li><b>🎮 Тренажёр</b> — задания вразнобой. Есть спокойный режим, марафон на 60 секунд и серия из 10 заданий.</li>
-      <li><b>⌨️ Печать</b> — набирай текст на время. Я считаю слова, нажатия, ошибки, точность и скорость (знаков в минуту). Нужная клавиша подсвечивается внизу. На клавишах латинская буква большая, русская — маленькая.</li>
+      <li><b>⌨️ Печать</b> — набирай текст на время. Я считаю слова, нажатия, ошибки, точность и скорость (знаков в минуту). Нужная клавиша подсвечивается внизу. На клавишах латинская буква большая, русская — маленькая. Если язык клавиатуры не тот, появится большая подсказка: переключи его (Alt+Shift или Win+Пробел).</li>
       <li><b>🔎 Клавиши</b> — нажми любую клавишу и узнай, что она делает и в каких сочетаниях участвует.</li>
       <li><b>📖 Справочник</b> — все сочетания с поиском. Нажми карточку — покажу на клавиатуре.</li>
       <li><b>👆 Экранная клавиатура</b> — работает на интерактивной доске: нажми модификатор (Ctrl, Shift, Alt, Win) — он «прилипнет», затем нажми вторую клавишу.</li>
@@ -992,6 +1022,7 @@ const inField=e=>!!(e.target&&e.target.closest&&e.target.closest('input,textarea
 addEventListener('keydown',e=>{
   if(inField(e)){ if(e.key==='Escape') e.target.blur(); return; }
   const code=e.code; if(!code) return;
+  if($('#langpop').classList.contains('open')&&e.key==='Escape'){ hideLangPop(false); e.preventDefault(); return; }
   if($('#help').classList.contains('open')){ if(e.key==='Escape') $('#help').classList.remove('open'); e.preventDefault(); return; }
   e.preventDefault(); unlockAudio();
   setPressed(code,true); if(e.repeat) return; snd.click();
@@ -1362,12 +1393,29 @@ function textDone(){
   if(!TP.limit){ setTimeout(endType,500); return; }
   setTimeout(()=>{ if(!TP.active) return; card.classList.remove('good'); loadText(); updateTypeClock(); },450);
 }
+// ---- не та раскладка: большое весёлое предупреждение ----
+const LP_RU=[['🙈','Ой-ой! Компьютер говорит по-английски!'],['🤖','Стоп! Клавиатура думает, что она в Лондоне!'],['🐸','Упс! Буквы получаются английские!'],['🦉','Ух! Не та раскладка, дружок!'],['🐱','Мяу! Кот говорит: переключи язык!']];
+const LP_EN=[['🙃','Ой! Компьютер говорит по-русски!'],['🦜','Эй! Клавиатура забыла английский!'],['🐵','Упс! Буквы получаются русские!'],['🚀','Ракета не взлетит без английских букв!']];
+let lpN=0;
+function showLangPop(need){
+  const pop=$('#langpop'); if(pop.classList.contains('open')) return;
+  const list=need==='ru'?LP_RU:LP_EN; const m=list[lpN++%list.length];
+  $('#lpEmoji').textContent=m[0]; $('#lpTitle').textContent=m[1]; $('#lpNeed').textContent=need==='ru'?'русский':'английский';
+  $('#lpFrom').textContent=need==='ru'?'ENG':'РУС'; $('#lpTo').textContent=need==='ru'?'РУС':'ENG';
+  pop.classList.add('open'); snd.bad(); tone(330,.25,'square',.05,.25); tone(262,.3,'square',.05,.45);
+  speak(m[1]+' Переключи язык клавиатуры: нажми Альт плюс Шифт.');
+}
+function hideLangPop(cheer){ const pop=$('#langpop'); if(!pop.classList.contains('open')) return; pop.classList.remove('open'); if(cheer){ toast('🎉 Ура, язык правильный! Печатай дальше'); snd.ok(); } }
+$('#langpop').addEventListener('click',()=>hideLangPop(false));
 // физическая клавиатура в режиме печати
 function typeKey(e,n){
   if(!TP.active||MODCODES[n]) return;
   if(n==='Backspace'){ typeBackspace(); return; }
   if(e.ctrlKey||e.altKey||e.metaKey) return;
   if(/^(F\d|Arrow|Home|End|Page|Insert|Delete|CapsLock|Escape|PrintScreen|ScrollLock|Pause|NumLock|ContextMenu|Tab|Enter)/.test(n)) return;
+  if(e.key&&e.key.length===1){ const cyr=isCyr(e.key), lat=/[a-z]/i.test(e.key);
+    if(TP.lang==='ru'&&lat){ showLangPop('ru'); return; } if(TP.lang==='en'&&cyr){ showLangPop('en'); return; }
+    if(cyr||lat) hideLangPop(true); }
   const cands=codeChars(n,e.shiftKey,e.getModifierState&&e.getModifierState('CapsLock')); if(e.key&&e.key.length===1) cands.add(e.key);
   if(cands.size) typeChar(cands);
 }
@@ -1379,7 +1427,7 @@ function typeScreen(n){
   const cands=codeChars(n,sticky.has('shift'),false); if(cands.size) typeChar(cands); clearSticky();
 }
 function endType(){
-  if(!TP.active) return; TP.active=false; clearInterval(TP.timer); TP.timer=null; clearTargets(); clearSticky();
+  if(!TP.active) return; TP.active=false; hideLangPop(false); clearInterval(TP.timer); TP.timer=null; clearTargets(); clearSticky();
   if(TP.started) TP.elapsed=(performance.now()-TP.started)/1000;
   const okc=TP.okDone+okNow(), words=TP.wordsDone+wordsNow(), speed=typeSpeed(), acc=TP.keys?Math.round((TP.keys-TP.err)/TP.keys*100):100;
   let rec=false; const bk=tpBestKey(TP.set,TP.limit); if(words>0&&speed>(S.best[bk]||0)){ S.best[bk]=speed; rec=true; }
@@ -1393,7 +1441,7 @@ function endType(){
   if(words>0){ confetti(rec?250:120); snd.win(); }
   speak(rec?'Новый рекорд! '+speed+' знаков в минуту!':words>0?'Время вышло! Слов: '+words+', ошибок: '+TP.err+'.':'Попробуй ещё раз!');
 }
-function typeHome(){ if(TP.active){ TP.active=false; clearInterval(TP.timer); TP.timer=null; clearTargets(); } clearSticky(); $('#typeResult').style.display='none'; $('#typeView').style.display='none'; $('#typeSetup').style.display='block'; renderTypeHome(); updateKb(); }
+function typeHome(){ hideLangPop(false); if(TP.active){ TP.active=false; clearInterval(TP.timer); TP.timer=null; clearTargets(); } clearSticky(); $('#typeResult').style.display='none'; $('#typeView').style.display='none'; $('#typeSetup').style.display='block'; renderTypeHome(); updateKb(); }
 $('#typeSkip').addEventListener('click',()=>{ if(!TP.active) return; TP.okDone+=okNow(); TP.wordsDone+=wordsNow(); TP.texts--; loadText(); updateTypeClock(); updateTypeStats(); });
 $('#typeStop').addEventListener('click',()=>{ if(TP.active&&TP.started) endType(); else typeHome(); });
 $('#pRAgain').addEventListener('click',startType);
