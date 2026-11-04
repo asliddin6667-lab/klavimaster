@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Компьютерный класс — КлавиМастер и компьютерная лаборатория</title>
+<title>Компьютерный класс — 6 разделов: компьютер, мышь, клавиатура, Windows, интернет, безопасность</title>
 <meta name="description" content="Компьютерный класс для школьников: тренажёр горячих клавиш и печати КлавиМастер и компьютерная лаборатория — детали компьютера с фото, сборка компьютера своими руками, викторина.">
 <meta name="theme-color" content="#6a5cff">
 <link rel="manifest" href="manifest.json">
@@ -310,7 +310,8 @@ p.lead{color:var(--muted);font-weight:700}
 
 /* ============ РАЗДЕЛЫ И ГЛАВНОЕ МЕНЮ ============ */
 .tabs[data-sec]{display:none}
-body[data-sec="kb"] .tabs[data-sec="kb"],body[data-sec="lab"] .tabs[data-sec="lab"],body[data-sec="mouse"] .tabs[data-sec="mouse"],body[data-sec="win"] .tabs[data-sec="win"]{display:flex}
+.tabs[data-sec="safe"] .tab,.tabs[data-sec="net"] .tab{padding:9px 12px;font-size:.93rem}
+body[data-sec="kb"] .tabs[data-sec="kb"],body[data-sec="lab"] .tabs[data-sec="lab"],body[data-sec="mouse"] .tabs[data-sec="mouse"],body[data-sec="win"] .tabs[data-sec="win"],body[data-sec="net"] .tabs[data-sec="net"],body[data-sec="safe"] .tabs[data-sec="safe"]{display:flex}
 body[data-sec="home"] .tab.home{display:none}
 .tab.home{padding:9px 13px;font-size:1.1rem}
 .logo{cursor:pointer}
@@ -497,9 +498,9 @@ body[data-sec="home"] .tab.home{display:none}
 .quiz .opt.ok{background:#dcfce7;border-color:#22c55e;color:#166534}
 .quiz .opt.bad{background:#fee2e2;border-color:#ef4444;color:#991b1b}
 .quiz .opt:disabled{cursor:default;transform:none}
-.quiz .qbar{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
-.quiz .qbar .pr{flex:1;height:12px;background:var(--line);border-radius:999px;overflow:hidden}
-.quiz .qbar .pr i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:.3s}
+.quiz .qbar,.phish .qbar,.sit .qbar{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.quiz .qbar .pr,.phish .qbar .pr,.sit .qbar .pr{flex:1;height:12px;background:var(--line);border-radius:999px;overflow:hidden}
+.quiz .qbar .pr i,.phish .qbar .pr i,.sit .qbar .pr i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:.3s}
 .quiz .qres{text-align:center;padding:30px}
 .quiz .qres .big{font-size:4.5rem}
 .lab-home{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;max-width:1200px;margin:0 auto}
@@ -541,7 +542,10 @@ body[data-sec="home"] .tab.home{display:none}
 .mlabels{display:grid;gap:8px;margin-top:12px}
 .mlabel{display:flex;gap:10px;align-items:center;background:var(--card2);border-radius:14px;padding:9px 12px;font-weight:700;font-size:.95rem}
 .mlabel i{width:14px;height:14px;border-radius:50%;flex:none;display:block}
-.msteps{display:grid;gap:8px}
+.msteps{display:grid;gap:8px;grid-template-columns:1fr 1fr}
+.msteps .mstep.cur{grid-column:1/-1}
+.msteps .mstep span{font-size:.82rem}
+.msteps .mstep:not(.cur) span{display:none}
 .mstep{display:flex;gap:12px;align-items:center;background:var(--card);border-radius:16px;padding:10px 14px;box-shadow:var(--shadow);border:3px solid transparent;opacity:.55;transition:.2s}
 .mstep.cur{opacity:1;border-color:var(--accent);transform:scale(1.01)}
 .mstep.done{opacity:1;border-color:transparent;background:#ecfdf5}
@@ -777,6 +781,276 @@ body[data-sec="home"] .tab.home{display:none}
 .wt-item.done .n{background:var(--ok);color:#fff}
 .wt-item span{font-size:.95rem;line-height:1.3}
 .sel-rect{position:absolute;border:1px solid #60a5fa;background:rgba(96,165,250,.25);pointer-events:none;display:none}
+.mstar{position:absolute;font-size:2.6rem;transform:translate(-50%,-50%);transition:.2s;cursor:default}
+.mstar.hot{transform:translate(-50%,-50%) scale(1.3);filter:drop-shadow(0 0 12px #fde047)}
+.mdot{position:absolute;width:18px;height:18px;border-radius:50%;background:#f59e0b;box-shadow:0 0 0 4px rgba(245,158,11,.35),0 0 18px #f59e0b;transform:translate(-50%,-50%);cursor:pointer;animation:glow 1s infinite}
+.mhold{position:absolute;left:50%;top:60%;transform:translate(-50%,-50%);width:220px;height:64px;border-radius:16px;background:#1e293b;border:3px solid #475569;overflow:hidden;display:grid;place-items:center;color:#fff;font-weight:900;font-size:1.2rem;cursor:pointer;user-select:none}
+.mhold i{position:absolute;left:0;top:0;bottom:0;width:0;background:#22c55e;transition:width 0s}
+.mhold.go i{width:100%;transition:width 2s linear}
+.mhold span{position:relative}
+.mhold.ok{border-color:#22c55e}
+.mrect{position:absolute;border:2px solid #38bdf8;background:rgba(56,189,248,.25);display:none;pointer-events:none}
+.mlist{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:260px;height:200px;overflow:auto;background:#fff;color:#1e2140;border-radius:12px;padding:8px 12px;font-weight:800;line-height:1.9;cursor:default}
+.mlist .fin{color:#16a34a;font-weight:900}
+.tgt{position:absolute;border-radius:50%;background:radial-gradient(circle,#fff 0 14%,#ef4444 15% 30%,#fff 31% 46%,#ef4444 47% 62%,#fff 63% 78%,#ef4444 79% 100%);box-shadow:0 10px 20px rgba(0,0,0,.3);transform:translate(-50%,-50%) scale(1);animation:shrink var(--d) linear forwards;cursor:pointer}
+@keyframes shrink{to{transform:translate(-50%,-50%) scale(.15);opacity:.6}}
+.tgt.hit{animation:popt .25s ease-out forwards!important}
+@keyframes popt{to{transform:translate(-50%,-50%) scale(1.4);opacity:0}}
+.sitem{position:absolute;font-size:2.4rem;transform:translate(-50%,-50%);pointer-events:none;filter:drop-shadow(0 4px 6px rgba(0,0,0,.3));transition:.3s}
+.sitem.got{transform:translate(-50%,-50%) scale(1.5);opacity:0}
+.sitem.boom{transform:translate(-50%,-50%) scale(1.8);opacity:0}
+.selbox{position:absolute;border:2px solid #fff;background:rgba(255,255,255,.25);display:none;pointer-events:none;z-index:3}
+
+/* ============ СЕТЬМАСТЕР: ИНТЕРНЕТ И СЕТЬ ============ */
+.sec-card .art.net{background:radial-gradient(circle at 50% 50%,#0ea5e9,#0c4a6e 70%)}
+.sec-card .art.safe{background:radial-gradient(circle at 50% 30%,#4ade80,#065f46 70%)}
+.art-net{position:relative;width:86%;height:80%}
+.art-net i{position:absolute;width:54px;height:54px;border-radius:16px;background:#fff;display:grid;place-items:center;font-size:1.7rem;font-style:normal;box-shadow:0 10px 24px rgba(0,0,0,.35);transform:translate(-50%,-50%)}
+.art-net svg{position:absolute;inset:0;width:100%;height:100%}
+.art-net svg path{stroke:rgba(255,255,255,.7);stroke-width:4;fill:none;stroke-dasharray:10 10;animation:dash 1.2s linear infinite}
+.art-safe{font-size:6.5rem;filter:drop-shadow(0 16px 24px rgba(0,0,0,.4));animation:float 6s ease-in-out infinite}
+.art-safe small{position:absolute;left:50%;bottom:14%;transform:translateX(-50%);background:#fff;color:#065f46;font-weight:900;font-size:.85rem;padding:5px 12px;border-radius:999px;white-space:nowrap}
+
+/* главное меню — учебный путь */
+.home-cta{display:flex;justify-content:center;gap:12px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.path{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;position:relative;padding-top:6px}
+@media(max-width:1100px){.path{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){.path{grid-template-columns:1fr}}
+.sec-card{min-height:0}
+.sec-card .stepn{position:absolute;left:14px;top:14px;z-index:2;background:rgba(255,255,255,.95);color:#1e2140;border-radius:999px;padding:6px 14px;font-weight:900;font-size:.9rem;box-shadow:0 6px 16px rgba(0,0,0,.25)}
+.sec-card .rec{position:absolute;right:14px;top:14px;z-index:2;background:linear-gradient(135deg,#f59e0b,#f97316);color:#fff;border-radius:999px;padding:6px 14px;font-weight:900;font-size:.85rem;box-shadow:0 6px 16px rgba(245,158,11,.5);animation:pulse 1.4s infinite}
+.sec-card.cur{border-color:#f59e0b;box-shadow:0 18px 44px rgba(245,158,11,.3)}
+.sec-card.done .stepn{background:var(--ok);color:#fff}
+.sec-card .prog{height:10px;background:var(--line);border-radius:999px;overflow:hidden;margin-top:4px}
+.sec-card .prog i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:999px;transition:.4s}
+.sec-card.done .prog i{background:linear-gradient(90deg,#22c55e,#14b8a6)}
+.sec-card .body p{font-size:.98rem}
+.sec-card .art{height:190px}
+.sec-card .brand{font-size:.8rem;font-weight:800;color:var(--muted);letter-spacing:.5px;margin-top:-6px}
+
+/* дом разделов сети/безопасности */
+.nhome{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;max-width:1300px;margin:0 auto}
+.nhome .catcard{min-height:150px;display:flex;flex-direction:column;justify-content:center}
+.nhome .catcard .em{font-size:2.3rem}
+.nhome .catcard .stp{position:absolute;right:14px;top:12px;background:var(--card2);color:var(--muted);border-radius:999px;padding:3px 10px;font-weight:900;font-size:.8rem}
+.nhome .catcard.done .stp{background:var(--ok);color:#fff}
+
+/* урок с диаграммой */
+.nlesson{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;align-items:start}
+@media(max-width:1000px){.nlesson{grid-template-columns:1fr}}
+.ndiag{background:linear-gradient(180deg,#0f172a,#1e1b4b);border-radius:24px;box-shadow:var(--shadow);padding:10px;position:relative;overflow:hidden}
+.ndiag svg{width:100%;display:block}
+.ndiag .node{cursor:pointer}
+.ndiag .node rect.bx{fill:#1e293b;stroke:#475569;stroke-width:3;transition:.2s}
+.ndiag .node:hover rect.bx,.ndiag .node.hl rect.bx{stroke:#f59e0b;fill:#2a2f45}
+.ndiag .node.ok rect.bx{stroke:#22c55e}
+.ndiag .node.dead rect.bx{stroke:#ef4444}
+.ndiag .node text{fill:#fff;font-family:Nunito,sans-serif;font-weight:900;pointer-events:none}
+.ndiag .node .ipl{cursor:pointer}
+.ndiag .node .ipl rect{fill:#0ea5e9;transition:.2s}
+.ndiag .node .ipl:hover rect,.ndiag .node .ipl.hl rect{fill:#f59e0b}
+.ndiag .link{stroke:#64748b;stroke-width:6;stroke-linecap:round;fill:none;cursor:pointer;transition:.2s}
+.ndiag .link.wifi{stroke-dasharray:4 12;stroke:#38bdf8}
+.ndiag .link.cut{stroke:#ef4444;stroke-dasharray:12 10}
+.ndiag .link.hl{stroke:#f59e0b}
+.ndiag .link.flow{stroke:#22c55e}
+.ndiag .pkt{font-size:30px;pointer-events:none}
+.ndiag .cloud{fill:#312e81;stroke:#6366f1;stroke-width:3}
+.ndiag .scr{fill:#0ea5e9}
+.ndiag .hl-wave{animation:glow 1s infinite}
+.nstep{background:var(--card);border-radius:22px;box-shadow:var(--shadow);padding:18px 22px;display:flex;flex-direction:column;gap:10px}
+.nstep .num{font-size:.8rem;font-weight:900;color:var(--muted);letter-spacing:.6px}
+.nstep h3{font-size:1.35rem}
+.nstep p{font-weight:700;line-height:1.5}
+.nstep .task{background:#fff7ed;border:2px dashed #f59e0b;border-radius:14px;padding:10px 14px;font-weight:800;color:#9a3412;min-height:0}
+:root[data-theme="dark"] .nstep .task{background:#3b2a12;color:#fde68a}
+.nstep .task.done{background:#ecfdf5;border-color:#22c55e;color:#166534}
+:root[data-theme="dark"] .nstep .task.done{background:#143d2b;color:#bbf7d0}
+.nstep .dots{display:flex;gap:5px;flex-wrap:wrap}
+.nstep .dots i{width:11px;height:11px;border-radius:50%;background:var(--line)}
+.nstep .dots i.done{background:var(--ok)}.nstep .dots i.cur{background:var(--accent)}
+.nstep .ctl{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto}
+.nstep .fact{background:var(--card2);border-radius:14px;padding:10px 14px;font-weight:700;font-size:.92rem;color:var(--muted)}
+.dnsopts{display:flex;gap:8px;flex-wrap:wrap}
+.dnsopts button{background:var(--card2);border:3px solid transparent;border-radius:12px;padding:8px 14px;font-weight:900;font-family:Consolas,monospace}
+.dnsopts button:hover{border-color:var(--accent)}
+.dnsopts button.ok{background:#dcfce7;border-color:#22c55e}.dnsopts button.bad{background:#fee2e2;border-color:#ef4444}
+.speedo{display:flex;align-items:center;gap:14px;font-weight:900}
+.speedo .bar{flex:1;height:16px;background:var(--line);border-radius:999px;overflow:hidden}
+.speedo .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#22c55e,#38b6ff);transition:width 2s ease-out}
+
+/* сборка домашней сети */
+.nbuild{display:grid;grid-template-columns:1fr 300px;gap:14px;height:calc(100vh - 104px);min-height:520px}
+@media(max-width:1000px){.nbuild{grid-template-columns:1fr;height:auto}}
+.house-wrap{position:relative;border-radius:24px;overflow:hidden;box-shadow:var(--shadow);background:#bae6fd;min-height:0;display:grid;place-items:center}
+.house{position:relative;width:100%;height:100%;background:linear-gradient(180deg,#bae6fd 0 8%,#fef3c7 8%);overflow:hidden;touch-action:none;user-select:none}
+.house .roof{position:absolute;left:0;right:0;top:0;height:9%;background:linear-gradient(180deg,#b45309,#92400e)}
+.house .room{position:absolute;border:3px solid rgba(120,53,15,.35);background:rgba(255,255,255,.35)}
+.house .room b{position:absolute;left:8px;top:6px;font-size:.85rem;color:#78350f;font-weight:900;background:rgba(255,255,255,.7);padding:2px 8px;border-radius:8px}
+.house .zone{position:absolute;border:3px dashed rgba(14,116,230,.6);border-radius:16px;background:rgba(56,189,248,.15);display:grid;place-items:center;text-align:center;font-weight:900;color:#0c4a6e;font-size:.85rem;transition:.2s;padding:4px}
+.house .zone.hint{border-color:#f59e0b;background:rgba(245,158,11,.25);animation:pulse 1s infinite}
+.house .zone.over{border-color:#22c55e;background:rgba(34,197,94,.3)}
+.house .zone.filled{border-style:solid;border-color:rgba(34,197,94,.7);background:rgba(34,197,94,.12)}
+.house .zone.filled span{display:none}
+.house .dev{position:absolute;width:92px;transform:translate(-50%,-50%);text-align:center;cursor:pointer;z-index:3}
+.house .dev .ic{font-size:2.6rem;line-height:1.1;filter:drop-shadow(0 6px 8px rgba(0,0,0,.3))}
+.house .dev .lb{font-size:.78rem;font-weight:900;color:#1e2140;background:rgba(255,255,255,.9);border-radius:8px;padding:2px 6px;margin-top:2px;line-height:1.15}
+.house .dev .st{position:absolute;right:-4px;top:-4px;width:24px;height:24px;border-radius:50%;background:#ef4444;color:#fff;font-size:.8rem;display:grid;place-items:center;font-weight:900;box-shadow:0 3px 8px rgba(0,0,0,.3)}
+.house .dev.on .st{background:#22c55e}
+.house .dev.sel{outline:4px solid #f59e0b;outline-offset:4px;border-radius:12px}
+.house .wall{position:absolute;left:1.5%;top:44%;width:70px;height:70px;background:#fff;border:3px solid #cbd5e1;border-radius:12px;display:grid;place-items:center;cursor:pointer;z-index:3;box-shadow:0 6px 14px rgba(0,0,0,.2)}
+.house .wall b{position:absolute;left:50%;bottom:-24px;transform:translateX(-50%);font-size:.72rem;white-space:nowrap;color:#1e2140;background:rgba(255,255,255,.85);padding:1px 6px;border-radius:6px}
+.house .wall.sel{outline:4px solid #f59e0b;outline-offset:4px}
+.house .wall .plug{width:30px;height:22px;background:#1d4ed8;border-radius:3px;position:relative}
+.house .wall .plug::after{content:'';position:absolute;left:8px;top:-6px;width:14px;height:6px;background:#1d4ed8}
+.house .ncab{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
+.house .ncab path{fill:none;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.house .ncab path.eth{stroke:#f59e0b}.house .ncab path.wan{stroke:#2563eb}
+.house .ncab path.wifi{stroke:#38bdf8;stroke-dasharray:6 10;stroke-width:4}
+.house .ncab path.flow{stroke:#22c55e;stroke-dasharray:14 10;animation:dash .6s linear infinite}
+.rpanel{position:absolute;z-index:4;background:#1e293b;border:3px solid #475569;border-radius:14px;padding:8px 10px;color:#fff;box-shadow:0 14px 30px rgba(0,0,0,.4);display:none;transform:translate(-50%,0);width:280px}
+.rpanel.open{display:block}
+.rpanel .ttl{font-size:.75rem;font-weight:900;letter-spacing:.5px;color:#94a3b8;margin-bottom:6px;display:flex;justify-content:space-between}
+.rpanel .ports{display:flex;gap:6px;align-items:flex-end}
+.rpanel .port{width:44px;height:40px;border-radius:5px;display:grid;place-items:center;font-size:.62rem;font-weight:900;cursor:pointer;border:3px solid transparent;position:relative;color:#fff}
+.rpanel .port.wan{background:#1d4ed8}.rpanel .port.lan{background:#b45309}
+.rpanel .port.used{opacity:.9}.rpanel .port.used::after{content:'🔌';position:absolute;top:-16px;font-size:1rem}
+.rpanel .port.hint{border-color:#f59e0b;animation:pulse 1s infinite}
+.rpanel .port.pwr{background:#334155;width:34px}
+.rpanel .sticker{margin-top:8px;background:#f8fafc;color:#111;border-radius:6px;padding:5px 8px;font-size:.72rem;font-weight:800;line-height:1.35}
+.rpanel .leds{display:flex;gap:6px;margin-top:6px}
+.rpanel .leds i{width:10px;height:10px;border-radius:50%;background:#334155}
+.rpanel .leds i.on{background:#22c55e;box-shadow:0 0 8px #22c55e}
+.wifipop{position:absolute;z-index:6;background:#fff;color:#111;border-radius:14px;box-shadow:0 20px 50px rgba(0,0,0,.4);width:300px;padding:12px;transform:translate(-50%,0);display:none}
+.wifipop.open{display:block}
+.wifipop h4{font-size:.95rem;margin-bottom:8px;display:flex;justify-content:space-between}
+.wifipop .net{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;cursor:pointer;font-weight:800;font-size:.9rem;border:2px solid transparent}
+.wifipop .net:hover{background:#f1f5f9;border-color:#38bdf8}
+.wifipop .net small{margin-left:auto;color:#64748b;font-weight:700}
+.wifipop input{width:100%;font:inherit;font-weight:800;font-size:1.1rem;padding:8px 10px;border:2px solid #cbd5e1;border-radius:10px;margin:6px 0;letter-spacing:2px;text-align:center}
+.wifipop .keys{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}
+.wifipop .keys button{background:#f1f5f9;border-radius:8px;padding:8px 0;font-weight:900;font-size:1rem}
+.wifipop .keys button:hover{background:#e2e8f0}
+.wifipop .err{color:#dc2626;font-weight:800;font-size:.85rem;min-height:1.2em}
+.ntray{background:var(--card);border-radius:22px;box-shadow:var(--shadow);padding:14px;display:flex;flex-direction:column;gap:10px;overflow:auto}
+.ntray h3{display:flex;align-items:center;gap:8px;font-size:1.05rem}
+.ntray .devs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ntray .tray-item .ic{font-size:2.2rem;line-height:1.1}
+.ntray .note{background:var(--card2);border-radius:14px;padding:10px 12px;font-weight:700;color:var(--muted);font-size:.9rem;line-height:1.45}
+.ntray .note b{color:var(--text)}
+
+/* доставь пакет */
+.pkgame{position:relative;height:calc(100vh - 170px);min-height:460px;border-radius:24px;overflow:hidden;background:radial-gradient(circle at 50% 40%,#1e1b4b,#0f172a 80%);box-shadow:var(--shadow)}
+.pkgame svg{position:absolute;inset:0;width:100%;height:100%}
+.pkgame .edge{stroke:#475569;stroke-width:5;stroke-linecap:round;transition:.2s}
+.pkgame .edge.avail{stroke:#38bdf8;stroke-dasharray:10 10;animation:dash 1s linear infinite}
+.pkgame .edge.used{stroke:#22c55e}
+.pkgame .edge.slow{stroke:#7f1d1d;stroke-dasharray:4 8}
+.pkgame .pn{cursor:pointer}
+.pkgame .pn circle{fill:#1e293b;stroke:#64748b;stroke-width:4;transition:.2s}
+.pkgame .pn.avail circle{stroke:#38bdf8;fill:#1e3a5f}
+.pkgame .pn.avail:hover circle{stroke:#f59e0b}
+.pkgame .pn.cur circle{stroke:#f59e0b;fill:#422006}
+.pkgame .pn.target circle{stroke:#22c55e;stroke-width:6}
+.pkgame .pn.visited circle{stroke:#22c55e}
+.pkgame .pn.slow circle{stroke:#ef4444;fill:#450a0a}
+.pkgame .pn text{fill:#fff;font-family:Nunito,sans-serif;font-weight:900;pointer-events:none;text-anchor:middle}
+.pkgame .pk{font-size:34px;pointer-events:none;transition:transform .45s ease-in-out}
+.pkgame .hud{position:absolute;left:14px;top:12px;background:rgba(255,255,255,.92);color:#1e2140;border-radius:14px;padding:8px 14px;font-weight:900;display:flex;gap:16px;z-index:2}
+.pkgame .msg{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);background:rgba(255,255,255,.95);color:#1e2140;border-radius:14px;padding:10px 18px;font-weight:900;z-index:2;max-width:90%;text-align:center}
+
+/* ============ КИБЕРЩИТ: БЕЗОПАСНОСТЬ ============ */
+.pwlab{display:grid;grid-template-columns:1.2fr 1fr;gap:16px;align-items:start}
+@media(max-width:1000px){.pwlab{grid-template-columns:1fr}}
+.pwbox{background:var(--card);border-radius:24px;box-shadow:var(--shadow);padding:20px 24px;display:flex;flex-direction:column;gap:12px}
+.pwin{display:flex;gap:8px;align-items:center}
+.pwin input{flex:1;font:inherit;font-weight:900;font-size:1.6rem;padding:12px 16px;border:3px solid var(--line);border-radius:16px;background:var(--card2);color:var(--text);letter-spacing:1px;outline:none;user-select:text}
+.pwin input:focus{border-color:var(--accent)}
+.pwin button{width:52px;height:52px;border-radius:14px;background:var(--card2);font-size:1.3rem}
+.meter{display:flex;gap:6px}
+.meter i{flex:1;height:14px;border-radius:999px;background:var(--line);transition:.3s}
+.meter[data-l="1"] i:nth-child(-n+1){background:#ef4444}
+.meter[data-l="2"] i:nth-child(-n+2){background:#f97316}
+.meter[data-l="3"] i:nth-child(-n+3){background:#f59e0b}
+.meter[data-l="4"] i:nth-child(-n+4){background:#84cc16}
+.meter[data-l="5"] i:nth-child(-n+5){background:#22c55e}
+.pwverdict{font-size:1.25rem;font-weight:900;display:flex;align-items:center;gap:10px;min-height:1.6em}
+.hacker{display:flex;align-items:center;gap:14px;background:#0f172a;color:#e2e8f0;border-radius:18px;padding:12px 16px}
+.hacker .bot{font-size:2.6rem;animation:float 4s ease-in-out infinite}
+.hacker b{color:#4ade80;font-family:Consolas,monospace;font-size:1.1rem}
+.hacker small{display:block;color:#94a3b8;font-weight:700}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.checks div{display:flex;gap:8px;align-items:center;font-weight:800;font-size:.9rem;padding:7px 10px;border-radius:10px;background:var(--card2);color:var(--muted)}
+.checks div.ok{background:#dcfce7;color:#166534}
+:root[data-theme="dark"] .checks div.ok{background:#143d2b;color:#bbf7d0}
+.pwgen{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.pwgen .w{background:var(--card2);border-radius:12px;padding:8px 12px;font-weight:900;font-size:1.05rem;display:flex;align-items:center;gap:6px}
+.pwgen .res{font-family:Consolas,monospace;font-weight:900;font-size:1.2rem;background:#0f172a;color:#4ade80;padding:8px 14px;border-radius:12px;user-select:text}
+.tasks{display:grid;gap:8px}
+.tasks .mstep{opacity:.7}.tasks .mstep.done{opacity:1}
+/* фишинг */
+.phish{max-width:980px;margin:0 auto}
+.phcard{background:var(--card);border-radius:24px;box-shadow:var(--shadow);padding:18px 22px;display:grid;grid-template-columns:1fr 300px;gap:18px;align-items:start}
+@media(max-width:900px){.phcard{grid-template-columns:1fr}}
+.msgmock{border-radius:18px;overflow:hidden;border:2px solid var(--line);background:#fff;color:#111;font-family:'Segoe UI',system-ui,sans-serif}
+.msgmock .hd{background:#f1f5f9;padding:8px 14px;font-size:.8rem;font-weight:700;color:#475569;display:flex;gap:10px;align-items:center;border-bottom:1px solid #e2e8f0}
+.msgmock .bd{padding:14px 16px;line-height:1.5;font-size:1rem}
+.msgmock .bd .lnk{color:#2563eb;text-decoration:underline}
+.msgmock .bd .btnm{display:inline-block;margin-top:8px;background:#2563eb;color:#fff;padding:8px 14px;border-radius:8px;font-weight:800}
+.msgmock.sms{background:#e5e7eb;padding:14px}
+.msgmock.sms .bd{background:#fff;border-radius:16px 16px 16px 4px;max-width:85%;box-shadow:0 2px 6px rgba(0,0,0,.1)}
+.msgmock.sms .hd{background:none;border:0;padding:0 0 8px}
+.msgmock.site .hd{background:#fff;border-bottom:1px solid #e2e8f0}
+.msgmock.site .url{flex:1;background:#f1f5f9;border-radius:999px;padding:6px 12px;font-family:Consolas,monospace;font-size:.85rem;color:#111;display:flex;align-items:center;gap:6px}
+.msgmock.site .bd{min-height:120px}
+.msgmock.popup{border:0;background:transparent}
+.msgmock.popup .bd{background:#fff;border:3px solid #dc2626;border-radius:12px;margin:10px;box-shadow:0 20px 40px rgba(0,0,0,.3)}
+.clue{background:#fee2e2;border-bottom:2px solid #ef4444;border-radius:3px}
+.safe-mark{background:#dcfce7;border-bottom:2px solid #22c55e;border-radius:3px}
+.phans{display:flex;flex-direction:column;gap:10px}
+.phans .q{font-weight:900;font-size:1.15rem}
+.phans button.big{padding:16px;border-radius:16px;font-weight:900;font-size:1.1rem;border:3px solid transparent;transition:.15s}
+.phans button.big.ok{background:#dcfce7;color:#166534}.phans button.big.bad{background:#fee2e2;color:#991b1b}
+.phans button.big:hover{transform:translateY(-2px);border-color:var(--accent)}
+.phans button.big:disabled{transform:none;opacity:.6}
+.phans button.big.right{border-color:#22c55e!important;opacity:1}
+.phans button.big.wrong{border-color:#ef4444!important;opacity:1}
+.phexp{background:var(--card2);border-radius:14px;padding:10px 14px;font-weight:700;line-height:1.45;font-size:.92rem;min-height:80px}
+.phexp b{display:block;margin-bottom:4px}
+/* можно / нельзя */
+.share{display:grid;grid-template-rows:auto 1fr auto;gap:14px;height:calc(100vh - 110px);min-height:520px}
+.share .pool{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-content:flex-start;padding:10px;background:var(--card);border-radius:22px;box-shadow:var(--shadow);min-height:120px;overflow:auto}
+.scard{background:#fff;color:#1e2140;border-radius:16px;padding:10px 14px;font-weight:900;font-size:1.05rem;box-shadow:0 8px 18px rgba(0,0,0,.12);cursor:grab;display:flex;align-items:center;gap:8px;border:3px solid transparent;touch-action:none;user-select:none;transition:transform .15s}
+.scard:hover{border-color:var(--accent)}
+.scard.sel{border-color:#f59e0b;transform:scale(1.05)}
+.scard.drag{position:fixed;z-index:90;pointer-events:none;transform:scale(1.1) rotate(-3deg)}
+.scard .e{font-size:1.5rem}
+.boxes{display:grid;grid-template-columns:1fr 1fr;gap:16px;min-height:0}
+.sbox{border-radius:24px;padding:14px;display:flex;flex-direction:column;gap:8px;border:4px dashed transparent;transition:.2s;overflow:auto}
+.sbox.ok{background:#dcfce7;border-color:#22c55e}.sbox.no{background:#fee2e2;border-color:#ef4444}
+.sbox.over{transform:scale(1.02);box-shadow:0 0 0 6px rgba(245,158,11,.5)}
+.sbox h3{font-size:1.2rem;display:flex;gap:8px;align-items:center;color:#1e2140}
+.sbox .in{display:flex;flex-wrap:wrap;gap:8px}
+.sbox .scard{cursor:default;font-size:.95rem;padding:8px 12px}
+.sbox .scard.wrongc{border-color:#ef4444;animation:shake .4s}
+.sexp{background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:12px 18px;font-weight:800;min-height:60px;display:flex;align-items:center;gap:12px}
+/* что делать если */
+.sit{max-width:900px;margin:0 auto}
+.sit .scn{background:var(--card);border-radius:24px;box-shadow:var(--shadow);padding:22px 26px}
+.sit .scn .pic{font-size:3.5rem;text-align:center;margin-bottom:6px}
+.sit .scn h3{font-size:1.3rem;text-align:center;margin-bottom:14px;line-height:1.4}
+.sit .opts{display:grid;gap:10px}
+.sit .opt{background:var(--card2);border:3px solid transparent;border-radius:16px;padding:14px 16px;font-weight:800;font-size:1.05rem;text-align:left;display:flex;gap:10px;transition:.15s}
+.sit .opt:hover{border-color:var(--accent);transform:translateX(4px)}
+.sit .opt.ok{background:#dcfce7;border-color:#22c55e;color:#166534}.sit .opt.bad{background:#fee2e2;border-color:#ef4444;color:#991b1b}
+.sit .opt:disabled{transform:none}
+.sit .why{margin-top:12px;background:#eef2ff;border-radius:14px;padding:12px 16px;font-weight:700;line-height:1.5;display:none}
+:root[data-theme="dark"] .sit .why{background:#2a2f5a}
+.sit .why.show{display:block}
+.rules{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;max-width:1300px;margin:12px auto 0}
+.rule{background:var(--card);border-radius:20px;box-shadow:var(--shadow);padding:14px 16px;display:flex;gap:12px;align-items:flex-start}
+.rule .e{font-size:2rem;line-height:1}
+.rule b{display:block;font-size:1.02rem;margin-bottom:2px}.rule span{color:var(--muted);font-weight:700;font-size:.9rem;line-height:1.4}
 </style>
 </head>
 <body>
@@ -806,6 +1080,21 @@ body[data-sec="home"] .tab.home{display:none}
   <nav class="tabs" data-sec="win">
     <button class="tab" data-mode="win-home"><span class="em">📋</span> Задания</button>
     <button class="tab" data-mode="win-desk"><span class="em">🖥️</span> Рабочий стол</button>
+  </nav>
+  <nav class="tabs" data-sec="net">
+    <button class="tab" data-mode="net-home"><span class="em">📡</span> Начало</button>
+    <button class="tab" data-mode="net-lesson"><span class="em">📖</span> Урок</button>
+    <button class="tab" data-mode="net-build"><span class="em">🏠</span> Домашняя сеть</button>
+    <button class="tab" data-mode="net-packet"><span class="em">✉️</span> Пакеты</button>
+    <button class="tab" data-mode="net-quiz"><span class="em">❓</span> Викторина</button>
+  </nav>
+  <nav class="tabs" data-sec="safe">
+    <button class="tab" data-mode="safe-home"><span class="em">🛡️</span> Начало</button>
+    <button class="tab" data-mode="safe-pass"><span class="em">🔑</span> Пароли</button>
+    <button class="tab" data-mode="safe-phish"><span class="em">🎣</span> Обман?</button>
+    <button class="tab" data-mode="safe-share"><span class="em">🙈</span> Данные</button>
+    <button class="tab" data-mode="safe-rules"><span class="em">🧭</span> Ситуации</button>
+    <button class="tab" data-mode="safe-quiz"><span class="em">❓</span> Викторина</button>
   </nav>
   <div class="spacer"></div>
   <div class="hdr-right">
@@ -1018,60 +1307,14 @@ body[data-sec="home"] .tab.home{display:none}
     <div id="refList"></div>
   </section>
 
+
   <!-- ---- ГЛАВНОЕ МЕНЮ ---- -->
   <section class="panel" id="panel-home">
     <div class="home-wrap">
-      <div class="home-title"><h1>🎓 Компьютерный класс</h1><p>Выбери раздел, чтобы начать</p></div>
-      <div class="home-grid">
-        <div class="sec-card" data-go="learn">
-          <div class="art kb">
-            <div class="minikb">
-              <div><span>Esc</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span class="w">⌫</span></div>
-              <div><span class="w">Tab</span><span>Q</span><span>W</span><span>E</span><span>R</span><span>T</span><span>Y</span></div>
-              <div><span class="hl w">Ctrl</span><span>A</span><span>S</span><span>D</span><span>F</span><span class="hl">C</span><span>H</span></div>
-              <div><span class="w">Shift</span><span>Z</span><span>X</span><span class="x">Пробел</span><span>N</span></div>
-            </div>
-          </div>
-          <div class="body">
-            <h2>⌨️ Клавиатура</h2>
-            <p>Горячие клавиши Windows, набор текста на время, экранная клавиатура для доски. Урок, тренажёр, печать и справочник.</p>
-            <div class="meta"><span class="chip" id="homeKbStat">0 сочетаний изучено</span><button class="btn">Открыть ➜</button></div>
-          </div>
-        </div>
-
-        <div class="sec-card" data-go="mouse-home">
-          <div class="art mouse">
-            <div class="art-mouse"><svg viewBox="0 0 200 330"><path d="M100 8 C152 8 184 60 184 150 C184 250 150 322 100 322 C50 322 16 250 16 150 C16 60 48 8 100 8Z" fill="url(#g-dark)" stroke="#0b0d12" stroke-width="3"/><path d="M98 12 C56 14 24 62 22 130 L98 130Z" fill="#f59e0b" stroke="#0b0d12" stroke-width="2"/><path d="M102 12 C144 14 176 62 178 130 L102 130Z" fill="#2f3542" stroke="#0b0d12" stroke-width="2"/><rect x="91" y="52" width="18" height="52" rx="9" fill="#4b5563" stroke="#0b0d12" stroke-width="2"/><path d="M22 134 H178" stroke="#0b0d12" stroke-width="3"/><circle cx="100" cy="200" r="6" fill="#38b6ff"/></svg></div>
-          </div>
-          <div class="body">
-            <h2>🖱️ КликМастер</h2>
-            <p>Тренажёр мыши: урок с настоящей мышью и 6 игр — пузыри, сундуки, шарики, урожай, лифт и дорожка. Щелчок, двойной щелчок, правая кнопка, перетаскивание, колёсико, точность.</p>
-            <div class="meta"><span class="chip" id="homeMouseStat">6 игр</span><button class="btn warn">Открыть ➜</button></div>
-          </div>
-        </div>
-        <div class="sec-card" data-go="win-home">
-          <div class="art win">
-            <div class="art-win"><div class="aw-ico" style="left:5%;top:8%">💻<small>Компьютер</small></div><div class="aw-ico" style="left:5%;top:40%">🗑️<small>Корзина</small></div><div class="aw-ico" style="left:5%;top:72%">📁<small>Школа</small></div><div class="aw-w"><div class="t"><i></i><i></i><i style="background:#f87171"></i></div><div class="b">📄📁🖼️📄📁📄</div></div><div class="aw-bar">⊞ 📁 📝 ⚙️</div></div>
-          </div>
-          <div class="body">
-            <h2>🪟 ОкноМастер</h2>
-            <p>Настоящий рабочий стол Windows внутри урока: меню Пуск, окна, Проводник, Блокнот, папки, Корзина, обои. 13 заданий — от первого щелчка до выключения компьютера.</p>
-            <div class="meta"><span class="chip" id="homeWinStat">0 / 13 заданий</span><button class="btn" style="background:linear-gradient(135deg,#2563eb,#38b6ff)">Открыть ➜</button></div>
-          </div>
-        </div>
-        <div class="sec-card" data-go="lab-home">
-          <div class="art lab" id="labArt">
-            <div class="float" id="labF1" style="left:8%;top:14%"></div>
-            <div class="float" id="labF2" style="right:9%;top:22%;animation-delay:-2s"></div>
-            <div class="float" id="labF3" style="left:38%;bottom:10%;animation-delay:-4s;width:76px;height:76px"></div>
-          </div>
-          <div class="body">
-            <h2>🖥️ Компьютерная лаборатория</h2>
-            <p>Узнай, из чего состоит компьютер, и собери его своими руками: поставь детали в корпус, подключи монитор, клавиатуру и мышь, включи в розетку — и запусти!</p>
-            <div class="meta"><span class="chip" id="homeLabStat">0 компьютеров собрано</span><button class="btn ok">Открыть ➜</button></div>
-          </div>
-        </div>
+      <div class="home-title"><h1>🎓 Компьютерный класс</h1><p>Шесть разделов — проходи по порядку: от устройства компьютера до безопасности в интернете</p>
+        <div class="home-cta"><button class="btn" id="homeContinue">▶ Продолжить обучение</button><span class="chip" id="homeTotal"></span></div>
       </div>
+      <div class="path" id="homePath"></div>
     </div>
   </section>
 
@@ -1081,7 +1324,7 @@ body[data-sec="home"] .tab.home{display:none}
     <div class="lab-home">
       <div class="catcard" data-go="lab-parts"><div class="em">📦</div><div class="nm">Детали компьютера</div><div class="ds">14 деталей с фотографиями: что это, зачем нужно и где стоит</div><div class="cnt" id="labPartsCnt"></div></div>
       <div class="catcard" data-go="lab-build"><div class="em">🔧</div><div class="nm">Собери компьютер</div><div class="ds">Поставь детали в корпус, подключи кабели, включи в розетку и запусти</div><div class="cnt" id="labBuildCnt"></div></div>
-      <div class="catcard" data-go="lab-quiz"><div class="em">❓</div><div class="nm">Викторина</div><div class="ds">Угадай деталь по фото и по описанию — заработай звёзды</div><div class="cnt" id="labQuizCnt"></div></div>
+      <div class="catcard" data-go="lab-quiz"><div class="em">❓</div><div class="nm">Викторина</div><div class="ds">12 вопросов: по фото, по описанию и по работе детали</div><div class="cnt" id="labQuizCnt"></div></div>
     </div>
   </section>
 
@@ -1109,7 +1352,7 @@ body[data-sec="home"] .tab.home{display:none}
 
   <!-- ---- КЛИКМАСТЕР: ИГРЫ ---- -->
   <section class="panel" id="panel-mouse-home">
-    <div class="lab-head"><h2>🎮 Игры с мышью</h2><p class="lead">Каждая игра тренирует одно умение: щелчок, двойной щелчок, правую кнопку, перетаскивание, колёсико и точность</p><div class="spacer"></div><button class="btn ghost sm" data-go="mouse-lesson">📖 Сначала урок</button></div>
+    <div class="lab-head"><h2>🎮 Игры с мышью</h2><p class="lead">8 игр — каждая тренирует одно умение: щелчок, двойной щелчок, правую кнопку, перетаскивание, колёсико, точность, выделение</p><div class="spacer"></div><button class="btn ghost sm" data-go="mouse-lesson">📖 Сначала урок</button></div>
     <div class="mgames" id="mgames"></div>
   </section>
 
@@ -1141,8 +1384,8 @@ body[data-sec="home"] .tab.home{display:none}
         </div>
       </div>
       <div>
+        <div class="mpad" id="mpad" style="margin:0 0 14px"><div class="hint" id="mpadHint">Работай мышью здесь 👇</div><div class="goal" id="mgoal"></div><div class="ball" id="mball"></div></div>
         <div class="msteps" id="msteps"></div>
-        <div class="mpad" id="mpad"><div class="hint" id="mpadHint">Работай мышью здесь 👇</div><div class="goal" id="mgoal"></div><div class="ball" id="mball"></div></div>
       </div>
     </div>
   </section>
@@ -1203,6 +1446,54 @@ body[data-sec="home"] .tab.home{display:none}
       </div>
     </div>
   </section>
+
+  <!-- ---- СЕТЬМАСТЕР ---- -->
+  <section class="panel" id="panel-net-home">
+    <div class="home-title" style="margin-top:4px"><h1>📡 СетьМастер</h1><p>Как компьютер попадает в интернет: роутер, провайдер, адреса, серверы — и своя домашняя сеть</p></div>
+    <div class="nhome" id="nhome"></div>
+  </section>
+  <section class="panel" id="panel-net-lesson">
+    <div class="nlesson">
+      <div class="ndiag" id="ndiag"></div>
+      <div class="nstep" id="nstep"></div>
+    </div>
+  </section>
+  <section class="panel" id="panel-net-build">
+    <div class="nbuild">
+      <div class="house-wrap" id="houseWrap"><div class="house" id="house"></div></div>
+      <div class="ntray" id="ntray"></div>
+    </div>
+  </section>
+  <section class="panel" id="panel-net-packet">
+    <div class="lab-head"><h2>✉️ Доставь пакет</h2><p class="lead">Нажимай на соседние узлы, чтобы довести пакет до сервера. Чем короче путь — тем лучше</p><div class="spacer"></div><span class="pill" id="pkLevel"></span></div>
+    <div class="pkgame" id="pkgame"></div>
+  </section>
+  <section class="panel" id="panel-net-quiz"><div class="quiz" id="nquiz"></div></section>
+
+  <!-- ---- КИБЕРЩИТ ---- -->
+  <section class="panel" id="panel-safe-home">
+    <div class="home-title" style="margin-top:4px"><h1>🛡️ КиберЩит</h1><p>Безопасность в интернете: надёжные пароли, обман в сообщениях, личные данные и правила поведения</p></div>
+    <div class="nhome" id="shome"></div>
+  </section>
+  <section class="panel" id="panel-safe-pass">
+    <div class="lab-head"><h2>🔑 Лаборатория паролей</h2><p class="lead">Придумай пароль и посмотри, за сколько его взломает робот</p></div>
+    <div class="pwlab">
+      <div class="pwbox">
+        <div class="pwin"><input id="pwInput" placeholder="Введи пароль…" autocomplete="off" spellcheck="false"><button id="pwEye" title="Показать/скрыть">👁️</button><button id="pwClear" title="Очистить">✕</button></div>
+        <div class="meter" id="pwMeter" data-l="0"><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="pwverdict" id="pwVerdict">Начни вводить пароль</div>
+        <div class="hacker"><div class="bot">🤖</div><div><small>Робот-взломщик подберёт этот пароль за:</small><b id="pwTime">—</b></div></div>
+        <div class="checks" id="pwChecks"></div>
+        <div style="font-weight:900;margin-top:4px">🎲 Генератор фразы-пароля</div>
+        <div class="pwgen"><span class="w" id="pwW1">🐱 Кот</span><span class="w" id="pwW2">🚀 Ракета</span><span class="w" id="pwW3">🍕 Пицца</span><span class="w" id="pwW4">27</span><button class="btn sm" id="pwGen">🎲 Придумать</button><span class="res" id="pwRes">Кот-Ракета-Пицца-27</span><button class="btn ghost sm" id="pwUse">Проверить ↑</button></div>
+      </div>
+      <div class="pwbox"><h3>📋 Задания</h3><div class="tasks" id="pwTasks"></div><div class="fact" style="background:var(--card2);border-radius:14px;padding:10px 14px;font-weight:700;color:var(--muted)">💡 Хороший пароль — длинный (от 12 знаков), с большими и маленькими буквами, цифрами и символами. Лучше всего — фраза из нескольких слов. Никому его не говори, даже друзьям.</div></div>
+    </div>
+  </section>
+  <section class="panel" id="panel-safe-phish"><div class="phish" id="phish"></div></section>
+  <section class="panel" id="panel-safe-share"><div class="share" id="share"></div></section>
+  <section class="panel" id="panel-safe-rules"><div class="sit" id="sit"></div></section>
+  <section class="panel" id="panel-safe-quiz"><div class="quiz" id="squiz"></div></section>
 </main>
 
 <!-- ============ КЛАВИАТУРА ============ -->
@@ -1246,6 +1537,8 @@ body[data-sec="home"] .tab.home{display:none}
       <li><b>🔧 Сборка</b> — перетащи детали в корпус (или нажми на деталь, потом на место в корпусе), закрой крышку, подключи монитор, клавиатуру, мышь и кабель питания, вставь вилку в розетку, включи блок питания и нажми кнопку. Если что-то не подключено — компьютер подскажет, что не так.</li>
       <li><b>❓ Викторина</b> — угадай деталь по фото и описанию.</li>
       <li><b>🖱️ КликМастер</b> — урок: нажимай кнопки настоящей мыши, на картинке они загораются. Игры: пузыри (щелчок), сундуки (двойной щелчок), шарики (левая/правая кнопка), урожай (перетаскивание), лифт (колёсико), жук (точность).</li>
+      <li><b>📡 СетьМастер</b> — урок с живой схемой (компьютер → роутер → провайдер → сервер, IP-адреса, DNS, скорость), сборка домашней сети (роутер, порты WAN/LAN, Wi-Fi с паролем), игра «Доставь пакет» и викторина.</li>
+      <li><b>🛡️ КиберЩит</b> — лаборатория паролей (робот показывает, за сколько взломает), «Обман или нет?» (сообщения, письма, сайты), «Можно или нельзя?» (личные данные), «Что делать, если…» (ситуации) и викторина.</li>
       <li><b>🪟 ОкноМастер</b> — учебный рабочий стол Windows: меню Пуск, окна (свернуть, развернуть, закрыть, перетащить), Проводник, Блокнот, Параметры, Корзина, правая кнопка → создать папку, переименовать (F2), удалить (Delete), перетащить файл в папку, выключение. 14 заданий по порядку или свободный режим.</li>
       <li><b>📚 Урок</b> — выбери тему. Каждое сочетание подсвечивается на клавиатуре и объясняется. Нажми его сам — и переходи дальше.</li>
       <li><b>🎮 Тренажёр</b> — задания вразнобой. Есть спокойный режим, марафон на 60 секунд и серия из 10 заданий.</li>
@@ -2200,15 +2493,15 @@ document.addEventListener('fullscreenchange',()=>{ if(!document.fullscreenElemen
 $('#btnHelp').addEventListener('click',()=>$('#help').classList.add('open'));
 $('#helpClose').addEventListener('click',()=>$('#help').classList.remove('open'));
 $('#help').addEventListener('click',e=>{ if(e.target.id==='help') $('#help').classList.remove('open'); });
-$('#resetProgress').addEventListener('click',()=>{ if(confirm('Сбросить все звёзды и прогресс?')){ const set=S.set; S={stars:0,learned:{},stats:{},best:{},set,lab:{seen:{},builds:0,best:0,quizBest:0},mouse:{best:{},lesson:0},win:{done:{},wp:'bloom'}}; save(); renderStars(); renderCats(); renderTrainGrid(); renderTypeHome(); renderHome(); toast('Прогресс сброшен'); } });
+$('#resetProgress').addEventListener('click',()=>{ if(confirm('Сбросить все звёзды и прогресс?')){ const set=S.set; S={stars:0,learned:{},stats:{},best:{},set,lab:{seen:{},builds:0,best:0,quizBest:0},mouse:{best:{},lesson:0},win:{done:{},wp:'bloom'},net:{lesson:0,built:0,pkBest:0,quizBest:0},safe:{pass:{},phishBest:0,share:0,rulesBest:0,quizBest:0}}; save(); renderStars(); renderCats(); renderTrainGrid(); renderTypeHome(); renderHome(); toast('Прогресс сброшен'); } });
 
 
 
 /* =====================================================================
    РАЗДЕЛЫ: ГЛАВНОЕ МЕНЮ / КЛАВИАТУРА / ЛАБОРАТОРИЯ
    ===================================================================== */
-const LOGOS={home:['🎓','Компьютерный класс','ВЫБЕРИ РАЗДЕЛ'],kb:['⌨️','КлавиМастер','ТРЕНАЖЁР ГОРЯЧИХ КЛАВИШ'],lab:['🖥️','КомпьюЛаб','КОМПЬЮТЕРНАЯ ЛАБОРАТОРИЯ'],mouse:['🖱️','КликМастер','ТРЕНАЖЁР МЫШИ'],win:['🪟','ОкноМастер','РАБОЧИЙ СТОЛ WINDOWS']};
-function secOf(m){ return m==='home'?'home':m.startsWith('lab')?'lab':m.startsWith('mouse')?'mouse':m.startsWith('win')?'win':'kb'; }
+const LOGOS={home:['🎓','Компьютерный класс','ВЫБЕРИ РАЗДЕЛ'],kb:['⌨️','КлавиМастер','ТРЕНАЖЁР ГОРЯЧИХ КЛАВИШ'],lab:['🖥️','КомпьюЛаб','КОМПЬЮТЕРНАЯ ЛАБОРАТОРИЯ'],mouse:['🖱️','КликМастер','ТРЕНАЖЁР МЫШИ'],win:['🪟','ОкноМастер','РАБОЧИЙ СТОЛ WINDOWS'],net:['📡','СетьМастер','ИНТЕРНЕТ И СЕТЬ'],safe:['🛡️','КиберЩит','БЕЗОПАСНОСТЬ В ИНТЕРНЕТЕ']};
+function secOf(m){ return m==='home'?'home':m.startsWith('lab')?'lab':m.startsWith('mouse')?'mouse':m.startsWith('win')?'win':m.startsWith('net')?'net':m.startsWith('safe')?'safe':'kb'; }
 function applySection(m){
   const s=secOf(m); document.body.dataset.sec=s; const l=LOGOS[s];
   $('#logoIco').textContent=l[0]; $('#logoT').textContent=l[1]; $('#logoS').textContent=l[2];
@@ -2216,20 +2509,17 @@ function applySection(m){
   if(m!=='lab-build') cancelDrag();
   if(m==='home'){ renderMouseHome(); renderWinHome(); } if(m==='mouse-home') renderMouseHome(); if(m==='mouse-lesson') renderLesson(); if(m==='win-home') renderWinHome(); if(m==='win-desk') enterDesk();
   if(m!=='mouse-game'&&MG.running) stopGame();
+  if(m==='net-home') renderNetHome(); if(m==='net-lesson'){ nDiagram(); nRenderStep(); } if(m==='net-build') renderNetBuild(); if(m==='net-packet') renderPacket(); if(m==='net-quiz'&&!netQuiz.active) netQuiz.home();
+  if(m==='safe-home') renderSafeHome(); if(m==='safe-pass') renderPass(); if(m==='safe-phish') renderPhish(); if(m==='safe-share') renderShare(); if(m==='safe-rules') renderSit(); if(m==='safe-quiz'&&!safeQuiz.active) safeQuiz.home();
 }
 document.addEventListener('click',e=>{ const g=e.target.closest('[data-go]'); if(g){ unlockAudio(); setMode(g.dataset.go); } });
 $('#logo').addEventListener('click',()=>setMode('home'));
 if(!S.lab) S.lab={seen:{},builds:0,best:0,quizBest:0};
-function renderHome(){
-  const learned=Object.keys(S.learned).length; $('#homeKbStat').textContent=learned+' сочетаний изучено · ⭐ '+S.stars;
-  const b=S.lab.builds; $('#homeLabStat').textContent=(b?b+' '+plural(b,'компьютер собран','компьютера собрано','компьютеров собрано'):'Собери свой первый компьютер')+' · '+Object.keys(S.lab.seen).length+' / '+PARTS.length+' деталей';
-  $('#labArt').style.backgroundImage='url('+IMG.inside+')'; $('#labF1').style.backgroundImage='url('+IMG.cpu+')'; $('#labF2').style.backgroundImage='url('+IMG.gpu+')'; $('#labF3').style.backgroundImage='url('+IMG.ram+')';
-}
 function plural(n,a,b,c){ const m=n%10,M=n%100; if(M>=11&&M<=19) return c; if(m===1) return a; if(m>=2&&m<=4) return b; return c; }
 function renderLabHome(){
   $('#labPartsCnt').textContent=Object.keys(S.lab.seen).length+' / '+PARTS.length+' изучено';
   $('#labBuildCnt').textContent=S.lab.builds?('собрано: '+S.lab.builds+(S.lab.best?' · лучшее время '+fmtTime(S.lab.best):'')):'ещё не собирал';
-  $('#labQuizCnt').textContent=S.lab.quizBest?('рекорд: '+S.lab.quizBest+' из 8'):'ещё не играл';
+  $('#labQuizCnt').textContent=S.lab.quizBest?('рекорд: '+S.lab.quizBest+' из 12'):'ещё не играл';
 }
 
 /* =====================================================================
@@ -2611,14 +2901,16 @@ $('#brHome').addEventListener('click',()=>{ $('#buildResult').classList.remove('
 const Q={i:0,score:0,qs:[],active:false};
 function renderQuizHome(){
   if(Q.active) return;
-  $('#quiz').innerHTML='<div class="card" style="text-align:center;padding:36px"><div style="font-size:4rem">❓</div><h2>Викторина «Детали компьютера»</h2><p class="lead" style="margin:8px 0 18px">8 вопросов: угадай деталь по фотографии или по описанию. За каждый правильный ответ — звезда, за все восемь — ещё четыре!</p>'+(S.lab.quizBest?'<p class="lead" style="margin-bottom:14px">🏆 Твой рекорд: '+S.lab.quizBest+' из 8</p>':'')+'<button class="btn" id="qStart" style="font-size:1.2rem">▶ Начать</button> <button class="btn ghost" data-go="lab-parts">📦 Сначала повторить детали</button></div>';
+  $('#quiz').innerHTML='<div class="card" style="text-align:center;padding:36px"><div style="font-size:4rem">❓</div><h2>Викторина «Детали компьютера»</h2><p class="lead" style="margin:8px 0 18px">12 вопросов: угадай деталь по фотографии, по описанию или по её работе. За каждый правильный ответ — звезда, за все — ещё четыре!</p>'+(S.lab.quizBest?'<p class="lead" style="margin-bottom:14px">🏆 Твой рекорд: '+S.lab.quizBest+' из 12</p>':'')+'<button class="btn" id="qStart" style="font-size:1.2rem">▶ Начать</button> <button class="btn ghost" data-go="lab-parts">📦 Сначала повторить детали</button></div>';
   $('#qStart').addEventListener('click',startQuiz);
 }
 function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+const QEXTRA=[['К какой детали подключают монитор кабелем HDMI?','gpu'],['Какая деталь превращает ток из розетки в безопасный для компьютера?','psu'],['Что стирается, когда компьютер выключают?','ram'],['Где хранится Windows, которая загружается за 10 секунд?','ssd'],['Что ставят сверху на процессор, чтобы он не перегрелся?','cooler'],['Внутри какой детали крутятся блестящие диски?','hdd'],['На какую деталь устанавливают процессор, память и видеокарту?','mb'],['Что защищает детали от пыли и ударов?','case'],['Какую деталь называют «мозгом компьютера»?','cpu'],['Какая деталь рисует картинку для игр и мультфильмов?','gpu'],['Какой кабель соединяет блок питания с розеткой?','power'],['Что передаёт картинку и звук от видеокарты к монитору?','hdmi']];
 function startQuiz(){
   Q.active=true; Q.i=0; Q.score=0; const ps=shuffle(PARTS.slice()).slice(0,8);
   Q.qs=ps.map((p,i)=>{ const type=i%2?'txt':'img'; const others=shuffle(PARTS.filter(x=>x.id!==p.id)).slice(0,3); const opts=shuffle([p,...others]); return {p,type,opts,text:type==='txt'?[p.why,p.what,p.where][i%3]:''}; });
-  renderQ();
+  shuffle(QEXTRA.slice()).slice(0,4).forEach(([q,id])=>{ const p=PART[id]; const others=shuffle(PARTS.filter(x=>x.id!==id)).slice(0,3); Q.qs.push({p,type:'txt',opts:shuffle([p,...others]),text:q}); });
+  Q.qs=shuffle(Q.qs); renderQ();
 }
 function renderQ(){
   const q=Q.qs[Q.i]; const el=$('#quiz');
@@ -2650,22 +2942,29 @@ const GAMES={
   chests:{n:'Сундуки с сокровищами',e:'🧰',skill:'Двойной щелчок',pv:'sand',d:'Открой все 12 сундуков двойным щелчком. Чем быстрее — тем больше звёзд.',time:0,unit:'сундуков'},
   balloons:{n:'Шарики: левая или правая',e:'🎈',skill:'Правая кнопка',pv:'sky',d:'Синие шарики с буквой Л лопай левой кнопкой, красные с буквой П — правой. 45 секунд.',time:45,unit:'шариков'},
   harvest:{n:'Собери урожай',e:'🧺',skill:'Перетаскивание',pv:'grass',d:'Зажми фрукт левой кнопкой и перетащи в свою корзину. Собери все 15.',time:0,unit:'фруктов'},
+  targets:{n:'Мишени',e:'🎯',skill:'Быстрый клик',pv:'sky',d:'Мишени появляются и уменьшаются — успей щёлкнуть по каждой. 45 секунд.',time:45,unit:'мишеней'},
+  select:{n:'Выдели звёзды',e:'✨',skill:'Выделение рамкой',pv:'city',d:'Зажми кнопку и растяни рамку вокруг всех звёзд, не задев бомбы. 60 секунд.',time:60,unit:'звёзд'},
   lift:{n:'Лифт',e:'🛗',skill:'Колёсико',pv:'city',d:'Крути колёсико мыши, чтобы привезти лифт на нужный этаж и забрать пассажира. 60 секунд.',time:60,unit:'пассажиров'},
   bug:{n:'Проведи жука',e:'🐞',skill:'Точность',pv:'road',d:'Нажми на старт и веди жука по дорожке до финиша, не задевая края. 3 дорожки.',time:0,unit:'дорожек'},
 };
 function renderMouseHome(){
   const g=$('#mgames'); g.innerHTML='';
   Object.entries(GAMES).forEach(([id,gm])=>{ const d=document.createElement('div'); d.className='mgame'; d.innerHTML='<div class="pv '+gm.pv+'"><span class="skill">'+gm.skill+'</span>'+gm.e+'</div><div class="tx"><b>'+gm.n+'</b><span>'+gm.d+'</span><div class="best">'+(S.mouse.best[id]!==undefined?'🏆 Рекорд: '+S.mouse.best[id]+' '+(gm.time?gm.unit:(id==='bug'?'ошибок':'сек')):'Ещё не играл')+'</div></div>'; d.addEventListener('click',()=>startGame(id)); g.appendChild(d); });
-  const n=Object.keys(S.mouse.best).length; const hs=$('#homeMouseStat'); if(hs) hs.textContent=(S.mouse.lesson?'урок пройден · ':'')+n+' из 6 игр сыграно';
+  const n=Object.keys(S.mouse.best).length; const hs=$('#homeMouseStat'); if(hs) hs.textContent=(S.mouse.lesson?'урок пройден · ':'')+n+' из '+Object.keys(GAMES).length+' игр сыграно';
 }
 /* ---- урок ---- */
 const MSTEPS=[
   {t:'Положи руку на мышь',s:'Указательный палец — на левой кнопке, средний — на правой. Подвигай мышью по коврику.',ev:'move'},
+  {t:'Наведи указатель на звезду',s:'Подведи стрелку к звезде ⭐ и подожди секунду. Нажимать не нужно — это называется «навести».',ev:'hover'},
   {t:'Нажми левую кнопку',s:'Один раз, коротко. Это называется «щелчок» или «клик».',ev:'left'},
   {t:'Нажми правую кнопку',s:'Средним пальцем. Так открывают меню с действиями.',ev:'right'},
   {t:'Покрути колёсико вниз',s:'Так листают страницу вниз.',ev:'wdown'},
   {t:'Покрути колёсико вверх',s:'А так — обратно вверх.',ev:'wup'},
   {t:'Сделай двойной щелчок',s:'Два быстрых нажатия левой кнопкой. Так открывают папки и программы.',ev:'dbl'},
+  {t:'Попади в маленькую точку',s:'Точность: аккуратно наведи и щёлкни по маленькому кружку.',ev:'small'},
+  {t:'Нажми и удерживай 2 секунды',s:'Зажми левую кнопку на кнопке-таймере и не отпускай, пока она не заполнится.',ev:'hold'},
+  {t:'Выдели три звезды рамкой',s:'Зажми кнопку на пустом месте и, не отпуская, растяни рамку вокруг всех трёх звёзд. Так выделяют несколько файлов.',ev:'rubber'},
+  {t:'Прокрути список до конца',s:'Крути колёсико над списком, пока не увидишь флажок 🏁.',ev:'scroll'},
   {t:'Перетащи мяч в ворота',s:'Наведи на мяч, зажми левую кнопку, не отпуская — веди мяч в ворота, потом отпусти.',ev:'drag'},
 ];
 const ML={i:0,wd:0};
@@ -2673,28 +2972,36 @@ function renderLesson(){
   const done=S.mouse.lesson?MSTEPS.length:ML.i;
   $('#msteps').innerHTML=MSTEPS.map((st,i)=>'<div class="mstep'+(i<done?' done':i===done?' cur':'')+'"><div class="n">'+(i<done?'✓':i+1)+'</div><div><b>'+st.t+'</b><span>'+st.s+'</span></div></div>').join('');
   const cur=MSTEPS[done]; $('#mpadHint').textContent=cur?('👉 '+cur.t):'🎉 Урок пройден! Теперь — к играм';
-  const dragStep=cur&&cur.ev==='drag'; $('#mball').style.display=dragStep?'block':'none'; $('#mgoal').style.display=dragStep?'block':'none';
-  if(dragStep){ const b=$('#mball'); b.style.left='40px'; b.style.top='calc(50% - 32px)'; }
+  const ev=cur&&cur.ev; const pad=$('#mpad'); $$('#mpad .mw').forEach(e=>e.remove());
+  $('#mball').style.display=ev==='drag'?'block':'none'; $('#mgoal').style.display=ev==='drag'?'block':'none';
+  if(ev==='drag'){ const b=$('#mball'); b.style.left='40px'; b.style.top='calc(50% - 32px)'; }
+  const add=(html)=>{ const d=document.createElement('div'); d.className='mw'; d.innerHTML=html; pad.appendChild(d); return d.firstElementChild; };
+  if(ev==='hover'){ const st=add('<div class="mstar" style="left:'+rnd(20,70)+'%;top:'+rnd(15,70)+'%">⭐</div>'); let t=null; st.addEventListener('pointerenter',()=>{ st.classList.add('hot'); t=setTimeout(()=>lessonEvent('hover'),900); }); st.addEventListener('pointerleave',()=>{ st.classList.remove('hot'); clearTimeout(t); }); }
+  if(ev==='small'){ add('<div class="mdot" style="left:'+rnd(20,75)+'%;top:'+rnd(20,75)+'%"></div>'); }
+  if(ev==='hold'){ const h=add('<div class="mhold"><i></i><span>Держи!</span></div>'); let t=null; h.addEventListener('pointerdown',e=>{ if(e.button!==0) return; h.classList.add('go'); t=setTimeout(()=>{ h.classList.add('ok'); lessonEvent('hold'); },2000); }); const stop=()=>{ if(h.classList.contains('ok')) return; h.classList.remove('go'); clearTimeout(t); }; h.addEventListener('pointerup',stop); h.addEventListener('pointerleave',stop); }
+  if(ev==='rubber'){ [[25,25],[45,60],[65,30]].forEach(p=>add('<div class="mstar rb" style="left:'+p[0]+'%;top:'+p[1]+'%">⭐</div>')); add('<div class="mrect"></div>'); }
+  if(ev==='scroll'){ const l=add('<div class="mlist">'+Array.from({length:28},(_,i)=>'<div>'+(i+1)+'. '+['Яблоко','Банан','Вишня','Груша','Дыня','Киви','Лимон','Манго'][i%8]+'</div>').join('')+'<div class="fin">🏁 Конец списка!</div></div>'); l.addEventListener('scroll',()=>{ if(l.scrollTop+l.clientHeight>=l.scrollHeight-6) lessonEvent('scroll'); }); }
 }
 function lessonEvent(ev){
   if(S.mouse.lesson) return; const cur=MSTEPS[ML.i]; if(!cur||cur.ev!==ev) return;
   ML.i++; snd.ok(); renderLesson();
-  if(ML.i>=MSTEPS.length){ S.mouse.lesson=1; save(); addStars(5); confetti(160); snd.win(); speak('Отлично! Ты познакомился с мышью. Получаешь пять звёзд. Теперь попробуй игры!'); toast('🎉 Урок пройден! +5 ⭐',2500); }
+  if(ML.i>=MSTEPS.length){ S.mouse.lesson=1; save(); addStars(8); confetti(160); snd.win(); speak('Отлично! Ты познакомился с мышью. Получаешь восемь звёзд. Теперь попробуй игры!'); toast('🎉 Урок пройден! +8 ⭐',2500); }
   else speak(MSTEPS[ML.i].t+'. '+MSTEPS[ML.i].s);
 }
 (function(){
-  const pad=$('#mpad'), svg=$('#mouseSvg'); let moved=0, ballDrag=null;
+  const pad=$('#mpad'), svg=$('#mouseSvg'); let moved=0, ballDrag=null, rub=null;
   const lit=(cls,on)=>svg.querySelector('.'+cls).classList.toggle('lit',on);
   const ripple=(x,y,r)=>{ const e=document.createElement('i'); e.className='ripple'+(r?' r':''); const rc=pad.getBoundingClientRect(); e.style.left=(x-rc.left)+'px'; e.style.top=(y-rc.top)+'px'; pad.appendChild(e); setTimeout(()=>e.remove(),500); };
-  pad.addEventListener('pointermove',e=>{ if(mode!=='mouse-lesson') return; moved++; if(moved>25) lessonEvent('move'); if(ballDrag){ const rc=pad.getBoundingClientRect(); const b=$('#mball'); b.style.left=Math.max(0,Math.min(rc.width-64,e.clientX-rc.left-ballDrag.dx))+'px'; b.style.top=Math.max(0,Math.min(rc.height-64,e.clientY-rc.top-ballDrag.dy))+'px'; } });
-  pad.addEventListener('pointerdown',e=>{ if(mode!=='mouse-lesson') return; unlockAudio(); if(e.button===0){ lit('btnL',true); ripple(e.clientX,e.clientY); snd.click(); const b=$('#mball'); if(e.target===b){ const r=b.getBoundingClientRect(); ballDrag={dx:e.clientX-r.left,dy:e.clientY-r.top}; b.setPointerCapture(e.pointerId); } else lessonEvent('left'); } if(e.button===2){ lit('btnR',true); ripple(e.clientX,e.clientY,true); snd.click(); lessonEvent('right'); } });
-  pad.addEventListener('pointerup',e=>{ lit('btnL',false); lit('btnR',false); if(ballDrag){ ballDrag=null; const b=$('#mball').getBoundingClientRect(), g=$('#mgoal').getBoundingClientRect(); if(b.left+32>g.left&&b.top+32>g.top&&b.top+32<g.bottom){ lessonEvent('drag'); } } });
+  pad.addEventListener('pointermove',e=>{ if(mode!=='mouse-lesson') return; moved++; if(moved>25) lessonEvent('move'); const rc=pad.getBoundingClientRect(); if(ballDrag){ const b=$('#mball'); b.style.left=Math.max(0,Math.min(rc.width-64,e.clientX-rc.left-ballDrag.dx))+'px'; b.style.top=Math.max(0,Math.min(rc.height-64,e.clientY-rc.top-ballDrag.dy))+'px'; } if(rub){ const r=$('#mpad .mrect'); const x=Math.min(rub.x,e.clientX-rc.left), y=Math.min(rub.y,e.clientY-rc.top); r.style.left=x+'px'; r.style.top=y+'px'; r.style.width=Math.abs(e.clientX-rc.left-rub.x)+'px'; r.style.height=Math.abs(e.clientY-rc.top-rub.y)+'px'; r.style.display='block'; } });
+  pad.addEventListener('pointerdown',e=>{ if(mode!=='mouse-lesson') return; unlockAudio(); if(e.button===0){ lit('btnL',true); ripple(e.clientX,e.clientY); snd.click(); const b=$('#mball'); if(e.target===b){ const r=b.getBoundingClientRect(); ballDrag={dx:e.clientX-r.left,dy:e.clientY-r.top}; b.setPointerCapture(e.pointerId); } else if(e.target.closest('.mdot')){ lessonEvent('small'); } else if($('#mpad .mrect')&&!e.target.closest('.mw')){ const rc=pad.getBoundingClientRect(); rub={x:e.clientX-rc.left,y:e.clientY-rc.top}; pad.setPointerCapture(e.pointerId); } else lessonEvent('left'); } if(e.button===2){ lit('btnR',true); ripple(e.clientX,e.clientY,true); snd.click(); lessonEvent('right'); } });
+  pad.addEventListener('pointerup',e=>{ lit('btnL',false); lit('btnR',false); if(ballDrag){ ballDrag=null; const b=$('#mball').getBoundingClientRect(), g=$('#mgoal').getBoundingClientRect(); if(b.left+32>g.left&&b.top+32>g.top&&b.top+32<g.bottom){ lessonEvent('drag'); } } if(rub){ rub=null; const r=$('#mpad .mrect'); if(r){ const rr=r.getBoundingClientRect(); const all=$$('#mpad .mstar.rb').every(s=>{ const sr=s.getBoundingClientRect(); const cx=sr.left+sr.width/2, cy=sr.top+sr.height/2; return cx>rr.left&&cx<rr.right&&cy>rr.top&&cy<rr.bottom; }); if(all) lessonEvent('rubber'); else { r.style.display='none'; toast('Рамка должна охватить все три звезды'); } } } });
   pad.addEventListener('contextmenu',e=>e.preventDefault());
   pad.addEventListener('dblclick',e=>{ if(mode!=='mouse-lesson') return; lessonEvent('dbl'); });
-  pad.addEventListener('wheel',e=>{ if(mode!=='mouse-lesson') return; e.preventDefault(); const w=svg.querySelector('.whl'); w.classList.remove('litu','litd'); w.classList.add(e.deltaY>0?'litd':'litu'); clearTimeout(ML._w); ML._w=setTimeout(()=>w.classList.remove('litu','litd'),250); lessonEvent(e.deltaY>0?'wdown':'wup'); },{passive:false});
+  pad.addEventListener('wheel',e=>{ if(mode!=='mouse-lesson') return; if(e.target.closest('.mlist')) return; e.preventDefault(); const w=svg.querySelector('.whl'); w.classList.remove('litu','litd'); w.classList.add(e.deltaY>0?'litd':'litu'); clearTimeout(ML._w); ML._w=setTimeout(()=>w.classList.remove('litu','litd'),250); lessonEvent(e.deltaY>0?'wdown':'wup'); },{passive:false});
   document.addEventListener('pointerdown',e=>{ if(mode!=='mouse-lesson'||pad.contains(e.target)) return; if(e.button===0) lit('btnL',true); if(e.button===2) lit('btnR',true); });
   document.addEventListener('pointerup',()=>{ if(mode==='mouse-lesson'){ lit('btnL',false); lit('btnR',false); } });
 })();
+
 
 /* ---- игровая оболочка ---- */
 const MG={id:null,running:false,score:0,miss:0,t0:0,timer:null,cleanup:null,handlers:[]};
@@ -2761,6 +3068,18 @@ const GAMEFN={
         f.addEventListener('pointermove',mv); f.addEventListener('pointerup',up); });
     }
   },
+targets(a){
+    let iv=1100; const spawn=()=>{ if(!MG.running) return; const t=document.createElement('div'); t.className='tgt'; const s=rnd(90,130); t.style.width=t.style.height=s+'px'; t.style.left=rnd(4,90)+'%'; t.style.top=rnd(6,86)+'%'; t.style.setProperty('--d',(3.2-(1100-iv)/400)+'s'); t.addEventListener('animationend',()=>{ if(t.classList.contains('hit')) return; t.remove(); gMiss(); }); t.addEventListener('pointerdown',e=>{ if(e.button!==0||t.classList.contains('hit')) return; t.classList.add('hit'); setTimeout(()=>t.remove(),250); gScore(1); tone(rnd(700,1000),.08,'square',.08); }); a.appendChild(t); iv=Math.max(520,iv-18); MG.sp=setTimeout(spawn,iv); };
+    spawn(); MG.cleanup=()=>clearTimeout(MG.sp);
+  },
+  select(a){
+    const rect=document.createElement('div'); rect.className='selbox'; a.appendChild(rect); let st=null;
+    const layout=()=>{ $$('#garea .sitem').forEach(x=>x.remove()); const n=5+Math.floor(Math.random()*4); const cx=rnd(25,75), cy=rnd(30,70); for(let i=0;i<n;i++){ const d=document.createElement('div'); d.className='sitem star'; d.textContent='⭐'; d.style.left=(cx+rnd(-16,16))+'%'; d.style.top=(cy+rnd(-18,18))+'%'; a.appendChild(d); } for(let i=0;i<4;i++){ const d=document.createElement('div'); d.className='sitem bomb'; d.textContent='💣'; let x,y; do{ x=rnd(5,95); y=rnd(8,90); }while(Math.abs(x-cx)<22&&Math.abs(y-cy)<24); d.style.left=x+'%'; d.style.top=y+'%'; a.appendChild(d); } gMsg('Растяни рамку вокруг всех ⭐, но не задень 💣',1800); };
+    layout();
+    gOn(a,'pointerdown',e=>{ if(e.button!==0||!MG.running) return; const rc=a.getBoundingClientRect(); st={x:e.clientX-rc.left,y:e.clientY-rc.top}; rect.style.display='block'; rect.style.left=st.x+'px'; rect.style.top=st.y+'px'; rect.style.width=rect.style.height='0px'; a.setPointerCapture(e.pointerId); });
+    gOn(a,'pointermove',e=>{ if(!st) return; const rc=a.getBoundingClientRect(); const x=e.clientX-rc.left, y=e.clientY-rc.top; rect.style.left=Math.min(st.x,x)+'px'; rect.style.top=Math.min(st.y,y)+'px'; rect.style.width=Math.abs(x-st.x)+'px'; rect.style.height=Math.abs(y-st.y)+'px'; });
+    gOn(a,'pointerup',()=>{ if(!st) return; st=null; const rr=rect.getBoundingClientRect(); rect.style.display='none'; const inside=el=>{ const r=el.getBoundingClientRect(); const cx=r.left+r.width/2, cy=r.top+r.height/2; return cx>rr.left&&cx<rr.right&&cy>rr.top&&cy<rr.bottom; }; const stars=$$('#garea .star'), bombs=$$('#garea .bomb'); const got=stars.filter(inside), bb=bombs.filter(inside); if(bb.length){ gMiss(); snd.bad(); bb.forEach(b=>b.classList.add('boom')); gMsg('💥 Бомба в рамке! Аккуратнее'); setTimeout(layout,700); return; } if(got.length===stars.length&&stars.length){ gScore(stars.length); snd.ok(); got.forEach(s=>s.classList.add('got')); gMsg('✨ Все звёзды выделены! +'+stars.length); setTimeout(layout,600); } else if(got.length){ gMsg('Выделено '+got.length+' из '+stars.length+' — нужно все сразу!'); snd.tick(); } });
+  },
   lift(a){
     const N=9; let floor=1, target=0, pax=['🧑','👧','👦','👩','👴','🧒','👨','👵']; let last=0, arriveT=null, busy=false;
     const b=document.createElement('div'); b.className='building'; b.innerHTML='<div class="floors">'+Array.from({length:N},(_,i)=>'<div class="floor" data-f="'+(i+1)+'"><div class="fn">'+(i+1)+'</div><div class="fw"><i></i><i></i><i></i></div><div class="pax"></div></div>').join('')+'</div><div class="shaft"><div class="cab" id="liftCab"><div class="inside"></div><div class="door l"></div><div class="door r"></div></div></div>';
@@ -2809,12 +3128,22 @@ const WMISSIONS=[
  {t:'Создай папку на рабочем столе',s:'Щёлкни правой кнопкой по пустому месту рабочего стола → «Создать папку».',ev:(t,d)=>t==='create'&&d.type==='folder'&&d.parent==='desktop'},
  {t:'Назови папку «Школа»',s:'Правая кнопка по новой папке → «Переименовать», набери имя и нажми Enter.',ev:(t,d)=>t==='rename'&&/^школа$/i.test(d.name.trim())},
  {t:'Перетащи файл «Рисунок» в папку «Школа»',s:'Зажми значок файла левой кнопкой, веди его на папку и отпусти.',ev:(t,d)=>t==='move'&&/рисунок/i.test(d.name)&&/школа/i.test(d.into)},
+ {t:'Открой файл «Стихи» двойным щелчком',s:'Два быстрых щелчка по значку на рабочем столе — файл откроется в Блокноте.',ev:(t,d)=>t==='openfile'&&/стихи/i.test(d.name)},
  {t:'Открой папку «Документы» в Проводнике',s:'Нажми Проводник 📁 на панели задач, слева выбери «Документы».',ev:(t,d)=>t==='nav'&&d.folder==='docs'},
  {t:'Разверни окно Проводника на весь экран',s:'Кнопка ☐ рядом с крестиком или двойной щелчок по заголовку окна.',ev:(t,d)=>t==='max'&&d.app==='explorer'},
  {t:'Сверни окно Проводника',s:'Кнопка — (минус) в углу окна. Окно спрячется на панель задач, а потом его можно вернуть.',ev:(t,d)=>t==='min'&&d.app==='explorer'},
+ {t:'Переключись на другое окно через панель задач',s:'Открой два окна (например, Проводник и Блокнот), потом нажми внизу на значок того окна, которое сейчас не активно.',ev:t=>t==='switch'},
+ {t:'Перетащи окно в другое место',s:'Зажми заголовок любого окна и потяни его в сторону.',ev:t=>t==='dragwin'},
+ {t:'Создай текстовый документ в папке «Документы»',s:'В Проводнике открой Документы → правая кнопка на пустом месте → «Создать текстовый документ».',ev:(t,d)=>t==='create'&&d.type==='txt'&&d.parent==='docs'},
+ {t:'Переименуй файл «Стихи» в «Пушкин»',s:'Выбери файл → F2 (или правая кнопка → Переименовать), набери имя, Enter.',ev:(t,d)=>t==='rename'&&/^пушкин$/i.test(d.name.trim())},
+ {t:'Открой картинку «Кот» из папки «Изображения»',s:'Проводник → Изображения → двойной щелчок по «Кот».',ev:(t,d)=>t==='openfile'&&/кот/i.test(d.name)},
  {t:'Удали файл «Старое» в Корзину',s:'Правая кнопка по файлу → «Удалить». Или перетащи файл на Корзину.',ev:(t,d)=>t==='delete'&&/старое/i.test(d.name)},
+ {t:'Удали папку «Игры», а потом восстанови её из Корзины',s:'Удали папку, открой Корзину двойным щелчком, выбери «Игры» → «Восстановить».',ev:(t,d)=>t==='restore'&&/игры/i.test(d.name)},
  {t:'Очисти Корзину',s:'Открой Корзину двойным щелчком и нажми «Очистить корзину».',ev:t=>t==='empty'},
  {t:'Смени обои рабочего стола',s:'Пуск → Параметры → Персонализация → выбери картинку.',ev:t=>t==='wallpaper'},
+ {t:'Заблокируй компьютер и войди снова',s:'Пуск → ⏻ → «Заблокировать». Потом нажми на экран блокировки, чтобы войти.',ev:t=>t==='unlock'},
+ {t:'Перезагрузи компьютер',s:'Пуск → ⏻ → «Перезагрузка». Дождись, пока он включится, и войди.',ev:t=>t==='restart'},
+ {t:'Закрой все открытые окна',s:'Открой хотя бы одно окно, а потом закрой все крестиком ✕.',ev:t=>t==='close'&&W.wins.length===0},
  {t:'Выключи компьютер',s:'Пуск → кнопка ⏻ внизу → «Завершение работы».',ev:t=>t==='shutdown'},
 ];
 function wEv(type,d){
@@ -2849,7 +3178,7 @@ function wRenderDesk(){
   const c=$('#wicons'); c.innerHTML=''; let auto=0;
   wChildren('desktop').forEach(it=>{ if(!it.pos){ it.pos={x:114+Math.floor(auto/5)*100,y:110+(auto%5)*100}; auto++; } const d=document.createElement('div'); d.className='wicon'+(W.sel===it.id?' sel':''); d.dataset.id=it.id; d.style.left=it.pos.x+'px'; d.style.top=it.pos.y+'px'; d.innerHTML='<div class="ic">'+(it.type==='bin'&&wChildren('bin').length?'🗑️':ICO[it.type])+'</div><div class="lb">'+it.name+(it.type==='txt'?'.txt':it.type==='img'?'.png':'')+'</div>'; c.appendChild(d); });
 }
-function wOpenItem(id){ const it=W.items[id]; if(!it) return; if(it.type==='folder') wOpen('explorer',{folder:id}); else if(it.type==='txt') wOpen('notepad',{file:id}); else if(it.type==='img') wOpen('viewer',{file:id}); else if(it.type==='bin') wOpen('bin'); else if(it.type==='computer') wOpen('explorer',{folder:'computer'}); }
+function wOpenItem(id){ const it=W.items[id]; if(!it) return; if(it.type==='folder') wOpen('explorer',{folder:id}); else if(it.type==='txt'){ wOpen('notepad',{file:id}); wEv('openfile',{name:it.name}); } else if(it.type==='img'){ wOpen('viewer',{file:id}); wEv('openfile',{name:it.name}); } else if(it.type==='bin') wOpen('bin'); else if(it.type==='computer') wOpen('explorer',{folder:'computer'}); }
 function wCreate(type,parent){ const base=type==='folder'?'Новая папка':'Новый документ'; let name=base,n=2; while(Object.values(W.items).some(i=>i.parent===parent&&i.name===name)) name=base+' ('+(n++)+')'; const id=wItem(name,type,parent,type==='txt'?{content:''}:{}); W.sel=id; wRefreshAll(); wEv('create',{type,parent}); setTimeout(()=>wRename(id),50); return id; }
 function wRename(id){
   const it=W.items[id]; if(!it||it.fixed) return; const el=$$('.wicon,.fi').find(e=>e.dataset.id===id); if(!el) return; const lb=el.querySelector('.lb'); const inp=document.createElement('input'); inp.value=it.name; lb.replaceWith(inp); inp.focus(); inp.select();
@@ -2867,7 +3196,7 @@ const desk=$('#wdesk');
 desk.addEventListener('contextmenu',e=>{ e.preventDefault(); if(mode!=='win-desk') return; wStartClose();
   const ic=e.target.closest('.wicon'); const fi=e.target.closest('.fi'); const files=e.target.closest('.ex .files'); const binf=e.target.closest('.bin .files');
   if(ic){ const it=W.items[ic.dataset.id]; W.sel=it.id; wRenderDesk(); const items=[{t:'Открыть',ico:'📂',fn:()=>wOpenItem(it.id)}]; if(!it.fixed) items.push('hr',{t:'Переименовать',ico:'✏️',fn:()=>wRename(it.id)},{t:'Удалить',ico:'🗑️',fn:()=>wDelete(it.id)}); if(it.type==='bin') items.push('hr',{t:'Очистить корзину',ico:'🧹',fn:wEmptyBin}); wCtx(e.clientX,e.clientY,items); return; }
-  if(fi){ const win=W.wins.find(w=>w.el.contains(fi)); const it=W.items[fi.dataset.id]; if(!it) return; win.data.sel=it.id; wBody(win); const items=[{t:'Открыть',ico:'📂',fn:()=>wOpenItem(it.id)}]; if(win.app==='bin') items.push({t:'Восстановить',ico:'♻️',fn:()=>{ it.parent=it.prev||'desktop'; wRefreshAll(); }}); else items.push('hr',{t:'Переименовать',ico:'✏️',fn:()=>wRename(it.id)},{t:'Удалить',ico:'🗑️',fn:()=>wDelete(it.id)}); wCtx(e.clientX,e.clientY,items); return; }
+  if(fi){ const win=W.wins.find(w=>w.el.contains(fi)); const it=W.items[fi.dataset.id]; if(!it) return; win.data.sel=it.id; wBody(win); const items=[{t:'Открыть',ico:'📂',fn:()=>wOpenItem(it.id)}]; if(win.app==='bin') items.push({t:'Восстановить',ico:'♻️',fn:()=>{ it.parent=it.prev||'desktop'; wRefreshAll(); wEv('restore',{name:it.name}); }}); else items.push('hr',{t:'Переименовать',ico:'✏️',fn:()=>wRename(it.id)},{t:'Удалить',ico:'🗑️',fn:()=>wDelete(it.id)}); wCtx(e.clientX,e.clientY,items); return; }
   if(files){ const win=W.wins.find(w=>w.el.contains(files)); if(win.data.folder==='computer') return; wCtx(e.clientX,e.clientY,[{t:'Создать папку',ico:'📁',fn:()=>wCreate('folder',win.data.folder)},{t:'Создать текстовый документ',ico:'📄',fn:()=>wCreate('txt',win.data.folder)},'hr',{t:'Обновить',ico:'🔄',fn:()=>wBody(win)}]); return; }
   if(binf){ wCtx(e.clientX,e.clientY,[{t:'Очистить корзину',ico:'🧹',fn:wEmptyBin}]); return; }
   if(e.target.closest('.ww')||e.target.closest('.wtask')||e.target.closest('.wstart')) return;
@@ -2896,7 +3225,7 @@ function wOpen(app,data){
   $('#wwins').appendChild(el); W.wins.push(win);
   el.querySelector('.mn').addEventListener('click',()=>wMin(win)); el.querySelector('.mx').addEventListener('click',()=>wMax(win)); el.querySelector('.x').addEventListener('click',()=>wClose(win));
   el.addEventListener('pointerdown',()=>wFocus(win));
-  const t=el.querySelector('.ww-t'); t.addEventListener('pointerdown',e=>{ if(e.button!==0||e.target.closest('button')||win.max) return; const r0=el.getBoundingClientRect(), rd=desk.getBoundingClientRect(); const ox=e.clientX-r0.left, oy=e.clientY-r0.top; const mv=ev=>{ win.x=Math.max(-w+120,Math.min(rd.width-80,ev.clientX-rd.left-ox)); win.y=Math.max(0,Math.min(rd.height-90,ev.clientY-rd.top-oy)); el.style.left=win.x+'px'; el.style.top=win.y+'px'; }; const up=()=>{ document.removeEventListener('pointermove',mv); document.removeEventListener('pointerup',up); }; document.addEventListener('pointermove',mv); document.addEventListener('pointerup',up); });
+  const t=el.querySelector('.ww-t'); t.addEventListener('pointerdown',e=>{ if(e.button!==0||e.target.closest('button')||win.max) return; const r0=el.getBoundingClientRect(), rd=desk.getBoundingClientRect(); const ox=e.clientX-r0.left, oy=e.clientY-r0.top; const mv=ev=>{ win.x=Math.max(-w+120,Math.min(rd.width-80,ev.clientX-rd.left-ox)); win.y=Math.max(0,Math.min(rd.height-90,ev.clientY-rd.top-oy)); el.style.left=win.x+'px'; el.style.top=win.y+'px'; }; let mvd=false; const mvw=ev=>{ mvd=true; mv(ev); }; const up=()=>{ document.removeEventListener('pointermove',mvw); document.removeEventListener('pointerup',up); if(mvd) wEv('dragwin'); }; document.addEventListener('pointermove',mvw); document.addEventListener('pointerup',up); });
   wBody(win); wFocus(win); wTaskbar(); wEv('open',{app}); snd.click(); return win;
 }
 function wFocus(win){ W.wins.forEach(w=>w.el.classList.toggle('focus',w===win)); win.el.style.zIndex=W.z++; W.active=win; wTaskbar(); }
@@ -2932,7 +3261,7 @@ function wBody(win){
     const list=wChildren('bin'); b.innerHTML='<div class="bin"><div class="tools"><button data-a="empty">🧹 Очистить корзину</button><button data-a="restore">♻️ Восстановить</button></div><div class="files">'+(list.length?list.map(it=>'<div class="fi'+(d.sel===it.id?' sel':'')+'" data-id="'+it.id+'"><div class="ic">'+ICO[it.type]+'</div><div class="lb">'+it.name+'</div></div>').join(''):'<div class="empty" style="grid-column:1/-1;color:#9ca3af;font-weight:600;padding:30px;text-align:center">Корзина пуста</div>')+'</div></div>';
     b.querySelectorAll('.fi').forEach(fi=>fi.addEventListener('click',()=>{ d.sel=fi.dataset.id; b.querySelectorAll('.fi').forEach(x=>x.classList.toggle('sel',x===fi)); }));
     b.querySelector('[data-a="empty"]').addEventListener('click',wEmptyBin);
-    b.querySelector('[data-a="restore"]').addEventListener('click',()=>{ const it=W.items[d.sel]; if(!it) return toast('Выбери, что восстановить'); it.parent=it.prev||'desktop'; d.sel=null; wRefreshAll(); toast('♻️ Восстановлено'); });
+    b.querySelector('[data-a="restore"]').addEventListener('click',()=>{ const it=W.items[d.sel]; if(!it) return toast('Выбери, что восстановить'); it.parent=it.prev||'desktop'; d.sel=null; wRefreshAll(); toast('♻️ Восстановлено'); wEv('restore',{name:it.name}); });
   }
   if(win.app==='settings'){
     const page=d.page||'system'; const nav=[['system','🖥️','Система'],['pers','🎨','Персонализация'],['apps','📦','Приложения'],['time','🕒','Время и язык'],['access','♿','Специальные возможности']];
@@ -2948,14 +3277,353 @@ function wBody(win){
 }
 function wEmptyBin(){ const list=wChildren('bin'); if(!list.length) return toast('Корзина уже пуста'); if(!confirm('Удалить эти элементы ('+list.length+') без возможности восстановления?')) return; list.forEach(it=>{ wChildren(it.id).forEach(c=>delete W.items[c.id]); delete W.items[it.id]; }); wRefreshAll(); snd.click(); wEv('empty'); }
 /* ---- панель задач и Пуск ---- */
-function wTaskbar(){ $('#wtOpen').innerHTML=W.wins.map(w=>'<button class="open'+(W.active===w&&!w.min?' act':'')+'" data-w="'+w.id+'" title="'+w.title+'">'+w.icon+'</button>').join(''); $$('#wtOpen button').forEach(b=>b.addEventListener('click',()=>{ const w=W.wins.find(x=>x.id===b.dataset.w); if(w.min||W.active!==w){ w.min=false; w.el.classList.remove('min'); wFocus(w); } else wMin(w); })); ['explorer','notepad','settings'].forEach(a=>{ const b=$('#wtask button[data-app="'+a+'"]'); b.classList.toggle('open',W.wins.some(w=>w.app===a)); }); }
+function wTaskbar(){ $('#wtOpen').innerHTML=W.wins.map(w=>'<button class="open'+(W.active===w&&!w.min?' act':'')+'" data-w="'+w.id+'" title="'+w.title+'">'+w.icon+'</button>').join(''); $$('#wtOpen button').forEach(b=>b.addEventListener('click',()=>{ const w=W.wins.find(x=>x.id===b.dataset.w); if(w.min||W.active!==w){ w.min=false; w.el.classList.remove('min'); wFocus(w); if(W.wins.length>1) wEv('switch'); } else wMin(w); })); ['explorer','notepad','settings'].forEach(a=>{ const b=$('#wtask button[data-app="'+a+'"]'); b.classList.toggle('open',W.wins.some(w=>w.app===a)); }); }
 $$('#wtask button[data-app]').forEach(b=>b.addEventListener('click',()=>{ const a=b.dataset.app; const ex=W.wins.find(w=>w.app===a); if(ex&&a!=='notepad'){ ex.min=false; ex.el.classList.remove('min'); wFocus(ex); } else wOpen(a,a==='explorer'?{folder:'computer'}:{}); }));
 $('#wStartBtn').addEventListener('click',()=>{ const s=$('#wstart'); const open=!s.classList.contains('open'); s.classList.toggle('open',open); $('#wpow').classList.remove('open'); if(open){ snd.click(); wEv('start'); } });
 $$('#wstart .apps button').forEach(b=>b.addEventListener('click',()=>{ const a=b.dataset.app; const names={calc:['🧮','Калькулятор'],paint:['🎨','Paint'],browser:['🌐','Браузер'],km:['⌨️','КлавиМастер'],lab:['🖥️','КомпьюЛаб'],music:['🎵','Музыка'],photos:['🖼️','Фотографии']}; if(a==='computer') wOpen('explorer',{folder:'computer'}); else if(a==='explorer') wOpen('explorer',{folder:'computer'}); else if(names[a]) wOpen('stub',{ico:names[a][0],name:names[a][1]}); else wOpen(a,{}); }));
 $('#wPwrBtn').addEventListener('click',e=>{ e.stopPropagation(); $('#wpow').classList.toggle('open'); });
-$$('#wpow button').forEach(b=>b.addEventListener('click',()=>{ const a=b.dataset.pw; wStartClose(); if(a==='lock'){ wClock(); $('#wlock').classList.add('open'); return; } const sh=$('#wshut'); sh.classList.remove('off'); sh.classList.add('open'); $('#wshutT').textContent=a==='restart'?'Перезагрузка…':'Завершение работы…'; W.wins.slice().forEach(wClose); setTimeout(()=>{ if(a==='restart'){ sh.classList.remove('open'); wClock(); $('#wlock').classList.add('open'); snd.ok(); } else { sh.classList.add('off'); $('#wshutT').innerHTML='Компьютер выключен.<br><small style="opacity:.7">Нажми, чтобы включить снова</small>'; wEv('shutdown'); } },2200); }));
+$$('#wpow button').forEach(b=>b.addEventListener('click',()=>{ const a=b.dataset.pw; wStartClose(); if(a==='lock'){ wClock(); W.locked=true; $('#wlock').classList.add('open'); return; } const sh=$('#wshut'); sh.classList.remove('off'); sh.classList.add('open'); $('#wshutT').textContent=a==='restart'?'Перезагрузка…':'Завершение работы…'; W.wins.slice().forEach(wClose); setTimeout(()=>{ if(a==='restart'){ sh.classList.remove('open'); wClock(); $('#wlock').classList.add('open'); snd.ok(); wEv('restart'); } else { sh.classList.add('off'); $('#wshutT').innerHTML='Компьютер выключен.<br><small style="opacity:.7">Нажми, чтобы включить снова</small>'; wEv('shutdown'); } },2200); }));
 $('#wshut').addEventListener('click',()=>{ const sh=$('#wshut'); if(!sh.classList.contains('off')) return; sh.classList.remove('off'); $('#wshutT').textContent='Загрузка…'; setTimeout(()=>{ sh.classList.remove('open'); wClock(); $('#wlock').classList.add('open'); [392,523,659,784].forEach((f,i)=>tone(f,.35,'sine',.12,i*.12)); },1500); });
-$('#wlock').addEventListener('click',()=>{ $('#wlock').classList.remove('open'); snd.click(); });
+$('#wlock').addEventListener('click',()=>{ $('#wlock').classList.remove('open'); snd.click(); if(W.locked){ W.locked=false; wEv('unlock'); } });
+
+
+
+/* =====================================================================
+   ОБЩИЙ ДВИЖОК ВИКТОРИН (сеть, безопасность)
+   ===================================================================== */
+function genQuiz(elId,QS,storeKey,title,emoji){
+  const el=$('#'+elId); const st={i:0,score:0,qs:[],active:false};
+  const home=()=>{ const best=(S[storeKey.split('.')[0]]||{})[storeKey.split('.')[1]]; el.innerHTML='<div class="card" style="text-align:center;padding:36px"><div style="font-size:4rem">'+emoji+'</div><h2>'+title+'</h2><p class="lead" style="margin:8px 0 18px">'+QS.length+' вопросов с объяснениями. За правильный ответ — звезда, за все — ещё пять!</p>'+(best?'<p class="lead" style="margin-bottom:14px">🏆 Рекорд: '+best+' из '+QS.length+'</p>':'')+'<button class="btn" id="'+elId+'Start" style="font-size:1.2rem">▶ Начать</button></div>'; $('#'+elId+'Start').addEventListener('click',start); };
+  const start=()=>{ st.active=true; st.i=0; st.score=0; st.qs=shuffle(QS.slice()); render(); };
+  const render=()=>{ const q=st.qs[st.i]; const opts=q.opts.map((o,i)=>({o,i})); const sh=shuffle(opts.slice()); el.innerHTML='<div class="qbar"><b>Вопрос '+(st.i+1)+' из '+st.qs.length+'</b><div class="pr"><i style="width:'+(st.i/st.qs.length*100)+'%"></i></div><span class="pill">⭐ '+st.score+'</span></div><div class="qcard"><div class="qph txt">'+(q.e||'❓')+'<br>'+q.q+'</div><div><div class="qtitle">Выбери ответ</div><div class="opts">'+sh.map(x=>'<button class="opt" data-i="'+x.i+'">'+x.o+'</button>').join('')+'</div><div class="phexp" id="'+elId+'Exp" style="margin-top:10px;display:none"></div></div></div>'; speak(q.q); $$('#'+elId+' .opt').forEach(b=>b.addEventListener('click',()=>answer(b))); };
+  const answer=b=>{ const q=st.qs[st.i]; const ok=+b.dataset.i===q.a; $$('#'+elId+' .opt').forEach(x=>{ x.disabled=true; if(+x.dataset.i===q.a) x.classList.add('ok'); }); if(!ok) b.classList.add('bad'); if(ok){ st.score++; snd.ok(); } else snd.bad(); const ex=$('#'+elId+'Exp'); ex.style.display='block'; ex.innerHTML='<b>'+(ok?'✅ Верно!':'❌ Правильный ответ: '+q.opts[q.a])+'</b>'+q.x; speak((ok?'Верно! ':'Неверно. ')+q.x); setTimeout(()=>{ st.i++; if(st.i<st.qs.length) render(); else end(); },ok?2200:3600); };
+  const end=()=>{ st.active=false; const n=st.qs.length; const stars=st.score+(st.score===n?5:0); addStars(stars); const [a,b]=storeKey.split('.'); if(!S[a]) S[a]={}; const rec=st.score>(S[a][b]||0); if(rec) S[a][b]=st.score; save(); el.innerHTML='<div class="card qres"><div class="big">'+(st.score===n?'🏆':st.score>=n/2?'🌟':'🙂')+'</div><h2>'+(st.score===n?'Все ответы верные!':st.score>=n/2?'Хороший результат!':'Повтори уроки и попробуй ещё!')+'</h2><p class="lead" style="margin:8px 0 16px">Правильных: '+st.score+' из '+n+' · +'+stars+' ⭐'+(rec?' · новый рекорд!':'')+'</p><div class="row" style="justify-content:center"><button class="btn" id="'+elId+'Again">🔁 Ещё раз</button><button class="btn ghost" data-go="home">🏠 В меню</button></div></div>'; $('#'+elId+'Again').addEventListener('click',start); if(st.score===n){ confetti(200); snd.win(); } };
+  return {home,start,get active(){return st.active}};
+}
+
+/* =====================================================================
+   СЕТЬМАСТЕР: ИНТЕРНЕТ И СЕТЬ
+   ===================================================================== */
+if(!S.net) S.net={lesson:0,built:0,pkBest:0,quizBest:0};
+const NNODES={pc:{x:110,y:180,e:'💻',n:'Твой компьютер',ip:'192.168.1.5'},router:{x:360,y:180,e:'📶',n:'Роутер',ip:'192.168.1.1'},isp:{x:610,y:180,e:'🏢',n:'Провайдер',ip:'85.12.4.1'},server:{x:870,y:180,e:'🖥️',n:'Сервер school.ru',ip:'93.184.216.34'}};
+const NL={wifi:false,cut:false,lock:false,toggled:new Set(),busy:false,dnsAsked:false,failed:false,genUsed:false};
+const NSTEPS=[
+ {t:'Что такое сеть',p:'Сеть — это когда компьютеры соединены и могут передавать друг другу сообщения. Интернет — самая большая сеть в мире: в ней миллиарды компьютеров, телефонов и серверов.',f:'Первая сеть ARPANET появилась в 1969 году и соединяла всего 4 компьютера.',task:'Нажми на свой компьютер на схеме',ev:(t,d)=>t==='node'&&d==='pc'},
+ {t:'Роутер — почтальон дома',p:'Роутер (маршрутизатор) — коробочка с антеннами. Он соединяет все устройства дома в одну сеть и передаёт их сообщения в интернет и обратно.',f:'Слово «роутер» от английского route — «маршрут». Он выбирает, куда отправить каждое сообщение.',task:'Нажми на роутер',ev:(t,d)=>t==='node'&&d==='router'},
+ {t:'IP-адрес — адрес компьютера',p:'У каждого дома есть адрес, чтобы почтальон знал, куда нести письмо. У каждого компьютера в сети есть IP-адрес — четыре числа через точку, например 192.168.1.5.',f:'Адреса, начинающиеся на 192.168 — домашние. Их не видно из интернета, как номер квартиры внутри дома.',task:'Найди на схеме адрес 192.168.1.5 и нажми на него',ev:(t,d)=>t==='ip'&&d==='pc'},
+ {t:'Wi-Fi или кабель',p:'Компьютер соединяется с роутером кабелем (надёжно и быстро) или по Wi-Fi — радиоволнами без проводов (удобно, но чуть медленнее и зависит от стен).',f:'Wi-Fi ловит примерно на 30–50 метров. Толстые стены и микроволновка ему мешают.',task:'Нажми на линию между компьютером и роутером — переключи на Wi-Fi, а потом обратно на кабель',ev:()=>NL.toggled.size>=2},
+ {t:'Провайдер — дорога в интернет',p:'Провайдер — компания, которая протянула кабель к твоему дому и соединяет твой роутер с остальным интернетом. За это семья платит каждый месяц.',f:'Кабели провайдеров тянутся по подъездам, под землёй и даже по дну океанов между странами.',task:'Нажми на провайдера',ev:(t,d)=>t==='node'&&d==='isp'},
+ {t:'Сервер — дом сайта',p:'Сайты живут на серверах — мощных компьютерах, которые работают круглые сутки без монитора и клавиатуры. Когда ты открываешь сайт, твой компьютер просит у сервера страницу.',f:'Серверы стоят в огромных залах — дата-центрах — тысячами, и их охлаждают как холодильник.',task:'Нажми на сервер',ev:(t,d)=>t==='node'&&d==='server'},
+ {t:'Запрос и ответ',p:'Открыть сайт — как отправить письмо: компьютер посылает запрос «дай страницу», он летит через роутер и провайдера к серверу, а сервер присылает страницу обратно. Всё — за долю секунды!',f:'Сообщения в сети режутся на маленькие кусочки — пакеты. Каждый пакет едет сам, а на месте они собираются.',task:'Нажми «Открыть сайт» и проследи за пакетом',btn:'🌐 Открыть сайт',act:'open',ev:t=>t==='loaded'},
+ {t:'DNS — телефонная книга интернета',p:'Людям удобно помнить имя school.ru, а компьютерам нужен адрес из чисел. Специальный сервер DNS переводит имя сайта в IP-адрес — как телефонная книга переводит имя друга в номер.',f:'DNS-серверы отвечают на миллионы вопросов «какой адрес у сайта?» каждую секунду.',task:'Нажми «Спросить DNS», а потом выбери правильный адрес сайта school.ru',btn:'📖 Спросить DNS',act:'dns',ev:t=>t==='dnsok'},
+ {t:'Если кабель выдернуть',p:'Если кабель от провайдера отключить, роутер и устройства дома останутся в домашней сети, но интернета не будет. Так можно понять, где поломка: дома или у провайдера.',f:'Первое, что делают мастера, когда «не работает интернет» — проверяют кабели и перезагружают роутер.',task:'Нажми на кабель между роутером и провайдером, чтобы его «выдернуть», попробуй открыть сайт, потом почини кабель',btn:'🌐 Открыть сайт',act:'open',ev:()=>NL.failed&&!NL.cut},
+ {t:'Скорость интернета',p:'Скорость измеряют в мегабитах в секунду (Мбит/с). При 100 Мбит/с фильм скачается за минуту. Пинг — время, за которое пакет долетает до сервера и обратно, в миллисекундах.',f:'До сервера в другой стране пакет летит 100–200 миллисекунд — быстрее, чем ты моргаешь.',task:'Нажми «Проверить скорость»',btn:'🚀 Проверить скорость',act:'speed',ev:t=>t==='speed'},
+ {t:'Защищённый Wi-Fi',p:'Роутер защищают паролем Wi-Fi, чтобы соседи и чужие не подключались к твоей сети. Домашний Wi-Fi — с замочком 🔒. Открытые сети без замочка в кафе и на вокзале могут быть опасны.',f:'Пароль от Wi-Fi обычно написан на наклейке снизу роутера. Его можно поменять в настройках.',task:'Нажми на роутер, чтобы включить защиту паролем 🔒',ev:t=>t==='lock'},
+];
+function renderNetHome(){
+  const items=[['net-lesson','📡','Как работает интернет','11 шагов: роутер, IP-адрес, провайдер, сервер, DNS, скорость',S.net.lesson>=NSTEPS.length?'пройдено':S.net.lesson+' / '+NSTEPS.length,S.net.lesson>=NSTEPS.length],['net-build','🏠','Собери домашнюю сеть','Поставь роутер, подключи кабели и Wi-Fi, проверь интернет',S.net.built?'собрано: '+S.net.built:'ещё не собирал',!!S.net.built],['net-packet','✉️','Доставь пакет','Проведи пакет по сети к серверу самым коротким путём — 6 уровней',S.net.pkBest?'лучший результат: '+S.net.pkBest+' ⭐':'ещё не играл',S.net.pkBest>=15],['net-quiz','❓','Викторина','10 вопросов про сеть и интернет',S.net.quizBest?'рекорд: '+S.net.quizBest+' / 10':'ещё не играл',S.net.quizBest>=10]];
+  $('#nhome').innerHTML=items.map((it,i)=>'<div class="catcard'+(it[5]?' done':'')+'" data-go="'+it[0]+'"><span class="stp">'+(it[5]?'✓ готово':'шаг '+(i+1))+'</span><div class="em">'+it[1]+'</div><div class="nm">'+it[2]+'</div><div class="ds">'+it[3]+'</div><div class="cnt">'+it[4]+'</div></div>').join('');
+}
+/* ---- урок ---- */
+function nDiagram(){
+  const node=(id,o)=>'<g class="node" data-node="'+id+'" transform="translate('+(o.x-75)+' '+(o.y-70)+')"><rect class="bx" width="150" height="120" rx="18"/><text x="75" y="52" font-size="40" text-anchor="middle">'+o.e+'</text><text x="75" y="84" font-size="13" text-anchor="middle">'+o.n+'</text>'+(id==='router'?'<text class="lockic" x="128" y="28" font-size="18" text-anchor="middle">'+(NL.lock?'🔒':'🔓')+'</text>':'')+'<g class="ipl" data-ip="'+id+'" transform="translate(20 96)"><rect width="110" height="20" rx="6"/><text x="55" y="14" font-size="11" text-anchor="middle" font-family="Consolas,monospace">'+o.ip+'</text></g></g>';
+  const link=(id,a,b,cls)=>'<path class="link '+cls+'" data-link="'+id+'" d="M'+(a.x+75)+' '+a.y+' L'+(b.x-75)+' '+b.y+'"/>';
+  const cloud='<ellipse class="cloud" cx="740" cy="100" rx="90" ry="34"/><text x="740" y="106" font-size="15" fill="#c7d2fe" text-anchor="middle" font-family="Nunito" font-weight="900">ИНТЕРНЕТ</text>';
+  $('#ndiag').innerHTML='<svg viewBox="0 0 1000 300">'+cloud+link('l1',NNODES.pc,NNODES.router,NL.wifi?'wifi':'')+link('l2',NNODES.router,NNODES.isp,NL.cut?'cut':'')+link('l3',NNODES.isp,NNODES.server,'')+Object.entries(NNODES).map(([id,o])=>node(id,o)).join('')+'<g class="scr" id="nscr" style="display:none"><rect x="60" y="235" width="100" height="56" rx="6" fill="#0ea5e9"/><rect x="66" y="241" width="88" height="8" rx="2" fill="#fff"/><rect x="66" y="254" width="60" height="5" rx="2" fill="#e0f2fe"/><rect x="66" y="263" width="80" height="5" rx="2" fill="#e0f2fe"/><rect x="66" y="272" width="50" height="5" rx="2" fill="#e0f2fe"/><text x="110" y="248" font-size="7" fill="#0369a1" text-anchor="middle" font-family="Nunito" font-weight="900">school.ru</text></g><text class="pkt" id="npkt" x="0" y="0" style="display:none">✉️</text><text id="nmsg" x="500" y="282" font-size="18" fill="#fca5a5" text-anchor="middle" font-family="Nunito" font-weight="900"></text></svg>';
+  $$('#ndiag .node').forEach(n=>n.addEventListener('click',e=>{ if(e.target.closest('.ipl')) return; const id=n.dataset.node; n.classList.add('hl'); setTimeout(()=>n.classList.remove('hl'),600); snd.click(); if(id==='router'&&NSTEPS[S.net.lesson]&&NSTEPS[S.net.lesson].ev('lock')){ NL.lock=!NL.lock; n.querySelector('.lockic').textContent=NL.lock?'🔒':'🔓'; if(NL.lock) nEv('lock'); return; } nEv('node',id); }));
+  $$('#ndiag .ipl').forEach(l=>l.addEventListener('click',()=>{ l.classList.add('hl'); setTimeout(()=>l.classList.remove('hl'),600); snd.click(); nEv('ip',l.dataset.ip); }));
+  $('#ndiag [data-link="l1"]').addEventListener('click',()=>{ NL.wifi=!NL.wifi; NL.toggled.add(NL.wifi?'wifi':'cable'); nDiagram(); snd.click(); toast(NL.wifi?'📶 Теперь по Wi-Fi':'🔌 Теперь по кабелю'); nEv('toggle'); });
+  $('#ndiag [data-link="l2"]').addEventListener('click',()=>{ NL.cut=!NL.cut; nDiagram(); snd.click(); toast(NL.cut?'❌ Кабель провайдера выдернут':'✅ Кабель подключён'); nEv('cut'); });
+}
+function nEv(t,d){ const i=S.net.lesson; const st=NSTEPS[i]; if(!st||!st.ev(t,d)) return; S.net.lesson=i+1; save(); addStars(1); snd.ok(); nRenderStep(true); if(S.net.lesson>=NSTEPS.length){ addStars(5); confetti(200); snd.win(); speak('Урок пройден! Теперь ты знаешь, как работает интернет.'); } else setTimeout(()=>speak(NSTEPS[S.net.lesson].t+'. '+NSTEPS[S.net.lesson].p),300); }
+function nRenderStep(flash){
+  const i=Math.min(S.net.lesson,NSTEPS.length); const el=$('#nstep');
+  if(i>=NSTEPS.length){ el.innerHTML='<div class="num">УРОК ПРОЙДЕН</div><h3>🎉 Ты знаешь, как работает интернет!</h3><p>Компьютер → роутер → провайдер → сервер. У каждого есть IP-адрес, DNS переводит имена в адреса, а Wi-Fi защищён паролем.</p><div class="dots">'+NSTEPS.map(()=>'<i class="done"></i>').join('')+'</div><div class="ctl"><button class="btn" data-go="net-build">🏠 Собрать домашнюю сеть</button><button class="btn ghost" id="nRestart">↺ Пройти заново</button></div>'; $('#nRestart').addEventListener('click',()=>{ S.net.lesson=0; save(); NL.toggled.clear(); NL.failed=false; NL.cut=false; NL.lock=false; nDiagram(); nRenderStep(); }); return; }
+  const st=NSTEPS[i];
+  el.innerHTML='<div class="num">ШАГ '+(i+1)+' ИЗ '+NSTEPS.length+'</div><h3>'+st.t+'</h3><p>'+st.p+'</p><div class="fact">💡 '+st.f+'</div><div class="task'+(flash?' done':'')+'" id="ntask">'+(flash?'✅ Готово!':'👉 '+st.task)+'</div><div id="nextra"></div><div class="dots">'+NSTEPS.map((s,k)=>'<i class="'+(k<i?'done':k===i?'cur':'')+'"></i>').join('')+'</div><div class="ctl">'+(st.btn?'<button class="btn" id="nAct">'+st.btn+'</button>':'')+'<button class="btn ghost sm" id="nSpeak">🔊 Прочитать</button>'+(i>0?'<button class="btn ghost sm" id="nPrev">← Назад</button>':'')+'</div>';
+  if(flash){ setTimeout(()=>nRenderStep(false),900); return; }
+  $('#nSpeak').addEventListener('click',()=>speak(st.t+'. '+st.p+' '+st.task,true));
+  if($('#nPrev')) $('#nPrev').addEventListener('click',()=>{ S.net.lesson=i-1; save(); nRenderStep(); });
+  if(st.btn) $('#nAct').addEventListener('click',()=>nAction(st.act));
+}
+function nMove(seq,cb){
+  const pk=$('#npkt'); pk.style.display=''; let k=0; NL.busy=true;
+  const hop=()=>{ if(k>=seq.length-1){ NL.busy=false; cb&&cb(); return; } const a=NNODES[seq[k]], b=NNODES[seq[k+1]]; const l=$$('#ndiag .link').find(x=>x.dataset.link===({pc:'l1',router:'l2',isp:'l3'})[seq[k]<seq[k+1]?seq[k]:seq[k+1]]); const t0=performance.now(); const an=()=>{ const p=Math.min(1,(performance.now()-t0)/650); pk.setAttribute('x',a.x+(b.x-a.x)*p-15); pk.setAttribute('y',a.y-80-Math.sin(p*Math.PI)*30); if(p<1) requestAnimationFrame(an); else { k++; hop(); } }; snd.tick(); an(); };
+  hop();
+}
+const NORD={pc:0,router:1,isp:2,server:3};
+function nAction(act){
+  if(NL.busy) return; const msg=$('#nmsg');
+  if(act==='open'){ msg.textContent=''; $('#nscr').style.display='none'; if(NL.cut){ nMove(['pc','router'],()=>{ $('#npkt').style.display='none'; msg.textContent='❌ Нет подключения к интернету: кабель провайдера отключён'; snd.bad(); NL.failed=true; speak('Нет подключения к интернету. Проверь кабель провайдера.'); nEv('fail'); }); return; } nMove(['pc','router','isp','server'],()=>{ $('#npkt').textContent='📄'; nMove(['server','isp','router','pc'],()=>{ $('#npkt').style.display='none'; $('#npkt').textContent='✉️'; $('#nscr').style.display=''; snd.ok(); nEv('loaded'); }); }); }
+  if(act==='dns'){ const ex=$('#nextra'); ex.innerHTML='<p style="font-weight:800;margin:6px 0">📖 DNS отвечает: <span style="font-family:Consolas,monospace">school.ru → ???</span><br>Какой из адресов — адрес сервера school.ru?</p><div class="dnsopts">'+shuffle(['93.184.216.34','192.168.1.1','85.12.4.1']).map(a=>'<button data-a="'+a+'">'+a+'</button>').join('')+'</div>'; snd.click(); $$('#nextra button').forEach(b=>b.addEventListener('click',()=>{ const ok=b.dataset.a==='93.184.216.34'; b.classList.add(ok?'ok':'bad'); if(ok){ nEv('dnsok'); } else { snd.bad(); toast('Это адрес '+(b.dataset.a==='192.168.1.1'?'роутера':'провайдера')+'. Посмотри адрес под сервером!',2500); } })); }
+  if(act==='speed'){ const ex=$('#nextra'); ex.innerHTML='<div class="speedo"><span>⬇️</span><div class="bar"><i id="spb"></i></div><b id="spv">0 Мбит/с</b></div><div class="speedo" style="margin-top:6px"><span>⏱</span><b id="spp">пинг: …</b></div>'; NL.busy=true; const t0=performance.now(); const target=100+Math.round(Math.random()*80); requestAnimationFrame(()=>{ $('#spb').style.width='90%'; }); const iv=setInterval(()=>{ const p=Math.min(1,(performance.now()-t0)/2000); $('#spv').textContent=Math.round(target*p)+' Мбит/с'; snd.tick(); if(p>=1){ clearInterval(iv); $('#spp').textContent='пинг: '+(8+Math.round(Math.random()*20))+' мс'; NL.busy=false; snd.ok(); nEv('speed'); } },120); }
+}
+/* ---- домашняя сеть ---- */
+const NDEV={router:{e:'📶',n:'Роутер'},pc:{e:'🖥️',n:'Компьютер'},printer:{e:'🖨️',n:'Принтер'},laptop:{e:'💻',n:'Ноутбук'},phone:{e:'📱',n:'Телефон'},tv:{e:'📺',n:'Телевизор'}};
+const NZONES={router:{x:50,y:30,l:'📶 Тумба в коридоре'},pc:{x:17,y:33,l:'🖥️ Стол в кабинете'},printer:{x:17,y:50,l:'🖨️ Полка'},phone:{x:83,y:34,l:'📱 Кровать'},laptop:{x:22,y:78,l:'💻 Диван'},tv:{x:50,y:76,l:'📺 Тумба под ТВ'}};
+const NB={placed:{},conn:{},sel:null,src:null,done:false,drag:null};
+const WIFIPASS='24681357';
+function renderNetBuild(){
+  NB.placed={}; NB.conn={}; NB.sel=null; NB.src=null; NB.done=false;
+  const h=$('#house');
+  h.innerHTML='<div class="roof"></div>'+[['Кабинет',0,9,33,46],['Коридор',33,9,34,46],['Детская',67,9,33,46],['Гостиная',0,55,62,45],['Кухня',62,55,38,45]].map(r=>'<div class="room" style="left:'+r[1]+'%;top:'+r[2]+'%;width:'+r[3]+'%;height:'+r[4]+'%"><b>'+r[0]+'</b></div>').join('')+'<div class="room" style="left:62%;top:55%;width:38%;height:45%;background:none;border:0"><div style="position:absolute;right:10%;bottom:12%;font-size:3rem;opacity:.5">🍳</div></div>'+
+    Object.entries(NZONES).map(([id,z])=>'<div class="zone" data-zone="'+id+'" style="left:calc('+z.x+'% - 60px);top:calc('+z.y+'% - 40px);width:120px;height:80px"><span>'+z.l+'</span></div>').join('')+
+    '<div class="wall" id="nwall"><div class="plug"></div><b>Интернет от провайдера</b></div><svg class="ncab" id="ncab"></svg><div class="rpanel" id="rpanel"></div><div class="wifipop" id="wifipop"></div>';
+  const tray=$('#ntray'); tray.innerHTML='<div class="task" id="ntaskbar" style="padding:10px 14px;min-height:60px"><div class="ic" id="ntIc">🏠</div><div class="tt"><b id="ntT"></b><span id="ntS"></span></div></div><h3>📦 Устройства</h3><div class="devs" id="ndevs">'+Object.entries(NDEV).map(([id,d])=>'<div class="tray-item" data-dev="'+id+'"><div class="ic">'+d.e+'</div><div class="nm">'+d.n+'</div></div>').join('')+'</div><div class="note">👆 <b>Нажми</b> устройство, потом на место в доме (или перетащи). Чтобы подключить кабель — нажми розетку или компьютер, потом порт на роутере. Ноутбук, телефон и телевизор — по Wi-Fi.</div><button class="btn ok" id="nCheck" style="justify-content:center">🔍 Проверить интернет</button><button class="btn ghost sm" id="nRestartB">↺ Заново</button>';
+  $('#nCheck').addEventListener('click',nCheck); $('#nRestartB').addEventListener('click',renderNetBuild);
+  $('#nwall').addEventListener('click',()=>{ if(NB.conn.wan) return toast('Кабель провайдера уже подключён'); nSrc('wan'); });
+  $$('#ndevs .tray-item').forEach(it=>{ it.addEventListener('pointerdown',e=>{ if(it.classList.contains('done')) return; e.preventDefault(); NB.drag={id:it.dataset.dev,x0:e.clientX,y0:e.clientY,moved:false,ghost:null,it}; try{ it.setPointerCapture(e.pointerId); }catch(err){} }); });
+  $$('#house .zone').forEach(z=>z.addEventListener('click',()=>{ if(NB.sel) nPlace(NB.sel,z.dataset.zone); }));
+  nTask(); fitHouse();
+}
+function fitHouse(){ const w=$('#houseWrap'), h=$('#house'); if(!w) return; const W=w.clientWidth, H=w.clientHeight; let sw=W, sh=W*0.62; if(sh>H){ sh=H; sw=H/0.62; } h.style.width=sw+'px'; h.style.height=sh+'px'; }
+addEventListener('resize',()=>{ if(mode==='net-build') fitHouse(); });
+document.addEventListener('pointermove',e=>{ const d=NB.drag; if(!d) return; if(!d.moved&&Math.hypot(e.clientX-d.x0,e.clientY-d.y0)<8) return; if(!d.moved){ d.moved=true; const g=document.createElement('div'); g.className='dragghost'; g.style.cssText='width:90px;height:90px;font-size:3.4rem;text-align:center;line-height:90px'; g.textContent=NDEV[d.id].e; document.body.appendChild(g); d.ghost=g; $$('#house .zone').forEach(z=>z.classList.toggle('hint',z.dataset.zone===d.id&&!z.classList.contains('filled'))); } d.ghost.style.left=(e.clientX-45)+'px'; d.ghost.style.top=(e.clientY-45)+'px'; $$('#house .zone.over').forEach(z=>z.classList.remove('over')); const z=document.elementsFromPoint(e.clientX,e.clientY).map(x=>x.closest&&x.closest('.zone')).find(Boolean); if(z) z.classList.add('over'); });
+document.addEventListener('pointerup',e=>{ const d=NB.drag; if(!d) return; NB.drag=null; $$('#house .zone').forEach(z=>z.classList.remove('hint','over')); if(!d.moved){ NB.sel=NB.sel===d.id?null:d.id; $$('#ndevs .tray-item').forEach(x=>x.classList.toggle('sel',x.dataset.dev===NB.sel)); $$('#house .zone').forEach(z=>z.classList.toggle('hint',!!NB.sel&&z.dataset.zone===NB.sel&&!z.classList.contains('filled'))); if(NB.sel) snd.click(); return; } d.ghost.remove(); const z=document.elementsFromPoint(e.clientX,e.clientY).map(x=>x.closest&&x.closest('.zone')).find(Boolean); if(z) nPlace(d.id,z.dataset.zone); });
+function nPlace(id,zone){
+  if(NB.placed[id]) return; if(zone!==id){ snd.bad(); const m={router:'Роутер лучше поставить в центре дома — в коридоре, чтобы Wi-Fi доставал во все комнаты.',pc:'Компьютер ставят на стол в кабинете — ему нужен кабель до роутера.',printer:'Принтер — на полку рядом с компьютером.',phone:'Телефон — в детской.',laptop:'Ноутбук — на диван в гостиной, ему не нужны провода.',tv:'Телевизор — на тумбу в гостиной.'}[id]; nTask(m,'bad'); speak(m); return; }
+  NB.placed[id]=true; NB.sel=null; const z=$$('#house .zone').find(x=>x.dataset.zone===zone); z.classList.add('filled'); z.classList.remove('hint'); const p=NZONES[zone];
+  const d=document.createElement('div'); d.className='dev'; d.dataset.dev=id; d.style.left=p.x+'%'; d.style.top=p.y+'%'; d.innerHTML='<div class="ic">'+NDEV[id].e+'</div><div class="lb">'+NDEV[id].n+'</div>'+(id!=='router'?'<div class="st">✕</div>':''); $('#house').appendChild(d);
+  d.addEventListener('click',()=>nDevClick(id));
+  $$('#ndevs .tray-item').forEach(x=>{ x.classList.toggle('done',!!NB.placed[x.dataset.dev]); x.classList.remove('sel'); }); $$('#house .zone').forEach(x=>x.classList.remove('hint'));
+  snd.ok(); if(id==='router') nRouterPanel(); nTask('Отлично! '+NDEV[id].n+' на месте.','good');
+}
+function nRouterPanel(){
+  const rp=$('#rpanel'); rp.style.left='50%'; rp.style.top='40%'; rp.classList.add('open');
+  rp.innerHTML='<div class="ttl"><span>ЗАДНЯЯ ПАНЕЛЬ РОУТЕРА</span><span>ПОРТЫ</span></div><div class="ports"><div class="port wan" data-port="wan">WAN<br>🌐</div><div class="port lan" data-port="lan1">LAN 1</div><div class="port lan" data-port="lan2">LAN 2</div><div class="port lan" data-port="lan3">LAN 3</div><div class="port lan" data-port="lan4">LAN 4</div><div class="port pwr">⏻</div></div><div class="leds"><i class="on"></i><i id="ledWan"></i><i id="ledWifi" class="on"></i><i id="ledLan"></i></div><div class="sticker">Wi-Fi: <b>Дом_WiFi</b> · Пароль: <b>'+WIFIPASS+'</b><br><span style="color:#64748b">Синий порт WAN — кабель от провайдера. Жёлтые LAN — домашние устройства.</span></div>';
+  $$('#rpanel .port[data-port]').forEach(pt=>pt.addEventListener('click',()=>nPort(pt.dataset.port)));
+}
+function nSrc(src){ NB.src=src; $('#nwall').classList.toggle('sel',src==='wan'); $$('#house .dev').forEach(d=>d.classList.toggle('sel',d.dataset.dev===src)); if(!NB.placed.router){ toast('Сначала поставь роутер'); return; } $$('#rpanel .port').forEach(p=>p.classList.toggle('hint',src==='wan'?p.dataset.port==='wan':p.dataset.port&&p.dataset.port.startsWith('lan')&&!p.classList.contains('used'))); snd.click(); nTask(src==='wan'?'Кабель от провайдера в руках. Нажми на нужный порт роутера.':'Кабель от устройства в руках. Нажми на свободный порт роутера.','hint'); }
+function nPort(port){
+  const src=NB.src; if(!src) return toast('Сначала выбери, что подключать: розетку или компьютер'); const pt=$$('#rpanel .port').find(p=>p.dataset.port===port);
+  if(pt.classList.contains('used')) return toast('Этот порт занят');
+  if(src==='wan'&&port!=='wan'){ snd.bad(); nTask('Это жёлтый порт LAN — для домашних устройств. Кабель от провайдера — в синий порт WAN!','bad'); speak('Кабель от провайдера — в синий порт WAN.'); return; }
+  if(src!=='wan'&&port==='wan'){ snd.bad(); nTask('Синий порт WAN — только для провайдера. Устройства — в жёлтые порты LAN.','bad'); speak('Устройства подключают в жёлтые порты LAN.'); return; }
+  pt.classList.add('used'); $$('#rpanel .port').forEach(p=>p.classList.remove('hint')); NB.conn[src]=port; NB.src=null; $('#nwall').classList.remove('sel'); $$('#house .dev').forEach(d=>d.classList.remove('sel'));
+  nCable(src,src==='wan'?'wan':'eth'); if(src==='wan') $('#ledWan').classList.add('on'); else { $('#ledLan').classList.add('on'); nDevOn(src); }
+  snd.ok(); nTask(src==='wan'?'Интернет пришёл в роутер! Лампочка WAN горит.':NDEV[src].n+' подключён кабелем.','good');
+}
+function nDevOn(id){ const d=$$('#house .dev').find(x=>x.dataset.dev===id); if(d){ d.classList.add('on'); d.querySelector('.st').textContent='✓'; } }
+function nCable(id,cls){
+  const h=$('#house').getBoundingClientRect(); const r=NZONES.router; const from=id==='wan'?{x:(parseFloat(getComputedStyle($('#nwall')).left)+35)/h.width*100,y:44+35/h.height*100}:NZONES[id];
+  const p=document.createElementNS('http://www.w3.org/2000/svg','path'); p.setAttribute('class',cls); p.setAttribute('vector-effect','non-scaling-stroke'); p.dataset.dev=id; const mx=(from.x+r.x)/2; p.setAttribute('d','M'+from.x+' '+from.y+' C'+mx+' '+from.y+' '+mx+' '+r.y+' '+r.x+' '+r.y); $('#ncab').setAttribute('viewBox','0 0 100 100'); $('#ncab').setAttribute('preserveAspectRatio','none'); $('#ncab').appendChild(p);
+}
+function nDevClick(id){
+  if(id==='router'){ $('#rpanel').classList.toggle('open'); return; }
+  if(NB.conn[id]) return toast(NDEV[id].n+' уже подключён');
+  if(id==='pc'||id==='printer'){ nSrc(id); if(id==='printer') toast('Принтер можно подключить кабелем в LAN-порт'); return; }
+  if(!NB.placed.router) return toast('Сначала поставь роутер');
+  const pop=$('#wifipop'); const z=NZONES[id]; pop.style.left=Math.min(80,Math.max(20,z.x))+'%'; pop.style.top=(z.y>50?z.y-45:z.y+8)+'%'; pop.classList.add('open');
+  pop.innerHTML='<h4>📶 Wi-Fi сети — '+NDEV[id].n+' <span style="cursor:pointer" id="wpClose">✕</span></h4><div class="net" data-n="home">🔒 Дом_WiFi <small>▂▄▆█</small></div><div class="net" data-n="nb">🔒 Сосед_5G <small>▂▄▆</small></div><div class="net" data-n="cafe">⚠️ Кафе_Free <small>открытая ▂</small></div><div id="wpPass"></div>';
+  $('#wpClose').addEventListener('click',()=>pop.classList.remove('open'));
+  $$('#wifipop .net').forEach(n=>n.addEventListener('click',()=>{ const k=n.dataset.n; if(k==='nb'){ snd.bad(); nTask('Это сеть соседей — чужая! Подключайся только к своей: Дом_WiFi.','bad'); speak('Это чужая сеть. Подключайся к своей.'); return; } if(k==='cafe'){ snd.bad(); nTask('Открытая сеть без пароля — и не твоя. В таких сетях чужие могут видеть, что ты делаешь. Выбери Дом_WiFi.','bad'); speak('Открытая сеть опасна. Выбери домашнюю сеть с замочком.'); return; }
+    $('#wpPass').innerHTML='<div style="font-weight:800;font-size:.85rem;margin-top:6px">Пароль сети Дом_WiFi (он на наклейке роутера):</div><input id="wpIn" inputmode="numeric" maxlength="12" autocomplete="off"><div class="err" id="wpErr"></div><div class="keys">'+['1','2','3','4','5','6','7','8','9','0','⌫','OK'].map(k=>'<button data-k="'+k+'">'+k+'</button>').join('')+'</div>';
+    const inp=$('#wpIn'); inp.focus(); const tryC=()=>{ if(inp.value===WIFIPASS){ pop.classList.remove('open'); NB.conn[id]='wifi'; nCable(id,'wifi'); nDevOn(id); snd.ok(); nTask(NDEV[id].n+' подключён к Wi-Fi!','good'); speak(NDEV[id].n+' подключён.'); } else { $('#wpErr').textContent='Неверный пароль. Посмотри на наклейку роутера.'; snd.bad(); inp.value=''; } };
+    $$('#wpPass .keys button').forEach(b=>b.addEventListener('click',()=>{ const k=b.dataset.k; if(k==='OK') tryC(); else if(k==='⌫') inp.value=inp.value.slice(0,-1); else inp.value+=k; }));
+    inp.addEventListener('keydown',e=>{ e.stopPropagation(); if(e.key==='Enter') tryC(); });
+  }));
+  snd.click();
+}
+function nTask(msg,kind){
+  const t=$('#ntaskbar'); t.className='task'+(kind?' '+kind:''); if(msg){ $('#ntIc').textContent=kind==='bad'?'❌':kind==='good'?'✅':'💡'; $('#ntT').textContent=msg; $('#ntS').textContent=''; clearTimeout(nTask._t); nTask._t=setTimeout(()=>nTask(),kind==='bad'?3500:1800); return; }
+  const need=[['router','Поставь роутер','В коридор — в центр дома, чтобы Wi-Fi доставал везде.',()=>NB.placed.router],['wan','Подключи интернет к роутеру','Нажми на розетку провайдера, потом на синий порт WAN роутера.',()=>NB.conn.wan],['pc','Поставь компьютер и подключи кабелем','На стол в кабинете. Потом нажми на компьютер и на жёлтый порт LAN.',()=>NB.conn.pc],['laptop','Подключи ноутбук по Wi-Fi','Поставь на диван, нажми на него и выбери сеть Дом_WiFi. Пароль — на роутере.',()=>NB.conn.laptop],['phone','Подключи телефон по Wi-Fi','В детской. Своя сеть — с замочком 🔒.',()=>NB.conn.phone],['tv','Подключи телевизор','На тумбу в гостиной, Wi-Fi Дом_WiFi.',()=>NB.conn.tv],['printer','Подключи принтер','На полку в кабинете, кабелем в LAN.',()=>NB.conn.printer],['check','Проверь интернет','Нажми кнопку «Проверить интернет» справа.',()=>NB.done]];
+  const cur=need.find(n=>!n[3]()); $('#ntIc').textContent=cur?'🎯':'🏆'; $('#ntT').textContent=cur?cur[1]:'Домашняя сеть готова!'; $('#ntS').textContent=cur?cur[2]:'Все устройства в интернете.';
+}
+function nCheck(){
+  if(NB.done) return; const missing=Object.keys(NDEV).filter(id=>id!=='router'&&!NB.conn[id]); if(!NB.conn.wan){ snd.bad(); nTask('Ни у кого нет интернета: роутер не подключён к провайдеру (порт WAN).','bad'); speak('Роутер не подключён к провайдеру.'); return; }
+  const paths=$$('#ncab path'); paths.forEach((p,i)=>setTimeout(()=>p.classList.add('flow'),i*250));
+  setTimeout(()=>{ paths.forEach(p=>p.classList.remove('flow')); if(missing.length){ snd.bad(); nTask('Интернет есть, но не подключены: '+missing.map(m=>NDEV[m].n).join(', ')+'.','bad'); speak('Не подключены: '+missing.map(m=>NDEV[m].n).join(', ')); return; } NB.done=true; S.net.built=(S.net.built||0)+1; save(); addStars(12); confetti(220); snd.win(); nTask(); speak('Ура! Домашняя сеть собрана, у всех устройств есть интернет! Плюс двенадцать звёзд.'); toast('🏆 Сеть собрана! +12 ⭐',3000); },paths.length*250+900);
+}
+/* ---- доставь пакет ---- */
+const PKL=[
+ {n:[['Ты',8,50],['Роутер',32,50],['Провайдер',58,50],['Сервер',88,50]],e:[[0,1],[1,2],[2,3]],s:0,t:3},
+ {n:[['Ты',8,50],['Роутер',28,50],['Узел А',52,22],['Узел Б',52,78],['Сервер',88,50]],e:[[0,1],[1,2],[1,3],[2,4],[3,4]],s:0,t:4,slow:[3]},
+ {n:[['Ты',8,50],['Роутер',24,50],['А',42,20],['Б',42,80],['В',60,50],['Г',60,15],['Тупик',78,80],['Сервер',90,30]],e:[[0,1],[1,2],[1,3],[2,4],[3,4],[2,5],[5,7],[4,7],[3,6]],s:0,t:7},
+ {n:[['Ты',6,50],['Роутер',20,50],['А',34,22],['Б',34,78],['В',50,22],['Г',50,78],['Д',66,22],['Е',66,78],['Ж',80,50],['Сервер',93,50]],e:[[0,1],[1,2],[1,3],[2,4],[3,5],[4,6],[5,7],[6,8],[7,8],[8,9],[2,3],[4,5]],s:0,t:9,slow:[4,6]},
+ {n:[['Ты',6,50],['Роутер',18,50],['А',30,20],['Б',30,50],['В',30,80],['Г',46,35],['Д',46,65],['Е',62,20],['Ж',62,50],['З',62,80],['И',78,50],['Сервер',93,50]],e:[[0,1],[1,2],[1,3],[1,4],[2,5],[3,5],[3,6],[4,6],[5,7],[5,8],[6,8],[6,9],[7,10],[8,10],[9,10],[10,11]],s:0,t:11,slow:[8,5]},
+ {n:[['Ты',5,50],['Роутер',16,50],['А',27,22],['Б',27,78],['В',38,50],['Г',49,20],['Д',49,80],['Е',60,50],['Ж',71,22],['З',71,78],['И',82,50],['К',82,15],['Л',82,85],['Сервер',94,50]],e:[[0,1],[1,2],[1,3],[2,4],[3,4],[2,5],[3,6],[4,7],[5,7],[6,7],[5,8],[6,9],[7,10],[8,10],[9,10],[8,11],[9,12],[10,13],[11,13],[12,13]],s:0,t:13,slow:[4,10]},
+];
+const PK={lv:0,cur:0,hops:0,stars:0,busy:false};
+function renderPacket(){ PK.lv=0; PK.stars=0; pkLevel(); }
+function pkCost(L,i){ return (L.slow||[]).includes(i)?3:1; }
+function pkOptimal(L){ const n=L.n.length; const dist=Array(n).fill(1e9); dist[L.s]=0; const seen=[]; for(let k=0;k<n;k++){ let u=-1; for(let i=0;i<n;i++) if(!seen[i]&&(u<0||dist[i]<dist[u])) u=i; seen[u]=true; L.e.forEach(([a,b])=>{ [[a,b],[b,a]].forEach(([x,y])=>{ if(x===u&&dist[u]+pkCost(L,y)<dist[y]) dist[y]=dist[u]+pkCost(L,y); }); }); } return dist[L.t]; }
+function pkLevel(){
+  const L=PKL[PK.lv]; PK.cur=L.s; PK.hops=0; PK.busy=false; $('#pkLevel').textContent='Уровень '+(PK.lv+1)+' из '+PKL.length+' · ⭐ '+PK.stars;
+  const g=$('#pkgame'); g.innerHTML='<svg viewBox="0 0 100 100" preserveAspectRatio="none">'+L.e.map(([a,b])=>'<line class="edge'+((L.slow||[]).includes(a)||(L.slow||[]).includes(b)?' slow':'')+'" data-e="'+a+'-'+b+'" x1="'+L.n[a][1]+'" y1="'+L.n[a][2]+'" x2="'+L.n[b][1]+'" y2="'+L.n[b][2]+'" vector-effect="non-scaling-stroke"/>').join('')+'</svg><svg viewBox="0 0 1000 600" id="pkn">'+L.n.map((nd,i)=>'<g class="pn'+(i===L.t?' target':'')+((L.slow||[]).includes(i)?' slow':'')+'" data-i="'+i+'" transform="translate('+nd[1]*10+' '+nd[2]*6+')"><circle r="30"/><text y="-40" font-size="15">'+nd[0]+'</text><text y="8" font-size="22">'+(i===L.s?'🏠':i===L.t?'🖥️':(L.slow||[]).includes(i)?'🐢':'🔁')+'</text></g>').join('')+'<text class="pk" id="pkpk" x="0" y="0">✉️</text></svg><div class="hud"><span>Переходов: <b id="pkHops">0</b></span><span>Лучший путь: <b>'+pkOptimal(L)+'</b></span></div><div class="msg" id="pkMsg">Нажимай на соседний узел (светится голубым). 🐢 — медленный узел: стоит как 3 перехода</div>';
+  pkUpdate();
+}
+function pkUpdate(){
+  const L=PKL[PK.lv]; const adj=i=>L.e.filter(e=>e.includes(i)).map(e=>e[0]===i?e[1]:e[0]);
+  $$('#pkn .pn').forEach(n=>{ const i=+n.dataset.i; n.classList.toggle('cur',i===PK.cur); n.classList.toggle('avail',adj(PK.cur).includes(i)); n.onclick=()=>pkGo(i); });
+  $$('#pkgame .edge').forEach(e=>{ const [a,b]=e.dataset.e.split('-').map(Number); e.classList.toggle('avail',(a===PK.cur||b===PK.cur)); });
+  const nd=L.n[PK.cur]; const pk=$('#pkpk'); pk.setAttribute('x',nd[1]*10-17); pk.setAttribute('y',nd[2]*6-42); $('#pkHops').textContent=PK.hops;
+}
+function pkGo(i){
+  const L=PKL[PK.lv]; if(PK.busy) return; const adj=L.e.some(e=>(e[0]===PK.cur&&e[1]===i)||(e[1]===PK.cur&&e[0]===i)); if(!adj){ snd.bad(); $('#pkMsg').textContent='Этот узел не соединён с текущим. Выбирай соседний!'; return; }
+  const edge=$$('#pkgame .edge').find(e=>e.dataset.e===PK.cur+'-'+i||e.dataset.e===i+'-'+PK.cur); edge.classList.add('used'); PK.hops+=pkCost(L,i); PK.cur=i; snd.tick(); pkUpdate(); $$('#pkn .pn').find(n=>+n.dataset.i===i).classList.add('visited');
+  if((L.slow||[]).includes(i)){ $('#pkMsg').textContent='🐢 Медленный узел! Это стоило 3 перехода.'; }
+  if(i===L.t){ PK.busy=true; const opt=pkOptimal(L); const st=PK.hops<=opt?3:PK.hops<=opt+2?2:1; PK.stars+=st; snd.ok(); $('#pkMsg').textContent=(PK.hops<=opt?'🏆 Самый короткий путь! ':'✅ Доставлено! Но можно короче: '+opt+'. ')+'+'+st+' ⭐'; speak(PK.hops<=opt?'Отлично, самый короткий путь!':'Доставлено! Но путь можно короче.');
+    setTimeout(()=>{ PK.lv++; if(PK.lv<PKL.length) pkLevel(); else pkEnd(); },1800); }
+}
+function pkEnd(){ addStars(PK.stars); const rec=PK.stars>(S.net.pkBest||0); if(rec) S.net.pkBest=PK.stars; save(); $('#pkgame').innerHTML='<div class="card qres" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(560px,90%)"><div class="big">'+(PK.stars>=16?'🏆':'📬')+'</div><h2>Все пакеты доставлены!</h2><p class="lead" style="margin:8px 0 16px">Звёзд: '+PK.stars+' из '+(PKL.length*3)+(rec?' · новый рекорд!':'')+'</p><div class="row" style="justify-content:center"><button class="btn" id="pkAgain">🔁 Ещё раз</button><button class="btn ghost" data-go="net-home">📡 В раздел</button></div></div>'; $('#pkAgain').addEventListener('click',renderPacket); if(PK.stars>=16){ confetti(200); snd.win(); } }
+const NETQ=[
+ {e:'📶',q:'Какое устройство соединяет все приборы дома в одну сеть и выпускает их в интернет?',opts:['Роутер','Принтер','Монитор','Блок питания'],a:0,x:'Роутер (маршрутизатор) раздаёт Wi-Fi и передаёт сообщения всех устройств в интернет.'},
+ {e:'🏠',q:'IP-адрес — это…',opts:['Адрес компьютера в сети из четырёх чисел','Имя сайта','Пароль от Wi-Fi','Скорость интернета'],a:0,x:'IP-адрес похож на домашний адрес: по нему сообщения находят нужный компьютер.'},
+ {e:'📖',q:'Что делает DNS?',opts:['Переводит имя сайта в IP-адрес','Ускоряет интернет','Хранит фотографии','Защищает от вирусов'],a:0,x:'DNS — «телефонная книга» интернета: school.ru → 93.184.216.34.'},
+ {e:'🏢',q:'Кто протягивает кабель к дому и соединяет его с интернетом?',opts:['Провайдер','Сервер','Браузер','Процессор'],a:0,x:'Провайдер — компания, которая предоставляет доступ в интернет за ежемесячную плату.'},
+ {e:'🖥️',q:'Где «живут» сайты?',opts:['На серверах','В роутере','В розетке','На клавиатуре'],a:0,x:'Сайты хранятся на серверах — мощных компьютерах, работающих круглосуточно.'},
+ {e:'📡',q:'Чем отличается Wi-Fi от кабеля?',opts:['Wi-Fi — без проводов, по радиоволнам','Wi-Fi быстрее любого кабеля','Wi-Fi работает только ночью','Ничем'],a:0,x:'Wi-Fi передаёт данные радиоволнами. Кабель надёжнее и быстрее, Wi-Fi — удобнее.'},
+ {e:'🔌',q:'В какой порт роутера подключают кабель от провайдера?',opts:['В синий порт WAN','В любой жёлтый LAN','В USB','В порт для наушников'],a:0,x:'WAN (обычно синий) — вход для интернета. Жёлтые LAN — для домашних устройств.'},
+ {e:'🔒',q:'Какую Wi-Fi сеть безопасно использовать?',opts:['Свою домашнюю с паролем 🔒','Открытую без пароля в кафе','Сеть соседей','Любую с самым сильным сигналом'],a:0,x:'Своя сеть с паролем. В открытых сетях чужие могут видеть, что ты делаешь.'},
+ {e:'✉️',q:'Как путешествуют данные в сети?',opts:['Маленькими кусочками — пакетами','Одним большим файлом','По воздуху без адреса','Только по ночам'],a:0,x:'Сообщения режут на пакеты, каждый едет своей дорогой, а на месте они собираются.'},
+ {e:'🚀',q:'В чём измеряют скорость интернета?',opts:['В мегабитах в секунду (Мбит/с)','В километрах в час','В градусах','В пикселях'],a:0,x:'Мбит/с показывает, сколько данных проходит за секунду. 100 Мбит/с — фильм за минуту.'},
+];
+const netQuiz=genQuiz('nquiz',NETQ,'net.quizBest','Викторина «Сеть и интернет»','📡');
+
+
+/* =====================================================================
+   КИБЕРЩИТ: БЕЗОПАСНОСТЬ В ИНТЕРНЕТЕ
+   ===================================================================== */
+if(!S.safe) S.safe={pass:{},phishBest:0,share:0,rulesBest:0,quizBest:0};
+const SRULES=[['🔑','Пароль — только твой','Не говори пароль никому, даже лучшему другу. Родителям — можно.'],['🙈','Личное — не в интернет','Адрес, школу, телефон, фото документов не публикуй и не отправляй незнакомым.'],['🚩','Не верь «срочно» и «выиграл»','Сообщения «вы выиграли!», «срочно введите пароль!» — почти всегда обман.'],['🔗','Не жми на странные ссылки','Если не понимаешь, куда ведёт ссылка — не нажимай. Проверь адрес сайта.'],['👤','Незнакомец — не друг','В интернете любой может назваться кем угодно. Не встречайся с незнакомцами.'],['📣','Расскажи взрослому','Если что-то напугало, обидело или кажется странным — сразу расскажи родителям или учителю.'],['😡','Не отвечай обидчикам','Грубияна лучше заблокировать и показать сообщения взрослому.'],['⬇️','Не скачивай что попало','Игры и программы — только из официальных магазинов и с разрешения родителей.'],['🔒','Замочек в адресе','Сайт с 🔒 и https:// — защищённый. Пароли вводи только на таких и только на знакомых сайтах.'],['⏰','Знай меру','Экран — не весь мир. Делай перерывы, гуляй, спи вовремя.']];
+function renderSafeHome(){
+  const items=[['safe-pass','🔑','Лаборатория паролей','Проверь, за сколько робот взломает пароль, и придумай надёжный',Object.keys(S.safe.pass).length+' / 6 заданий',Object.keys(S.safe.pass).length>=6],['safe-phish','🎣','Обман или нет?','12 сообщений, писем и сайтов — найди мошенников',S.safe.phishBest?'рекорд: '+S.safe.phishBest+' / 12':'ещё не играл',S.safe.phishBest>=10],['safe-share','🙈','Можно или нельзя?','Рассортируй, что можно рассказывать в интернете, а что — нет',S.safe.share?'пройдено':'ещё не играл',!!S.safe.share],['safe-rules','🧭','Что делать, если…','12 ситуаций: выбери правильное решение',S.safe.rulesBest?'рекорд: '+S.safe.rulesBest+' / 12':'ещё не играл',S.safe.rulesBest>=10],['safe-quiz','❓','Викторина','10 вопросов о безопасности',S.safe.quizBest?'рекорд: '+S.safe.quizBest+' / 10':'ещё не играл',S.safe.quizBest>=10]];
+  $('#shome').innerHTML=items.map((it,i)=>'<div class="catcard'+(it[5]?' done':'')+'" data-go="'+it[0]+'"><span class="stp">'+(it[5]?'✓ готово':'шаг '+(i+1))+'</span><div class="em">'+it[1]+'</div><div class="nm">'+it[2]+'</div><div class="ds">'+it[3]+'</div><div class="cnt">'+it[4]+'</div></div>').join('')+'<div style="grid-column:1/-1"><h3 style="margin:14px 0 0;text-align:center">🛡️ 10 правил КиберЩита</h3><div class="rules">'+SRULES.map(r=>'<div class="rule"><div class="e">'+r[0]+'</div><div><b>'+r[1]+'</b><span>'+r[2]+'</span></div></div>').join('')+'</div></div>';
+}
+/* ---- пароли ---- */
+const COMMON=['123456','12345678','123456789','1234','12345','password','пароль','qwerty','йцукен','111111','000000','abc123','admin','123123','1q2w3e','iloveyou','654321','666666','qwerty123','welcome','monkey','dragon','football','letmein','зщыыцщкв','ghbdtn','privet','привет','1234567','11111111','987654321'];
+function pwAnalyze(p){
+  const len=p.length; let cs=0; if(/[a-z]/.test(p)) cs+=26; if(/[A-Z]/.test(p)) cs+=26; if(/[а-яё]/.test(p)) cs+=33; if(/[А-ЯЁ]/.test(p)) cs+=33; if(/\d/.test(p)) cs+=10; if(/[^a-zA-Zа-яА-ЯёЁ0-9]/.test(p)) cs+=32;
+  const common=COMMON.includes(p.toLowerCase()); const seq=/(0123|1234|2345|3456|4567|5678|6789|abcd|qwer|asdf|йцук|фыва|(.)\2\2)/i.test(p);
+  let sec=len?Math.pow(cs,len)/1e10:0; if(common) sec=0.001; else if(seq) sec/=1000;
+  const ch={l8:len>=8,l12:len>=12,l16:len>=16,dig:/\d/.test(p),up:/[A-ZА-ЯЁ]/.test(p),low:/[a-zа-яё]/.test(p),sym:/[^a-zA-Zа-яА-ЯёЁ0-9]/.test(p),nocommon:len>0&&!common,noseq:len>0&&!seq};
+  const Y=3.15e7; let lvl=0; if(len) lvl=common||sec<1?1:sec<3600?2:sec<Y?3:sec<100*Y?4:5;
+  return {sec,lvl,ch,common,seq};
+}
+function pwHuman(s){ if(s<=0.01) return 'мгновенно'; if(s<1) return 'меньше секунды'; if(s>3.15e7*1e9) return 'миллиарды лет — никогда!'; const u=[[3.15e7*1e6,'млн лет'],[3.15e7*1000,'тыс. лет'],[3.15e7,'лет'],[2.6e6,'мес.'],[86400,'дн.'],[3600,'ч.'],[60,'мин.'],[1,'сек.']]; for(const [k,n] of u){ if(s>=k) return Math.round(s/k)+' '+n; } return '…'; }
+const PWTASKS=[
+ {t:'Введи 123456 и посмотри, что будет',s:'Это самый популярный пароль в мире — и самый плохой.',ok:(p,a)=>p==='123456'},
+ {t:'Пароль из 8+ знаков с цифрой',s:'Например, имя кота и год — но лучше что-то похитрее.',ok:(p,a)=>p.length>=8&&a.ch.dig&&!a.common},
+ {t:'Добавь большую букву и символ, 10+ знаков',s:'Символы: ! ? # $ % * — и подобные.',ok:(p,a)=>p.length>=10&&a.ch.up&&a.ch.sym},
+ {t:'Пароль, который взломают дольше 100 лет',s:'Смотри на время у робота.',ok:(p,a)=>a.sec>100*3.15e7},
+ {t:'Придумай фразу-пароль генератором 🎲 и проверь её',s:'Три слова и число легко запомнить и трудно взломать.',ok:(p,a)=>SP.genUsed&&p===SP.gen},
+ {t:'Супер-пароль: 16+ знаков, 5 полосок',s:'Длина важнее всего!',ok:(p,a)=>p.length>=16&&a.lvl===5},
+];
+const SP={genUsed:false,gen:'Кот-Ракета-Пицца-27'};
+const PWORDS=[['🐱','Кот'],['🚀','Ракета'],['🍕','Пицца'],['🐘','Слон'],['🌙','Луна'],['🍎','Яблоко'],['🚲','Велик'],['🐉','Дракон'],['🎸','Гитара'],['🌵','Кактус'],['🦊','Лиса'],['⚽','Футбол'],['🍉','Арбуз'],['🏰','Замок'],['🐢','Черепаха'],['🎈','Шарик'],['🌈','Радуга'],['🦉','Сова']];
+function renderPass(){ pwTasks(); pwUpdate(); }
+function pwTasks(){ $('#pwTasks').innerHTML=PWTASKS.map((t,i)=>'<div class="mstep'+(S.safe.pass[i]?' done':'')+'"><div class="n">'+(S.safe.pass[i]?'✓':i+1)+'</div><div><b>'+t.t+'</b><span>'+t.s+'</span></div></div>').join(''); }
+function pwUpdate(){
+  const p=$('#pwInput').value; const a=pwAnalyze(p); $('#pwMeter').dataset.l=a.lvl;
+  const v=['Начни вводить пароль','😱 Очень слабый','😟 Слабый','😐 Средний','🙂 Хороший','💪 Отличный!'][a.lvl]; $('#pwVerdict').textContent=v+(a.common?' — этот пароль знают все взломщики!':a.seq?' — есть простая последовательность':'');
+  $('#pwTime').textContent=p?pwHuman(a.sec):'—';
+  const C=[['l8','8+ знаков'],['l12','12+ знаков'],['l16','16+ знаков'],['dig','есть цифра'],['up','большая буква'],['low','маленькая буква'],['sym','символ (!?#…)'],['nocommon','не из списка частых'],['noseq','нет 1234 / qwer / ааа']];
+  $('#pwChecks').innerHTML=C.map(c=>'<div class="'+(a.ch[c[0]]?'ok':'')+'">'+(a.ch[c[0]]?'✅':'⬜')+' '+c[1]+'</div>').join('');
+  PWTASKS.forEach((t,i)=>{ if(!S.safe.pass[i]&&p&&t.ok(p,a)){ S.safe.pass[i]=1; save(); addStars(2); snd.ok(); pwTasks(); toast('✅ Задание '+(i+1)+' выполнено! +2 ⭐'); if(Object.keys(S.safe.pass).length>=PWTASKS.length){ confetti(180); snd.win(); speak('Все задания с паролями выполнены! Ты мастер паролей.'); } } });
+}
+$('#pwInput').addEventListener('input',pwUpdate);
+$('#pwEye').addEventListener('click',()=>{ const i=$('#pwInput'); i.type=i.type==='password'?'text':'password'; });
+$('#pwClear').addEventListener('click',()=>{ $('#pwInput').value=''; pwUpdate(); $('#pwInput').focus(); });
+$('#pwGen').addEventListener('click',()=>{ const w=shuffle(PWORDS.slice()).slice(0,3); const n=10+Math.floor(Math.random()*89); ['#pwW1','#pwW2','#pwW3'].forEach((id,i)=>$(id).textContent=w[i][0]+' '+w[i][1]); $('#pwW4').textContent=n; SP.gen=w.map(x=>x[1]).join('-')+'-'+n; $('#pwRes').textContent=SP.gen; SP.genUsed=true; snd.click(); });
+$('#pwUse').addEventListener('click',()=>{ $('#pwInput').value=SP.gen; pwUpdate(); snd.click(); });
+/* ---- обман или нет ---- */
+const PHISH=[
+ {k:'sms',from:'+7 900 123-45-67',b:'<span class="clue">Поздравляем! Вы выиграли iPhone 15!</span> Заберите приз по ссылке: <span class="clue lnk">win-prize.xyz/iphone</span> в течение <span class="clue">24 часов</span>',bad:true,why:'Неизвестный номер, «выигрыш», которого ты не ждал, странная ссылка и спешка — классический обман.'},
+ {k:'sms',from:'Мама',b:'Привет! Купи, пожалуйста, хлеб по дороге домой 🙂 Я буду в 18:00.',bad:false,why:'Знакомый человек, обычная просьба, никаких ссылок и паролей.'},
+ {k:'mail',from:'Банк &lt;<span class="clue">info@sber-bank-security.com</span>&gt;',subj:'<span class="clue">СРОЧНО: ваша карта заблокирована</span>',b:'Для разблокировки <span class="clue">введите номер карты и пароль</span> по ссылке <span class="clue lnk">sber-bank-security.com/unlock</span>. Иначе счёт закроют через 24 часа!',bad:true,why:'Банк никогда не просит пароль по ссылке. Адрес похож на настоящий, но лишние слова «-security» выдают подделку.'},
+ {k:'mail',from:'Школа №12 &lt;school12@edu.ru&gt;',subj:'Расписание на вторник',b:'Уважаемые ученики! Во вторник уроки начинаются в 8:30. Первый урок — математика. Классный руководитель.',bad:false,why:'Знакомый отправитель, обычная информация, нет ссылок и просьб что-то ввести.'},
+ {k:'site',url:'<span class="safe-mark">🔒 https://vk.com</span>/login',b:'<b>ВКонтакте</b><br>Вход: телефон или почта, пароль.',bad:false,why:'Настоящий адрес vk.com с замочком. Вводить пароль можно только на таких знакомых сайтах.'},
+ {k:'site',url:'<span class="clue">⚠️ http://vk-login-secure.ru</span>/enter',b:'<b>ВКонтакте — вход</b><br>Введите телефон и пароль, чтобы получить <span class="clue">бесплатные стикеры</span>.',bad:true,why:'Адрес не vk.com, нет замочка, а «бесплатные стикеры» — приманка. Это сайт-подделка для кражи пароля.'},
+ {k:'popup',b:'<span class="clue">⚠️ ВАШ КОМПЬЮТЕР ЗАРАЖЁН!</span><br>Обнаружено 37 вирусов. <span class="clue">Нажмите сейчас</span>, чтобы удалить!<br><span class="btnm clue">УДАЛИТЬ ВИРУСЫ</span>',bad:true,why:'Настоящий антивирус так не кричит. Такие окошки сами и заражают компьютер. Закрой окно и скажи взрослому.'},
+ {k:'mail',from:'Анна Петровна &lt;teacher@school12.edu.ru&gt;',subj:'Домашнее задание',b:'Ребята, на завтра: стр. 45, упражнение 3. Принесите тетради по русскому.',bad:false,why:'Учитель, знакомый адрес школы, обычное задание.'},
+ {k:'sms',from:'Поддержка игры',b:'Это служба поддержки. <span class="clue">Пришлите логин и пароль</span> от аккаунта, и мы начислим вам <span class="clue">1000 монет бесплатно</span>!',bad:true,why:'Настоящая поддержка никогда не просит пароль. «Бесплатные монеты» — приманка.'},
+ {k:'sms',from:'<span class="clue">Незнакомый пользователь</span>',b:'Привет! Ты классно играешь 😊 <span class="clue">Скинь свой адрес</span>, я пришлю тебе подарок!',bad:true,why:'Незнакомец просит адрес — это опасно. Адрес, школу и телефон незнакомым не сообщают. Расскажи родителям.'},
+ {k:'mail',from:'YouTube &lt;noreply@youtube.com&gt;',subj:'Новое видео на канале «Наука для детей»',b:'Канал, на который вы подписаны, выложил новое видео: «Как работает вулкан».',bad:false,why:'Настоящий адрес youtube.com, обычное уведомление о подписке.'},
+ {k:'sms',from:'Папа',b:'Заберу тебя после школы в 14:00 у главного входа. Жди там 👍',bad:false,why:'Обычное сообщение от родителя.'},
+ {k:'mail',from:'Администрация &lt;<span class="clue">admin.site@gmail.com</span>&gt;',subj:'<span class="clue">Ваш аккаунт будет удалён!</span>',b:'Чтобы сохранить аккаунт, <span class="clue">введите пароль</span> в ответном письме <span class="clue">в течение часа</span>.',bad:true,why:'Администрация пишет с адреса сайта, а не с gmail. Пароль по почте не просят никогда. Спешка — признак обмана.'},
+ {k:'site',url:'<span class="clue">http://free-games-top.xyz</span>/gta',b:'<b>Скачай GTA бесплатно!</b><br><span class="btnm clue">Скачать GTA_setup.exe</span><br>Без регистрации и SMS!',bad:true,why:'Платные игры «бесплатно» с неизвестных сайтов — почти всегда вирус. Игры — только из официальных магазинов и с разрешения родителей.'},
+ {k:'mail',from:'Библиотека &lt;lib@school12.edu.ru&gt;',subj:'Напоминание',b:'Напоминаем: книгу «Гарри Поттер» нужно вернуть до пятницы. Спасибо!',bad:false,why:'Знакомый отправитель, обычное напоминание, ничего не просят вводить.'},
+ {k:'sms',from:'Пункт выдачи',b:'Ваш заказ 4521 доставлен в пункт выдачи на ул. Ленина, 5. Срок хранения 7 дней.',bad:false,why:'Нет ссылок и просьб. Если заказ правда был — всё в порядке. Если нет — просто не обращай внимания.'},
+ {k:'sms',from:'<span class="clue">Школьный чат?</span>',b:'Всем привет! Голосуй за мою подругу в конкурсе: <span class="clue lnk">vote-konkurs.top/go</span> — нужно <span class="clue">войти через ВКонтакте</span>',bad:true,why:'«Проголосуй, войдя через соцсеть» на чужом сайте — так крадут пароли. Даже если прислал знакомый — его могли взломать.'},
+ {k:'popup',b:'🍪 Этот сайт использует файлы cookie для работы.<br><span class="btnm" style="background:#64748b">Понятно</span>',bad:false,why:'Обычное уведомление о cookie — его показывают почти все сайты. Ничего вводить не просят.'},
+];
+const PH={i:0,score:0,qs:[],active:false};
+function renderPhish(){ if(PH.active) return; $('#phish').innerHTML='<div class="card" style="text-align:center;padding:36px"><div style="font-size:4rem">🎣</div><h2>Обман или нет?</h2><p class="lead" style="margin:8px 0 18px">Тебе покажут 12 сообщений, писем, сайтов и окошек. Реши: это безопасно или мошенники? После ответа я покажу, где спрятаны подсказки.</p>'+(S.safe.phishBest?'<p class="lead" style="margin-bottom:14px">🏆 Рекорд: '+S.safe.phishBest+' из 12</p>':'')+'<button class="btn" id="phStart" style="font-size:1.2rem">▶ Начать</button></div>'; $('#phStart').addEventListener('click',()=>{ PH.active=true; PH.i=0; PH.score=0; PH.qs=shuffle(PHISH.slice()).slice(0,12); phRender(); }); }
+function phMock(q,reveal){ const strip=s=>reveal?s:s.replace(/ class="clue( lnk)?"/g,m=>m.includes('lnk')?' class="lnk"':'').replace(/ class="safe-mark"/g,''); if(q.k==='sms') return '<div class="msgmock sms"><div class="hd">📱 Сообщение от: <b>'+strip(q.from)+'</b></div><div class="bd">'+strip(q.b)+'</div></div>'; if(q.k==='mail') return '<div class="msgmock"><div class="hd">✉️ От: <b>'+strip(q.from)+'</b></div><div class="hd">Тема: <b>'+strip(q.subj)+'</b></div><div class="bd">'+strip(q.b)+'</div></div>'; if(q.k==='site') return '<div class="msgmock site"><div class="hd">◀ ▶ ⟳ <div class="url">'+strip(q.url)+'</div></div><div class="bd">'+strip(q.b)+'</div></div>'; return '<div class="msgmock popup"><div class="bd">'+strip(q.b)+'</div></div>'; }
+function phRender(){ const q=PH.qs[PH.i]; $('#phish').innerHTML='<div class="qbar"><b>'+(PH.i+1)+' из '+PH.qs.length+'</b><div class="pr"><i style="width:'+(PH.i/PH.qs.length*100)+'%"></i></div><span class="pill">⭐ '+PH.score+'</span></div><div class="phcard"><div id="phMock">'+phMock(q,false)+'</div><div class="phans"><div class="q">Это безопасно или обман?</div><button class="big ok" data-a="0">✅ Безопасно</button><button class="big bad" data-a="1">🚩 Обман</button><div class="phexp" id="phExp"></div></div></div>'; $$('#phish .big').forEach(b=>b.addEventListener('click',()=>phAnswer(+b.dataset.a))); }
+function phAnswer(a){ const q=PH.qs[PH.i]; const ok=(a===1)===q.bad; $$('#phish .big').forEach(b=>{ b.disabled=true; if((+b.dataset.a===1)===q.bad) b.classList.add('right'); }); if(!ok) $$('#phish .big').find(b=>+b.dataset.a===a).classList.add('wrong'); $('#phMock').innerHTML=phMock(q,true); if(ok){ PH.score++; snd.ok(); } else snd.bad(); $('#phExp').innerHTML='<b>'+(ok?'✅ Верно! ':'❌ Нет. ')+(q.bad?'Это обман.':'Это безопасно.')+'</b>'+q.why+(q.bad?'<br><span style="color:#dc2626">Красным выделены подсказки.</span>':''); speak((ok?'Верно. ':'Неверно. ')+q.why); setTimeout(()=>{ PH.i++; if(PH.i<PH.qs.length) phRender(); else phEnd(); },ok?3200:4800); }
+function phEnd(){ PH.active=false; const n=PH.qs.length; const stars=PH.score+(PH.score===n?5:0); addStars(stars); const rec=PH.score>(S.safe.phishBest||0); if(rec) S.safe.phishBest=PH.score; save(); $('#phish').innerHTML='<div class="card qres"><div class="big">'+(PH.score===n?'🛡️':PH.score>=n*.75?'🌟':'🙂')+'</div><h2>'+(PH.score===n?'Тебя не обмануть!':PH.score>=n*.75?'Отлично!':'Будь внимательнее!')+'</h2><p class="lead" style="margin:8px 0 16px">Верно: '+PH.score+' из '+n+' · +'+stars+' ⭐'+(rec?' · рекорд!':'')+'</p><div class="row" style="justify-content:center"><button class="btn" id="phAgain">🔁 Ещё раз</button><button class="btn ghost" data-go="safe-home">🛡️ В раздел</button></div></div>'; $('#phAgain').addEventListener('click',()=>{ PH.active=false; renderPhish(); $('#phStart').click(); }); if(PH.score===n){ confetti(200); snd.win(); } }
+/* ---- можно / нельзя ---- */
+const SHARE=[['🐱','Как зовут моего кота',true,'Имя кота — не секрет, по нему тебя не найти.'],['🏠','Мой домашний адрес',false,'По адресу незнакомец может прийти к тебе домой. Только для семьи.'],['🔑','Пароль от игры',false,'Пароль — только твой. Даже друзьям его не говорят.'],['🎨','Что я люблю рисовать',true,'Увлечения — можно рассказывать, это безопасно.'],['🏫','Номер и адрес школы',false,'По школе тебя могут найти чужие люди.'],['🛂','Фото паспорта или свидетельства',false,'Документы — никогда! Их используют мошенники.'],['📞','Телефон родителей',false,'Номер телефона — личные данные семьи.'],['⚽','Любимая команда',true,'Безопасно — это просто твой вкус.'],['📍','Где я сейчас нахожусь (геолокация)',false,'Чужие не должны знать, где ты прямо сейчас.'],['🎂','Какой торт я люблю',true,'Безопасно.'],['🗓️','Когда вся семья уедет в отпуск',false,'Пустой дом — подарок для воров.'],['🎮','В какие игры я играю',true,'Можно, это увлечение.'],['💳','Номер карты мамы',false,'С номером карты могут украсть деньги.'],['🌈','Мой любимый цвет',true,'Безопасно.']];
+const SH={left:[],sel:null,drag:null};
+function renderShare(){ SH.left=shuffle(SHARE.map((c,i)=>i)); SH.sel=null; const el=$('#share'); el.innerHTML='<div class="pool" id="shPool"></div><div class="boxes"><div class="sbox ok" data-box="1"><h3>🌍 Можно рассказать в интернете</h3><div class="in"></div></div><div class="sbox no" data-box="0"><h3>🔒 Нельзя — только для своих</h3><div class="in"></div></div></div><div class="sexp" id="shExp">👆 Перетащи карточку в нужную коробку (или нажми карточку, потом коробку)</div>'; shPool(); $$('#share .sbox').forEach(b=>b.addEventListener('click',()=>{ if(SH.sel!==null) shDrop(SH.sel,b.dataset.box==='1'); })); }
+function shPool(){ $('#shPool').innerHTML=SH.left.map(i=>'<div class="scard" data-i="'+i+'"><span class="e">'+SHARE[i][0]+'</span>'+SHARE[i][1]+'</div>').join(''); $$('#shPool .scard').forEach(c=>c.addEventListener('pointerdown',e=>{ e.preventDefault(); SH.drag={i:+c.dataset.i,el:c,x0:e.clientX,y0:e.clientY,moved:false,ox:e.clientX-c.getBoundingClientRect().left,oy:e.clientY-c.getBoundingClientRect().top}; try{ c.setPointerCapture(e.pointerId); }catch(err){} })); }
+document.addEventListener('pointermove',e=>{ const d=SH.drag; if(!d) return; if(!d.moved&&Math.hypot(e.clientX-d.x0,e.clientY-d.y0)<8) return; d.moved=true; d.el.classList.add('drag'); d.el.style.left=(e.clientX-d.ox)+'px'; d.el.style.top=(e.clientY-d.oy)+'px'; $$('#share .sbox').forEach(b=>{ const r=b.getBoundingClientRect(); b.classList.toggle('over',e.clientX>r.left&&e.clientX<r.right&&e.clientY>r.top&&e.clientY<r.bottom); }); });
+document.addEventListener('pointerup',e=>{ const d=SH.drag; if(!d) return; SH.drag=null; if(!d.moved){ SH.sel=SH.sel===d.i?null:d.i; $$('#shPool .scard').forEach(c=>c.classList.toggle('sel',+c.dataset.i===SH.sel)); if(SH.sel!==null){ snd.click(); $('#shExp').textContent='Теперь нажми на коробку: можно или нельзя?'; } return; } d.el.classList.remove('drag'); d.el.style.left=d.el.style.top=''; const b=$$('#share .sbox').find(x=>x.classList.contains('over')); $$('#share .sbox').forEach(x=>x.classList.remove('over')); if(b) shDrop(d.i,b.dataset.box==='1'); });
+function shDrop(i,toOk){ const c=SHARE[i]; const right=c[2]===toOk; SH.sel=null; const ex=$('#shExp'); if(!right){ snd.bad(); ex.innerHTML='❌ <b>'+c[1]+'</b> — '+(c[2]?'это можно рассказывать. ':'это нельзя рассказывать! ')+c[3]; speak('Нет. '+c[3]); const b=$$('#share .sbox').find(x=>(x.dataset.box==='1')===toOk); b.classList.add('over'); setTimeout(()=>b.classList.remove('over'),400); return; } snd.ok(); SH.left=SH.left.filter(x=>x!==i); shPool(); const box=$$('#share .sbox').find(x=>(x.dataset.box==='1')===toOk); const d=document.createElement('div'); d.className='scard'; d.innerHTML='<span class="e">'+c[0]+'</span>'+c[1]; box.querySelector('.in').appendChild(d); ex.innerHTML='✅ <b>'+c[1]+'</b> — '+c[3]; speak(c[3]); if(!SH.left.length){ S.safe.share=1; save(); addStars(8); confetti(180); snd.win(); ex.innerHTML='🏆 Всё разложено правильно! +8 ⭐ Личные данные — адрес, школа, телефон, пароли, документы — только для своих.'; speak('Отлично! Ты знаешь, что можно рассказывать в интернете, а что нельзя.'); } }
+/* ---- что делать, если ---- */
+const SITS=[
+ {p:'💬',q:'Незнакомый человек в игре пишет: «Давай встретимся завтра в парке, я подарю тебе скин». Что делать?',o:['Рассказать родителям и не ходить','Пойти, но взять с собой друга','Пойти, если скин редкий'],a:0,w:'В интернете любой может назваться кем угодно. Встречи с незнакомцами — только с родителями и только если они разрешат.'},
+ {p:'🔑',q:'Лучший друг просит пароль от твоего аккаунта, чтобы «посмотреть одну штуку».',o:['Не давать: пароль только мой','Дать, он же друг','Дать, но попросить никому не говорить'],a:0,w:'Пароль не дают никому. Друг может случайно потерять его, и аккаунт украдут.'},
+ {p:'⚠️',q:'На экране выскочило: «Ваш компьютер заражён! Нажмите, чтобы удалить вирусы».',o:['Закрыть окно и сказать взрослому','Нажать, чтобы удалить вирусы','Ввести пароль, чтобы проверить'],a:0,w:'Это обман: такие окошки сами заражают компьютер. Настоящий антивирус так не кричит.'},
+ {p:'😡',q:'Кто-то в чате обзывает тебя и присылает злые сообщения.',o:['Не отвечать, заблокировать и показать взрослому','Обозвать его в ответ','Молчать и никому не говорить'],a:0,w:'Обидчик ждёт ответа. Блокируй, сохрани сообщения и расскажи родителям или учителю.'},
+ {p:'🎁',q:'Сообщение: «Ты выиграл телефон! Введи данные карты родителей для доставки».',o:['Удалить сообщение — это обман','Взять карту мамы и ввести номер','Ответить и спросить, какой телефон'],a:0,w:'Никто не дарит телефоны просто так. Данные карты просят только мошенники.'},
+ {p:'📸',q:'Друг просит прислать фото твоей страницы из паспорта «для регистрации в игре».',o:['Отказаться и спросить родителей','Прислать, игра же хорошая','Прислать только половину фото'],a:0,w:'Документы не отправляют никому. Для игр паспорт детям не нужен.'},
+ {p:'⬇️',q:'Нашёл сайт, где любимую платную игру можно скачать бесплатно файлом game_setup.exe.',o:['Не скачивать, спросить родителей про покупку','Скачать, это же бесплатно','Скачать, но не устанавливать'],a:0,w:'«Бесплатные» игры с чужих сайтов — почти всегда вирусы. Игры — только из официальных магазинов.'},
+ {p:'🔗',q:'Пришла ссылка от одноклассника: «Смотри, ты тут на видео!» — ведёт на незнакомый сайт с входом через соцсеть.',o:['Не переходить и спросить его лично','Перейти и войти — интересно же','Переслать всем, чтобы посмотрели'],a:0,w:'Такие ссылки воруют пароли. Аккаунт одноклассника могли взломать — спроси его вживую.'},
+ {p:'📍',q:'Игра просит включить геолокацию и показывать друзьям, где ты.',o:['Не включать для всех, спросить родителей','Включить, пусть все видят','Включить только ночью'],a:0,w:'Чужие не должны знать, где ты находишься. Настройки приватности — вместе с родителями.'},
+ {p:'🙈',q:'Увидел в интернете страшное или неприятное видео.',o:['Закрыть и рассказать взрослому','Досмотреть до конца','Отправить друзьям'],a:0,w:'Закрой и расскажи взрослому — это нормально и правильно, ты ни в чём не виноват.'},
+ {p:'🔒',q:'Хочешь ввести пароль на сайте, но в адресе нет замочка и адрес странный: vk-secure-login.xyz.',o:['Не вводить, открыть настоящий сайт самому','Ввести, вдруг сработает','Ввести старый пароль'],a:0,w:'Пароли вводят только на знакомых сайтах с замочком 🔒. Подделки крадут пароль.'},
+ {p:'⏰',q:'Ты играешь уже три часа, глаза устали, а мама зовёт ужинать.',o:['Сделать перерыв и пойти ужинать','Доиграть ещё часик','Взять планшет с собой за стол'],a:0,w:'Перерывы нужны глазам и голове. Экран подождёт, а ужин с семьёй — нет.'},
+];
+const SI={i:0,score:0,qs:[],active:false};
+function renderSit(){ if(SI.active) return; $('#sit').innerHTML='<div class="card" style="text-align:center;padding:36px"><div style="font-size:4rem">🧭</div><h2>Что делать, если…</h2><p class="lead" style="margin:8px 0 18px">12 ситуаций из жизни в интернете. Выбери самое правильное решение.</p>'+(S.safe.rulesBest?'<p class="lead" style="margin-bottom:14px">🏆 Рекорд: '+S.safe.rulesBest+' из 12</p>':'')+'<button class="btn" id="siStart" style="font-size:1.2rem">▶ Начать</button></div>'; $('#siStart').addEventListener('click',()=>{ SI.active=true; SI.i=0; SI.score=0; SI.qs=shuffle(SITS.slice()); siRender(); }); }
+function siRender(){ const q=SI.qs[SI.i]; const opts=shuffle(q.o.map((o,i)=>({o,i}))); $('#sit').innerHTML='<div class="qbar"><b>Ситуация '+(SI.i+1)+' из '+SI.qs.length+'</b><div class="pr"><i style="width:'+(SI.i/SI.qs.length*100)+'%"></i></div><span class="pill">⭐ '+SI.score+'</span></div><div class="scn"><div class="pic">'+q.p+'</div><h3>'+q.q+'</h3><div class="opts">'+opts.map(x=>'<button class="opt" data-i="'+x.i+'"><span>'+['🅰️','🅱️','©️'][opts.indexOf(x)]+'</span>'+x.o+'</button>').join('')+'</div><div class="why" id="siWhy"></div></div>'; speak(q.q); $$('#sit .opt').forEach(b=>b.addEventListener('click',()=>{ const ok=+b.dataset.i===q.a; $$('#sit .opt').forEach(x=>{ x.disabled=true; if(+x.dataset.i===q.a) x.classList.add('ok'); }); if(!ok) b.classList.add('bad'); if(ok){ SI.score++; snd.ok(); } else snd.bad(); const w=$('#siWhy'); w.classList.add('show'); w.innerHTML='<b>'+(ok?'✅ Правильно! ':'❌ Лучше так: «'+q.o[q.a]+'». ')+'</b>'+q.w; speak((ok?'Правильно. ':'Нет. ')+q.w); setTimeout(()=>{ SI.i++; if(SI.i<SI.qs.length) siRender(); else siEnd(); },ok?2800:4200); })); }
+function siEnd(){ SI.active=false; const n=SI.qs.length; const stars=SI.score+(SI.score===n?5:0); addStars(stars); const rec=SI.score>(S.safe.rulesBest||0); if(rec) S.safe.rulesBest=SI.score; save(); $('#sit').innerHTML='<div class="card qres"><div class="big">'+(SI.score===n?'🛡️':SI.score>=n*.75?'🌟':'🙂')+'</div><h2>'+(SI.score===n?'Ты знаешь, как поступать!':'Хороший результат!')+'</h2><p class="lead" style="margin:8px 0 16px">Верно: '+SI.score+' из '+n+' · +'+stars+' ⭐'+(rec?' · рекорд!':'')+'</p><div class="row" style="justify-content:center"><button class="btn" id="siAgain">🔁 Ещё раз</button><button class="btn ghost" data-go="safe-home">🛡️ В раздел</button></div></div>'; $('#siAgain').addEventListener('click',()=>{ renderSit(); $('#siStart').click(); }); if(SI.score===n){ confetti(200); snd.win(); } }
+const SAFEQ=[
+ {e:'🔑',q:'Какой пароль самый надёжный?',opts:['Слон-Ракета-Пицца-42','123456','имя и год рождения','qwerty'],a:0,x:'Длинная фраза из нескольких слов с числом — её трудно подобрать и легко запомнить.'},
+ {e:'🤝',q:'Кому можно сказать свой пароль?',opts:['Только родителям','Лучшему другу','Админу игры, если попросит','Всем, кто спросит вежливо'],a:0,x:'Пароль — только твой. Родители — единственное исключение.'},
+ {e:'🚩',q:'Какой признак почти всегда выдаёт обман?',opts:['«Срочно!», «Вы выиграли!», просьба ввести пароль','Письмо от учителя с заданием','Уведомление о новом видео','Сообщение от мамы про хлеб'],a:0,x:'Спешка, неожиданные выигрыши и просьбы ввести пароль — признаки мошенников.'},
+ {e:'🔒',q:'Что означает замочек 🔒 в адресе сайта?',opts:['Соединение защищено (https)','Сайт платный','Сайт закрыт','На сайте есть вирусы'],a:0,x:'Замочек и https:// значат, что данные передаются защищённо. Но сайт всё равно должен быть знакомым.'},
+ {e:'📍',q:'Что нельзя публиковать в интернете?',opts:['Домашний адрес и школу','Любимый цвет','Имя кота','Любимую игру'],a:0,x:'Адрес, школа, телефон, документы — личные данные. По ним чужие могут тебя найти.'},
+ {e:'⚠️',q:'Выскочило окно «Ваш компьютер заражён! Нажмите здесь». Что делать?',opts:['Закрыть и сказать взрослому','Нажать, чтобы вылечить','Ввести пароль администратора','Перезагрузить 10 раз'],a:0,x:'Это обман. Настоящий антивирус так не кричит — закрой окно и расскажи взрослому.'},
+ {e:'👤',q:'Незнакомец в сети предлагает встретиться. Как поступить?',opts:['Рассказать родителям и не ходить','Пойти вместе с другом','Пойти, если он кажется добрым','Назначить встречу у школы'],a:0,x:'В интернете любой может притворяться. Встречи с незнакомцами — только с родителями.'},
+ {e:'😡',q:'Тебя обижают в чате. Что лучше сделать?',opts:['Заблокировать и показать взрослому','Обидеть в ответ сильнее','Удалить аккаунт и плакать','Ничего — само пройдёт'],a:0,x:'Не отвечай обидчику, заблокируй, сохрани сообщения и расскажи взрослому.'},
+ {e:'⬇️',q:'Откуда безопасно скачивать игры?',opts:['Из официальных магазинов приложений','С любого сайта с надписью «бесплатно»','Из ссылок в чатах','С сайтов без замочка'],a:0,x:'Официальные магазины проверяют программы. Чужие сайты часто подсовывают вирусы.'},
+ {e:'📣',q:'Что-то в интернете напугало или показалось странным. Что делать?',opts:['Рассказать родителям или учителю','Никому не говорить','Разобраться самому','Переслать друзьям'],a:0,x:'Взрослые помогут. Рассказать — всегда правильно, ты ни в чём не виноват.'},
+];
+const safeQuiz=genQuiz('squiz',SAFEQ,'safe.quizBest','Викторина «КиберЩит»','🛡️');
+
+
+/* =====================================================================
+   ГЛАВНОЕ МЕНЮ: УЧЕБНЫЙ ПУТЬ
+   ===================================================================== */
+const SECTIONS=[
+ {id:'lab',go:'lab-home',brand:'КОМПЬЮЛАБ',n:'Устройство компьютера',e:'🖥️',d:'Из чего состоит компьютер: 14 деталей с фотографиями, сборка своими руками и викторина.',
+  art:()=>'<div class="art lab" style="background-image:url('+IMG.inside+')"><div class="float" style="left:8%;top:14%;background-image:url('+IMG.cpu+')"></div><div class="float" style="right:9%;top:22%;animation-delay:-2s;background-image:url('+IMG.gpu+')"></div><div class="float" style="left:38%;bottom:10%;animation-delay:-4s;width:70px;height:70px;background-image:url('+IMG.ram+')"></div></div>',
+  prog(){ const seen=Object.keys(S.lab.seen).length; const b=S.lab.builds||0, q=S.lab.quizBest||0; return {p:Math.min(1,seen/PARTS.length*.5+(b?.3:0)+(q>=9?.2:0)),l:seen+' / '+PARTS.length+' деталей · сборок: '+b+(q?' · викторина '+q+'/12':'')}; }},
+ {id:'mouse',go:'mouse-home',brand:'КЛИКМАСТЕР',n:'Мышь',e:'🖱️',d:'Урок с настоящей мышью и 8 игр: щелчок, двойной щелчок, правая кнопка, перетаскивание, колёсико, точность, выделение.',
+  art:()=>'<div class="art mouse"><div class="art-mouse"><svg viewBox="0 0 200 330"><path d="M100 8 C152 8 184 60 184 150 C184 250 150 322 100 322 C50 322 16 250 16 150 C16 60 48 8 100 8Z" fill="url(#g-dark)" stroke="#0b0d12" stroke-width="3"/><path d="M98 12 C56 14 24 62 22 130 L98 130Z" fill="#f59e0b" stroke="#0b0d12" stroke-width="2"/><path d="M102 12 C144 14 176 62 178 130 L102 130Z" fill="#2f3542" stroke="#0b0d12" stroke-width="2"/><rect x="91" y="52" width="18" height="52" rx="9" fill="#4b5563" stroke="#0b0d12" stroke-width="2"/><path d="M22 134 H178" stroke="#0b0d12" stroke-width="3"/><circle cx="100" cy="200" r="6" fill="#38b6ff"/></svg></div></div>',
+  prog(){ const g=Object.keys(S.mouse.best).length, n=Object.keys(GAMES).length; return {p:Math.min(1,(S.mouse.lesson?.3:0)+g/n*.7),l:(S.mouse.lesson?'урок пройден · ':'урок не пройден · ')+g+' / '+n+' игр'}; }},
+ {id:'kb',go:'learn',brand:'КЛАВИМАСТЕР',n:'Клавиатура',e:'⌨️',d:'Горячие клавиши Windows (212 сочетаний в 9 темах), тренажёр, печать на время, справочник и экранная клавиатура.',
+  art:()=>'<div class="art kb"><div class="minikb"><div><span>Esc</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span class="w">⌫</span></div><div><span class="w">Tab</span><span>Q</span><span>W</span><span>E</span><span>R</span><span>T</span><span>Y</span></div><div><span class="hl w">Ctrl</span><span>A</span><span>S</span><span>D</span><span>F</span><span class="hl">C</span><span>H</span></div><div><span class="w">Shift</span><span>Z</span><span>X</span><span class="x">Пробел</span><span>N</span></div></div></div>',
+  prog(){ const n=Object.keys(S.learned).length; const typed=Object.keys(S.best).some(k=>k.startsWith('type:')); return {p:Math.min(1,n/80*.8+(typed?.2:0)),l:n+' из '+SHORTCUTS.length+' сочетаний'+(typed?' · печать ✓':'')}; }},
+ {id:'win',go:'win-home',brand:'ОКНОМАСТЕР',n:'Рабочий стол Windows',e:'🪟',d:'Настоящий рабочий стол: меню Пуск, окна, Проводник, Блокнот, папки, Корзина, обои. '+WMISSIONS.length+' заданий по порядку.',
+  art:()=>'<div class="art win"><div class="art-win"><div class="aw-ico" style="left:5%;top:8%">💻<small>Компьютер</small></div><div class="aw-ico" style="left:5%;top:40%">🗑️<small>Корзина</small></div><div class="aw-ico" style="left:5%;top:72%">📁<small>Школа</small></div><div class="aw-w"><div class="t"><i></i><i></i><i style="background:#f87171"></i></div><div class="b">📄📁🖼️📄📁📄</div></div><div class="aw-bar">⊞ 📁 📝 ⚙️</div></div></div>',
+  prog(){ const d=Object.keys(S.win.done).length; return {p:d/WMISSIONS.length,l:d+' / '+WMISSIONS.length+' заданий'}; }},
+ {id:'net',go:'net-home',brand:'СЕТЬМАСТЕР',n:'Интернет и сеть',e:'📡',d:'Как компьютер попадает в интернет: роутер, провайдер, IP-адреса, DNS. Собери домашнюю сеть и доставь пакеты.',
+  art:()=>'<div class="art net"><div class="art-net"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M15 70 L40 35 L65 65 L88 30"/></svg><i style="left:15%;top:70%">💻</i><i style="left:40%;top:35%">📶</i><i style="left:65%;top:65%">🏢</i><i style="left:88%;top:30%">🖥️</i></div></div>',
+  prog(){ const L=S.net.lesson/NSTEPS.length; return {p:Math.min(1,L*.4+(S.net.built?.3:0)+((S.net.pkBest||0)>=12?.15:0)+((S.net.quizBest||0)>=8?.15:0)),l:'урок '+S.net.lesson+'/'+NSTEPS.length+(S.net.built?' · сеть ✓':'')+(S.net.pkBest?' · пакеты '+S.net.pkBest+'⭐':'')}; }},
+ {id:'safe',go:'safe-home',brand:'КИБЕРЩИТ',n:'Безопасность в интернете',e:'🛡️',d:'Надёжные пароли, обман в сообщениях, личные данные, правильные решения в трудных ситуациях.',
+  art:()=>'<div class="art safe"><div class="art-safe">🛡️<small>10 правил безопасности</small></div></div>',
+  prog(){ const p=Object.keys(S.safe.pass).length/6; return {p:Math.min(1,p*.3+((S.safe.phishBest||0)>=10?.2:0)+(S.safe.share?.2:0)+((S.safe.rulesBest||0)>=10?.15:0)+((S.safe.quizBest||0)>=8?.15:0)),l:'пароли '+Object.keys(S.safe.pass).length+'/6'+(S.safe.phishBest?' · обман '+S.safe.phishBest+'/12':'')+(S.safe.share?' · данные ✓':'')}; }},
+];
+function renderHome(){
+  const el=$('#homePath'); let cur=null; let doneN=0;
+  el.innerHTML=SECTIONS.map((s,i)=>{ const pr=s.prog(); const done=pr.p>=.999; if(done) doneN++; const isCur=!cur&&!done; if(isCur) cur=s; return '<div class="sec-card'+(done?' done':'')+(isCur?' cur':'')+'" data-go="'+s.go+'"><span class="stepn">'+(done?'✓ Шаг '+(i+1):'Шаг '+(i+1))+'</span>'+(isCur?'<span class="rec">👉 '+(pr.p>0?'Продолжай здесь':'Начни отсюда')+'</span>':'')+s.art()+'<div class="body"><h2>'+s.e+' '+s.n+'</h2><div class="brand">'+s.brand+'</div><p>'+s.d+'</p><div class="prog"><i style="width:'+Math.round(pr.p*100)+'%"></i></div><div class="meta"><span class="chip">'+pr.l+'</span><button class="btn'+(done?' ok':isCur?'':' ghost')+'">'+(done?'✓ Пройдено':pr.p>0?'Продолжить ➜':'Открыть ➜')+'</button></div></div></div>'; }).join('');
+  $('#homeTotal').textContent='Пройдено '+doneN+' из '+SECTIONS.length+' разделов · ⭐ '+S.stars;
+  const b=$('#homeContinue'); b.textContent=cur?(cur.prog().p>0?'▶ Продолжить: '+cur.n:'▶ Начать: '+cur.n):'🏆 Все разделы пройдены!'; b.onclick=()=>{ if(cur){ unlockAudio(); setMode(cur.go); } else { confetti(200); snd.win(); } };
+}
 
 /* =====================================================================
    СТАРТ
@@ -2963,7 +3631,7 @@ $('#wlock').addEventListener('click',()=>{ $('#wlock').classList.remove('open');
 if(S.set.tpLimit!==undefined) TP.limit=S.set.tpLimit; if(S.set.tpStrict!==undefined) TP.strict=S.set.tpStrict; if(S.set.tpHints!==undefined) TP.hints=S.set.tpHints;
 buildKeyboard(); applySettings(); renderStars(); renderCats(); renderTrainGrid(); renderTypeHome(); renderRefCats(); renderRef(); pressedCombo(); updateKb(); setMode('home');
 addEventListener('pointerdown',unlockAudio,{once:true});
-window.KM={get T(){return T},get LN(){return LN},get TP(){return TP},get S(){return S},get B(){return B},get mode(){return mode},SHORTCUTS,CATS,TSETS,PARTS,comboHTML,MODCODES,sig,parseKeys,codeChars,charKeys,setMode,startBuild,place1,place2,closeCase,toggleSwitch,powerOn,nextStep,startQuiz,get G(){return MG},get W(){return W},startGame,endGame,lessonEvent,wOpen,wEv,wResetFS,wCreate,wRename,wDelete,wMove,wEmptyBin,wMax,wMin,wClose,WMISSIONS};
+window.KM={get T(){return T},get LN(){return LN},get TP(){return TP},get S(){return S},get B(){return B},get mode(){return mode},SHORTCUTS,CATS,TSETS,PARTS,comboHTML,MODCODES,sig,parseKeys,codeChars,charKeys,setMode,startBuild,place1,place2,closeCase,toggleSwitch,powerOn,nextStep,startQuiz,get G(){return MG},get W(){return W},startGame,endGame,lessonEvent,wOpen,wEv,wResetFS,wCreate,wRename,wDelete,wMove,wEmptyBin,wMax,wMin,wClose,WMISSIONS,nCable,nEv,nAction,nPlace,nPort,nSrc,nCheck,get NB(){return NB},get NL(){return NL},NSTEPS,get PK(){return PK},pkGo,pwUpdate,PHISH,phAnswer,get PH(){return PH},shDrop,get SH(){return SH},get SI(){return SI},netQuiz,safeQuiz,SECTIONS,renderHome};
 if('serviceWorker' in navigator&&location.protocol.startsWith('http')){ navigator.serviceWorker.register('sw.js').catch(()=>{}); }
 </script>
 </body>
