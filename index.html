@@ -1084,8 +1084,10 @@ body[data-sec="home"] .tab.home{display:none}
 .nx .dev.ok .st{background:#22c55e}.nx .dev.bad .st{background:#ef4444}
 .nx .dev.sel{outline:4px solid #f59e0b;outline-offset:4px;border-radius:12px}
 .nx .dev.hint{animation:pulse 1s infinite;border-radius:12px}
-.nx .wall{position:absolute;width:62px;height:62px;background:#fff;border:3px solid #cbd5e1;border-radius:12px;display:grid;place-items:center;cursor:pointer;z-index:3;box-shadow:0 6px 14px rgba(0,0,0,.2);transform:translate(-50%,-50%)}
-.nx .wall b{position:absolute;left:50%;top:100%;transform:translateX(-50%);font-size:.66rem;white-space:nowrap;color:#1e2140;background:rgba(255,255,255,.9);padding:1px 6px;border-radius:6px;margin-top:2px}
+.nx .wall{position:absolute;width:64px;height:64px;background:#fff;border:3px solid #2563eb;border-radius:14px;display:grid;place-items:center;cursor:pointer;z-index:3;box-shadow:0 6px 14px rgba(0,0,0,.25);transform:translate(-50%,-50%)}
+.nx .wall::before{content:'🌐';position:absolute;top:-14px;right:-10px;font-size:1.1rem;background:#fff;border-radius:50%;padding:2px}
+.nx .wall.hint{animation:pulse 1s infinite}
+.nx .wall b{position:absolute;left:0;top:100%;font-size:.66rem;white-space:nowrap;color:#1e2140;background:rgba(255,255,255,.95);padding:2px 7px;border-radius:6px;margin-top:4px;box-shadow:0 2px 6px rgba(0,0,0,.15);line-height:1.2}
 .nx .wall.sel{outline:4px solid #f59e0b;outline-offset:4px}
 .nx .wall .plug{width:26px;height:20px;background:#1d4ed8;border-radius:3px}
 .nx .ncab{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
@@ -1129,6 +1131,7 @@ body[data-sec="home"] .tab.home{display:none}
 .nxdlg .camlist button.added{background:#22c55e}
 .nxdlg .foot{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
 .nxtray{background:var(--card);border-radius:22px;box-shadow:var(--shadow);padding:12px;display:flex;flex-direction:column;gap:10px;overflow:auto}
+.nxtray>*,.ntray>*{flex-shrink:0}
 .nxtray .task{padding:10px 12px;min-height:60px}
 .nxtray .task .ic{width:42px;height:42px;font-size:1.3rem}
 .nxtray .task .tt b{font-size:1rem}.nxtray .task .tt span{font-size:.84rem}
@@ -2161,7 +2164,7 @@ addEventListener('keydown',e=>{
   const code=e.code; if(!code) return;
   if($('#langpop').classList.contains('open')&&e.key==='Escape'){ hideLangPop(false); e.preventDefault(); return; }
   if($('#help').classList.contains('open')){ if(e.key==='Escape') $('#help').classList.remove('open'); e.preventDefault(); return; }
-  if(secOf(mode)!=='kb'){ if(e.key==='Escape'){ closePart(); $('#creditsModal').classList.remove('open'); } return; }
+  if(secOf(mode)!=='kb'){ if(e.key==='Escape'){ closePart(); $('#creditsModal').classList.remove('open'); if(mode==='net-lab'){ nxCancelSrc(); const pp=$('#nxpop'); if(pp) pp.style.display='none'; const dg=$('#nxdlg'); if(dg) dg.innerHTML=''; } } return; }
   e.preventDefault(); unlockAudio();
   setPressed(code,true); if(e.repeat) return; snd.click();
   const n=norm(code); const mods=modsFromEvent(e,n);
@@ -3614,7 +3617,7 @@ const NXT={
 };
 const pk=name=>name==='WAN'?'wan':name==='HDMI'?'hdmi':/^PoE/.test(name)?'poe':name==='UP'?'up':'lan';
 const NXLV=[
- {id:'class',n:'Компьютерный класс',e:'🏫',net:{pre:'192.168.10.',gw:1,min:2,max:254},prov:{x:3,y:52},
+ {id:'class',n:'Компьютерный класс',e:'🏫',net:{pre:'192.168.10.',gw:1,min:2,max:254},prov:{x:7,y:50},
   rooms:[['Компьютерный класс',0,6,74,94],['Серверный шкаф',74,6,26,40],['Коридор',74,46,26,54]],
   decor:[['🪟',20,14,2.2],['🪟',50,14,2.2],['📋',37,22,2.6],['🚪',87,95,2.2]],
   zones:{zr:{x:87,y:17,l:'Стойка: роутер',f:['router']},zs:{x:87,y:34,l:'Стойка: коммутатор',f:['sw8','hub']},zt:{x:37,y:34,l:'Стол учителя',f:['pc1']},z1:{x:14,y:56,l:'Парта 1',f:['pc2']},z2:{x:37,y:56,l:'Парта 2',f:['pc3']},z3:{x:60,y:56,l:'Парта 3',f:['pc4']},z4:{x:14,y:80,l:'Парта 4',f:['pc5']},z5:{x:37,y:80,l:'Парта 5',f:['pc6']},zp:{x:60,y:80,l:'Тумба: принтер',f:['printer']},za:{x:87,y:70,l:'Стена: Wi-Fi',f:['ap']}},
@@ -3622,7 +3625,7 @@ const NXLV=[
   tray:['router','sw8','hub','pc1','pc2','pc3','pc4','pc5','pc6','printer','ap'],
   steps:[
    {t:'Поставь роутер в серверный шкаф',s:'Роутер раздаёт интернет всему классу. Он стоит в шкафу — чтобы дети не трогали.',h:{zone:'zr'},d:()=>NX.placed.router},
-   {t:'Подключи интернет к роутеру',s:'Нажми розетку провайдера, потом синий порт WAN роутера.',h:{dev:'router',port:'WAN'},d:()=>nxLinked('prov','router')},
+   {t:'Подключи интернет к роутеру',s:'Нажми розетку провайдера (слева, с 🌐), потом синий порт WAN роутера.',h:{prov:true,dev:'router',port:'WAN'},d:()=>nxLinked('prov','router')},
    {t:'Поставь коммутатор (свитч) в шкаф',s:'У роутера всего 4 порта, а компьютеров 6. Коммутатор добавляет порты. Не бери хаб — он устарел.',h:{zone:'zs'},d:()=>NX.placed.sw8},
    {t:'Соедини роутер с коммутатором',s:'Любой порт LAN роутера → порт 1 коммутатора.',h:{dev:'sw8',port:'1'},d:()=>nxLinked('router','sw8')},
    {t:'Расставь 6 компьютеров по партам',s:'ПК учителя — на стол учителя, остальные — на парты.',h:{zone:'zt'},d:()=>['pc1','pc2','pc3','pc4','pc5','pc6'].every(p=>NX.placed[p])},
@@ -3634,16 +3637,16 @@ const NXLV=[
    {t:'Проверь сеть',s:'Нажми «Проверить сеть». Если что-то не так — я подскажу.',h:{btn:true},d:()=>NX.done},
   ],
   success:'Компьютерный класс в сети! Все 6 компьютеров видят друг друга, принтер и интернет, а Wi-Fi защищён новым паролем.'},
- {id:'office',n:'Офис организации',e:'🏢',net:{pre:'192.168.1.',gw:1,min:2,max:254},prov:{x:3,y:26},dhcp:true,
+ {id:'office',n:'Офис организации',e:'🏢',net:{pre:'192.168.1.',gw:1,min:2,max:254},prov:{x:5,y:31},dhcp:true,
   rooms:[['Серверная',0,6,24,42],['Бухгалтерия',24,6,38,42],['Отдел продаж',62,6,38,42],['Кабинет директора',0,48,30,52],['Приёмная',30,48,70,52]],
   decor:[['🪟',43,12,2],['🪟',81,12,2],['🪟',15,55,2],['🛋️',75,90,2.6],['🌴',94,90,2.4],['❄️',12,13,2]],
-  zones:{zf:{x:12,y:22,l:'Стойка: роутер-файрвол',f:['fw']},zm:{x:12,y:38,l:'Стойка: главный коммутатор',f:['sw24']},zsv:{x:12,y:72,l:'Сервер',f:['server']},zs1:{x:56,y:16,l:'Коммутатор бухгалтерии',f:['s1','s2']},zs2:{x:94,y:16,l:'Коммутатор продаж',f:['s1','s2']},
+  zones:{zf:{x:16,y:21,l:'Стойка: роутер-файрвол',f:['fw']},zm:{x:16,y:41,l:'Стойка: главный коммутатор',f:['sw24']},zsv:{x:12,y:72,l:'Сервер',f:['server']},zs1:{x:56,y:16,l:'Коммутатор бухгалтерии',f:['s1','s2']},zs2:{x:94,y:16,l:'Коммутатор продаж',f:['s1','s2']},
    b1:{x:30,y:30,l:'Бухгалтер 1',f:['b1']},b2:{x:43,y:30,l:'Бухгалтер 2',f:['b2']},b3:{x:36,y:42,l:'Главбух',f:['b3']},p1:{x:68,y:30,l:'Менеджер 1',f:['p1']},p2:{x:81,y:30,l:'Менеджер 2',f:['p2']},p3:{x:74,y:42,l:'Менеджер 3',f:['p3']},zd:{x:18,y:60,l:'Стол директора',f:['dir']},za1:{x:43,y:58,l:'Wi-Fi приёмная',f:['a1','a2']},za2:{x:88,y:58,l:'Wi-Fi продажи',f:['a1','a2']},zpr:{x:60,y:75,l:'Принтер',f:['printer']}},
   devs:{fw:{t:'fw',n:'Роутер-файрвол'},sw24:{t:'sw24',n:'Главный свитч'},server:{t:'server',n:'Сервер'},s1:{t:'sw8',n:'Свитч А'},s2:{t:'sw8',n:'Свитч Б'},b1:{t:'pc',n:'Бухгалтер 1'},b2:{t:'pc',n:'Бухгалтер 2'},b3:{t:'pc',n:'Главбух'},p1:{t:'pc',n:'Менеджер 1'},p2:{t:'pc',n:'Менеджер 2'},p3:{t:'pc',n:'Менеджер 3'},dir:{t:'pc',n:'Директор'},a1:{t:'ap',n:'Wi-Fi 1'},a2:{t:'ap',n:'Wi-Fi 2'},printer:{t:'printer',n:'Принтер'}},
   tray:['fw','sw24','server','s1','s2','b1','b2','b3','p1','p2','p3','dir','a1','a2','printer'],
   steps:[
-   {t:'Серверная: роутер-файрвол, главный коммутатор, сервер',s:'Всё важное оборудование — в отдельной прохладной комнате. Файрвол — это роутер, который ещё и защищает сеть.',h:{zone:'zf'},d:()=>NX.placed.fw&&NX.placed.sw24&&NX.placed.server},
-   {t:'Интернет → WAN файрвола, файрвол → главный коммутатор',s:'Розетка провайдера → синий WAN. Потом LAN файрвола → порт 1 главного коммутатора.',h:{dev:'fw',port:'WAN'},d:()=>nxLinked('prov','fw')&&nxLinked('fw','sw24')},
+   {t:'Серверная: файрвол, главный свитч, сервер',s:'Всё важное оборудование — в отдельной прохладной комнате. Файрвол — это роутер, который ещё и защищает сеть.',h:{zone:'zf'},d:()=>NX.placed.fw&&NX.placed.sw24&&NX.placed.server},
+   {t:'Интернет → WAN файрвола, файрвол → главный коммутатор',s:'Розетка провайдера → синий WAN. Потом LAN файрвола → порт 1 главного коммутатора.',h:{prov:true,dev:'fw',port:'WAN'},d:()=>nxLinked('prov','fw')&&nxLinked('fw','sw24')},
    {t:'Поставь коммутаторы в отделы и подключи к главному',s:'В каждом отделе свой коммутатор (порт 8 — «аплинк» к главному). Так кабели короче.',h:{zone:'zs1'},d:()=>NX.placed.s1&&NX.placed.s2&&nxLinked('s1','sw24')&&nxLinked('s2','sw24')},
    {t:'Расставь компьютеры и подключи к коммутаторам отделов',s:'Бухгалтеры — к свитчу бухгалтерии, менеджеры — к свитчу продаж, директор — к главному коммутатору.',h:{zone:'b1'},d:()=>['b1','b2','b3','p1','p2','p3','dir'].every(p=>NX.placed[p]&&nxReach(p,'fw'))},
    {t:'Включи DHCP на файрволе',s:'Семь компьютеров вручную настраивать долго. DHCP раздаёт адреса автоматически. Нажми файрвол → ⚙️ → DHCP: включить, диапазон 100–200.',h:{dev:'fw',cfg:true},d:()=>NX.cfg.fw&&NX.cfg.fw.dhcp&&NX.cfg.fw.range==='100-200'},
@@ -3704,11 +3707,12 @@ function renderNetLab(lvId){
   nx.innerHTML=L.rooms.map(r=>'<div class="roomx'+(r[5]?' '+r[5]:'')+'" style="left:'+r[1]+'%;top:'+r[2]+'%;width:'+r[3]+'%;height:'+r[4]+'%"><b>'+r[0]+'</b></div>').join('')+
     (L.decor||[]).map(d=>'<div class="decor" style="left:'+d[1]+'%;top:'+d[2]+'%;font-size:'+d[3]+'rem">'+d[0]+'</div>').join('')+
     Object.entries(L.zones).map(([id,z])=>'<div class="zone" data-zone="'+id+'" style="left:'+z.x+'%;top:'+z.y+'%"><span>'+z.l+'</span></div>').join('')+
-    (L.prov?'<div class="wall" id="nxprov" style="left:'+L.prov.x+'%;top:'+L.prov.y+'%"><div class="plug"></div><b>Интернет от провайдера</b></div>':'')+
+    (L.prov?'<div class="wall" id="nxprov" style="left:'+L.prov.x+'%;top:'+L.prov.y+'%"><div class="plug"></div><b>Интернет<br>от провайдера</b></div>':'')+
     '<svg class="ncab" id="nxcab" viewBox="0 0 100 100" preserveAspectRatio="none"></svg><div id="nxdevs"></div><div class="nxpop" id="nxpop" style="display:none"></div><div id="nxdlg"></div>';
   if(L.pre) Object.entries(L.pre).forEach(([id,p])=>nxAddDev(id,p.x,p.y));
-  if(L.prov) $('#nxprov').addEventListener('click',()=>nxPick('prov','WAN'));
+  if(L.prov) $('#nxprov').addEventListener('click',()=>{ if(NX.src&&NX.src.d==='prov'){ nxCancelSrc(); snd.click(); nxTask('Кабель провайдера положен обратно.','hint'); return; } nxPick('prov','WAN'); });
   $$('#nx .zone').forEach(z=>z.addEventListener('click',()=>{ if(NX.sel) nxPlace(NX.sel,z.dataset.zone); }));
+  nx.addEventListener('pointerdown',e=>{ if(e.target.closest('.dev,.zone,.wall,.nxpop,#nxdlg')) return; const pp=$('#nxpop'); if(pp) pp.style.display='none'; if(NX.src){ nxCancelSrc(); nxTask('Кабель положен обратно.','hint'); } });
   const tray=$('#nxtray'); tray.innerHTML='<div class="task" id="nxtask"><div class="ic" id="nxIc">🎯</div><div class="tt"><b id="nxT"></b><span id="nxS"></span></div></div><div class="steps" id="nxsteps"></div><div class="row" style="gap:6px"><button class="btn ghost sm" id="nxHint">💡 Подсказка</button><button class="btn ok sm" id="nxCheck">🔍 Проверить сеть</button><button class="btn ghost sm" id="nxReset">↺</button></div><div class="probs" id="nxprobs"></div><h3>📦 Оборудование <small id="nxCnt"></small></h3><div class="devs" id="nxdevtray"></div><div class="legend"><span><i style="background:#2563eb"></i>WAN — интернет</span><span><i style="background:#b45309"></i>LAN</span><span><i style="background:#15803d"></i>PoE — питание</span><span><i style="background:#6d28d9"></i>UP — аплинк</span><span><i style="background:#111827"></i>HDMI</span></div><div class="note" style="background:var(--card2);border-radius:14px;padding:9px 12px;font-weight:700;color:var(--muted);font-size:.84rem;line-height:1.4">👆 Нажми устройство в списке, потом на место в помещении. Кабель: нажми устройство → порт, потом второе устройство → порт. ⚙️ — настройки (адрес, Wi-Fi, DHCP).</div>';
   $('#nxdevtray').innerHTML=L.tray.map(id=>'<div class="tray-item'+(NXT[L.devs[id].t].decoy||(L.opt||[]).includes(id)?' decoy':'')+'" data-dev="'+id+'"><div class="ic">'+NXT[L.devs[id].t].e+'</div><div class="nm">'+L.devs[id].n+'</div></div>').join('');
   $$('#nxdevtray .tray-item').forEach(it=>it.addEventListener('pointerdown',e=>{ if(it.classList.contains('done')) return; e.preventDefault(); NX.drag={id:it.dataset.dev,x0:e.clientX,y0:e.clientY,moved:false,ghost:null,it}; try{ it.setPointerCapture(e.pointerId); }catch(err){} }));
@@ -3750,8 +3754,9 @@ function nxOpenPop(id){
 function nxPick(id,port){
   const used=NX.conn.find(c=>(c.a===id&&c.ap===port)||(c.b===id&&c.bp===port));
   if(used){ if(confirm('Отключить кабель от порта '+port+'?')){ NX.conn=NX.conn.filter(c=>c!==used); nxRedraw(); nxDevState(used.a); nxDevState(used.b); } $('#nxpop').style.display='none'; return; }
-  if(!NX.src){ NX.src={d:id,p:port}; $('#nxpop').style.display='none'; if(id==='prov') $('#nxprov').classList.add('sel'); else $$('#nx .dev').forEach(x=>x.classList.toggle('sel',x.dataset.dev===id)); snd.click(); nxTask('Кабель от '+nxName(id)+' ('+port+') в руках. Нажми второе устройство и его порт.','hint'); return; }
-  const s=NX.src; if(s.d===id){ snd.bad(); nxTask('Нельзя соединить устройство само с собой.','bad'); return; }
+  if(NX.src&&NX.src.d===id){ if(NX.src.p===port){ nxCancelSrc(); snd.click(); nxTask('Выбор порта отменён. Нажми устройство и порт заново.','hint'); return; } NX.src={d:id,p:port}; $$('#nxpop .port').forEach(x=>x.classList.toggle('sel',x.dataset.p===port)); snd.click(); nxTask('Выбран порт '+port+' на '+nxName(id)+'. Теперь нажми второе устройство и его порт. (Нажми порт ещё раз, чтобы отменить.)','hint'); return; }
+  if(!NX.src){ NX.src={d:id,p:port}; $('#nxpop').style.display='none'; if(id==='prov') $('#nxprov').classList.add('sel'); else $$('#nx .dev').forEach(x=>x.classList.toggle('sel',x.dataset.dev===id)); snd.click(); nxTask('Кабель от '+nxName(id)+' ('+port+') в руках. Нажми второе устройство и его порт. Передумал — нажми этот порт ещё раз.','hint'); return; }
+  const s=NX.src;
   const k1=pk(s.p), k2=pk(port); let err='';
   if((k1==='hdmi')!==(k2==='hdmi')) err='HDMI соединяют только с HDMI — это видеокабель, а не сетевой.';
   else if(k1==='wan'&&s.d!=='prov'&&id!=='prov') err='Синий порт WAN — только для кабеля от провайдера.';
@@ -3764,6 +3769,7 @@ function nxPick(id,port){
   else nxTask('Соединено: '+nxName(s.d)+' ('+s.p+') ↔ '+nxName(id)+' ('+port+').','good');
   nxDevState(s.d); nxDevState(id); if(k1!=='hdmi') Object.keys(NX.cfg).forEach(nxDevState);
 }
+function nxCancelSrc(){ NX.src=null; $$('#nx .sel').forEach(x=>x.classList.remove('sel')); $$('#nxpop .port.sel').forEach(x=>x.classList.remove('sel')); }
 function nxPos(id){ if(id==='prov') return NX.lv.prov; const z=NX.placed[id]; if(z==='pre') return NX.lv.pre[id]; return NX.lv.zones[z]; }
 function nxRedraw(){ const svg=$('#nxcab'); svg.innerHTML=NX.conn.map(c=>{ const a=nxPos(c.a), b=nxPos(c.b); if(!a||!b) return ''; const k=pk(c.ap)==='hdmi'?'hdmi':pk(c.ap)==='wan'||pk(c.bp)==='wan'?'wan':(pk(c.ap)==='poe'||pk(c.bp)==='poe')?'poe':(c.ap==='UP'||c.bp==='UP')?'up':'lan'; const mx=(a.x+b.x)/2; return '<path class="'+k+'" vector-effect="non-scaling-stroke" d="M'+a.x+' '+a.y+' C'+mx+' '+a.y+' '+mx+' '+b.y+' '+b.x+' '+b.y+'"/>'; }).join(''); }
 /* ---- настройки ---- */
@@ -3799,7 +3805,8 @@ function nxHint(){
   if(h.zone){ const z=$$('#nx .zone').find(x=>x.dataset.zone===h.zone); if(z&&!z.classList.contains('filled')) z.classList.add('hint'); const dev=NX.lv.zones[h.zone].f.find(d=>!NX.placed[d]); $$('#nxdevtray .tray-item').forEach(x=>x.classList.toggle('hint',x.dataset.dev===dev)); }
   if(h.dev){ const d=$$('#nx .dev').find(x=>x.dataset.dev===h.dev); if(d){ d.classList.add('hint'); if(h.port||h.cfg){ nxOpenPop(h.dev); const p=$$('#nxpop .port').find(x=>x.dataset.p===h.port); if(p) p.classList.add('hint'); if(h.cfg){ const cb=$('#nxpop .cfgbtn'); if(cb) cb.style.animation='pulse 1s infinite'; } } } else { const dev=h.dev; $$('#nxdevtray .tray-item').forEach(x=>x.classList.toggle('hint',x.dataset.dev===dev)); } }
   if(h.btn) $('#nxCheck').classList.add('hint');
-  setTimeout(()=>{ $$('#nx .hint,#nxdevtray .hint,#nxCheck.hint').forEach(x=>x.classList.remove('hint')); },3000);
+  if(h.prov&&$('#nxprov')&&!nxLinked('prov',NX.lv.devs.fw?'fw':'router')) $('#nxprov').classList.add('hint');
+  setTimeout(()=>{ $$('#nx .hint,#nxdevtray .hint,#nxCheck.hint,#nxprov.hint').forEach(x=>x.classList.remove('hint')); },3000);
 }
 function nxCheck(){
   const L=NX.lv; const probs=[]; const gw=L.devs.fw?'fw':L.devs.router?'router':(L.pre&&L.pre.fw?'fw':null);
