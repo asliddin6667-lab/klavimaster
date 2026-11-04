@@ -1051,6 +1051,110 @@ body[data-sec="home"] .tab.home{display:none}
 .rule{background:var(--card);border-radius:20px;box-shadow:var(--shadow);padding:14px 16px;display:flex;gap:12px;align-items:flex-start}
 .rule .e{font-size:2rem;line-height:1}
 .rule b{display:block;font-size:1.02rem;margin-bottom:2px}.rule span{color:var(--muted);font-weight:700;font-size:.9rem;line-height:1.4}
+
+/* ============ СЕТЕВАЯ ЛАБОРАТОРИЯ ============ */
+.nhome .catcard.done::after{display:none}
+.nxstages{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;align-items:center}
+.nxstage{display:flex;align-items:center;gap:8px;background:var(--card);border-radius:999px;padding:8px 14px 8px 8px;font-weight:900;box-shadow:var(--shadow);border:3px solid transparent;cursor:pointer;transition:.15s}
+.nxstage:hover{transform:translateY(-2px);border-color:var(--accent)}
+.nxstage.cur{border-color:var(--accent);background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
+.nxstage i{width:28px;height:28px;border-radius:50%;background:var(--card2);color:var(--text);display:grid;place-items:center;font-style:normal;font-size:.85rem}
+.nxstage.done i{background:var(--ok);color:#fff}
+.nxlab{display:grid;grid-template-columns:1fr 320px;gap:14px;height:calc(100vh - 160px);min-height:520px}
+@media(max-width:1000px){.nxlab{grid-template-columns:1fr;height:auto}}
+.nx-wrap{position:relative;border-radius:24px;overflow:hidden;box-shadow:var(--shadow);background:#cbd5e1;min-height:0;display:grid;place-items:center}
+.nx{position:relative;width:100%;height:100%;overflow:hidden;touch-action:none;user-select:none;background:#e2e8f0}
+.nx.class{background:linear-gradient(180deg,#dbeafe 0 6%,#fef9c3 6%)}
+.nx.office{background:linear-gradient(180deg,#e2e8f0 0 6%,#f1f5f9 6%)}
+.nx.cctv{background:linear-gradient(180deg,#334155 0 6%,#cbd5e1 6%)}
+.nx .roomx{position:absolute;border:3px solid rgba(71,85,105,.45);background:rgba(255,255,255,.4);border-radius:4px}
+.nx .roomx b{position:absolute;left:8px;top:6px;font-size:.82rem;color:#334155;font-weight:900;background:rgba(255,255,255,.8);padding:2px 8px;border-radius:8px;white-space:nowrap}
+.nx .roomx.out{background:rgba(134,239,172,.25);border-style:dashed}
+.nx .decor{position:absolute;transform:translate(-50%,-50%);opacity:.55;pointer-events:none;line-height:1}
+.nx .zone{position:absolute;border:3px dashed rgba(14,116,230,.55);border-radius:14px;background:rgba(56,189,248,.13);display:grid;place-items:center;text-align:center;font-weight:900;color:#0c4a6e;font-size:.72rem;transition:.2s;padding:3px;line-height:1.15;width:96px;height:66px;transform:translate(-50%,-50%)}
+.nx .zone.hint{border-color:#f59e0b;background:rgba(245,158,11,.25);animation:pulse 1s infinite}
+.nx .zone.over{border-color:#22c55e;background:rgba(34,197,94,.3)}
+.nx .zone.filled{border-style:solid;border-color:rgba(34,197,94,.6);background:rgba(34,197,94,.08)}
+.nx .zone.filled span{display:none}
+.nx .dev{position:absolute;width:88px;transform:translate(-50%,-50%);text-align:center;cursor:pointer;z-index:3}
+.nx .dev .ic{font-size:2.3rem;line-height:1.1;filter:drop-shadow(0 5px 7px rgba(0,0,0,.3))}
+.nx .dev .lb{font-size:.7rem;font-weight:900;color:#1e2140;background:rgba(255,255,255,.92);border-radius:7px;padding:1px 5px;margin-top:1px;line-height:1.15}
+.nx .dev .ipb{display:block;font-size:.62rem;font-family:Consolas,monospace;color:#0369a1;font-weight:800}
+.nx .dev .st{position:absolute;right:-4px;top:-4px;width:22px;height:22px;border-radius:50%;background:#94a3b8;color:#fff;font-size:.72rem;display:grid;place-items:center;font-weight:900;box-shadow:0 3px 8px rgba(0,0,0,.3)}
+.nx .dev.ok .st{background:#22c55e}.nx .dev.bad .st{background:#ef4444}
+.nx .dev.sel{outline:4px solid #f59e0b;outline-offset:4px;border-radius:12px}
+.nx .dev.hint{animation:pulse 1s infinite;border-radius:12px}
+.nx .wall{position:absolute;width:62px;height:62px;background:#fff;border:3px solid #cbd5e1;border-radius:12px;display:grid;place-items:center;cursor:pointer;z-index:3;box-shadow:0 6px 14px rgba(0,0,0,.2);transform:translate(-50%,-50%)}
+.nx .wall b{position:absolute;left:50%;top:100%;transform:translateX(-50%);font-size:.66rem;white-space:nowrap;color:#1e2140;background:rgba(255,255,255,.9);padding:1px 6px;border-radius:6px;margin-top:2px}
+.nx .wall.sel{outline:4px solid #f59e0b;outline-offset:4px}
+.nx .wall .plug{width:26px;height:20px;background:#1d4ed8;border-radius:3px}
+.nx .ncab{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
+.nx .ncab path{fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.nx .ncab path.lan{stroke:#f59e0b}.nx .ncab path.wan{stroke:#2563eb}.nx .ncab path.poe{stroke:#16a34a}.nx .ncab path.up{stroke:#7c3aed}.nx .ncab path.hdmi{stroke:#111827}
+.nx .ncab path.wifi{stroke:#38bdf8;stroke-dasharray:6 10}
+.nx .ncab path.flow{stroke:#22c55e;stroke-dasharray:14 10;animation:dash .6s linear infinite}
+.nx .ncab path.dead{stroke:#ef4444;stroke-dasharray:4 6}
+.nxpop{position:absolute;z-index:6;background:#1e293b;border:3px solid #475569;border-radius:14px;padding:10px 12px;color:#fff;box-shadow:0 14px 30px rgba(0,0,0,.45);width:300px;transform:translate(-50%,0)}
+.nxpop .ttl{font-size:.8rem;font-weight:900;letter-spacing:.4px;color:#cbd5e1;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
+.nxpop .ttl span.x{cursor:pointer;font-size:1rem}
+.nxpop .ports{display:flex;gap:5px;flex-wrap:wrap;align-items:flex-end}
+.nxpop .port{min-width:40px;height:36px;border-radius:5px;display:grid;place-items:center;font-size:.6rem;font-weight:900;cursor:pointer;border:3px solid transparent;position:relative;color:#fff;padding:0 4px}
+.nxpop .port.wan{background:#1d4ed8}.nxpop .port.lan{background:#b45309}.nxpop .port.poe{background:#15803d}.nxpop .port.up{background:#6d28d9}.nxpop .port.hdmi{background:#111827;border-color:#475569}
+.nxpop .port.used::after{content:'🔌';position:absolute;top:-15px;font-size:.9rem}
+.nxpop .port.hint,.nxpop .port.sel{border-color:#f59e0b;animation:pulse 1s infinite}
+.nxpop .port.off{opacity:.4}
+.nxpop .cfgbtn{margin-top:8px;width:100%;background:#0ea5e9;color:#fff;border-radius:8px;padding:8px;font-weight:900;font-size:.9rem}
+.nxpop .cfgbtn:hover{background:#38bdf8}
+.nxpop .info{font-size:.74rem;color:#94a3b8;font-weight:700;margin-top:6px;line-height:1.35}
+.nxpop .info b{color:#e2e8f0}
+.nxdlg{position:absolute;z-index:7;left:50%;top:50%;transform:translate(-50%,-50%);background:#fff;color:#111;border-radius:16px;box-shadow:0 24px 60px rgba(0,0,0,.45);width:min(420px,94%);padding:14px 16px;max-height:92%;overflow:auto}
+.nxdlg h4{font-size:1rem;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+.nxdlg h4 span{cursor:pointer}
+.nxdlg .row2{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#f1f5f9;border-radius:10px;padding:9px 12px;margin:6px 0;font-weight:800;font-size:.9rem}
+.nxdlg .row2 small{display:block;font-weight:700;color:#64748b;font-size:.76rem}
+.nxdlg input{width:100%;font:inherit;font-weight:900;font-size:1.15rem;padding:8px 10px;border:2px solid #cbd5e1;border-radius:10px;margin:4px 0;font-family:Consolas,monospace;letter-spacing:1px}
+.nxdlg input.txt{font-family:inherit;letter-spacing:0;font-size:1rem}
+.nxdlg .keys{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;margin-top:4px}
+.nxdlg .keys button{background:#f1f5f9;border-radius:8px;padding:8px 0;font-weight:900;font-size:1rem}
+.nxdlg .keys button:hover{background:#e2e8f0}
+.nxdlg .keys button.ok{background:#22c55e;color:#fff}
+.nxdlg .err{color:#dc2626;font-weight:800;font-size:.84rem;min-height:1.2em;margin-top:4px}
+.nxdlg .okm{color:#16a34a;font-weight:800;font-size:.84rem}
+.nxdlg .tip{background:#fef3c7;border-radius:10px;padding:8px 10px;font-size:.8rem;font-weight:700;color:#92400e;margin:6px 0}
+.nxdlg .seg{display:flex;gap:6px}
+.nxdlg .seg button{flex:1;background:#f1f5f9;border-radius:10px;padding:9px;font-weight:900;font-size:.88rem;border:2px solid transparent}
+.nxdlg .seg button.on{background:#dbeafe;border-color:#2563eb}
+.nxdlg .camlist div{display:flex;justify-content:space-between;align-items:center;background:#f1f5f9;border-radius:10px;padding:8px 10px;margin:5px 0;font-weight:800;font-size:.88rem}
+.nxdlg .camlist button{background:#2563eb;color:#fff;border-radius:8px;padding:5px 10px;font-weight:900;font-size:.8rem}
+.nxdlg .camlist button.added{background:#22c55e}
+.nxdlg .foot{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
+.nxtray{background:var(--card);border-radius:22px;box-shadow:var(--shadow);padding:12px;display:flex;flex-direction:column;gap:10px;overflow:auto}
+.nxtray .task{padding:10px 12px;min-height:60px}
+.nxtray .task .ic{width:42px;height:42px;font-size:1.3rem}
+.nxtray .task .tt b{font-size:1rem}.nxtray .task .tt span{font-size:.84rem}
+.nxtray h3{display:flex;align-items:center;gap:8px;font-size:1rem}
+.nxtray h3 small{margin-left:auto;color:var(--muted);font-weight:800}
+.nxtray .devs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+.nxtray .tray-item{padding:6px 4px 5px}
+.nxtray .tray-item .ic{font-size:1.9rem;line-height:1.1}
+.nxtray .tray-item .nm{font-size:.74rem}
+.nxtray .tray-item .qty{top:4px;left:5px;font-size:.68rem}
+.nxtray .tray-item.decoy{border-style:dashed;border-color:#fca5a5}
+.nxtray .steps{display:flex;gap:4px;flex-wrap:wrap}
+.nxtray .steps i{width:11px;height:11px;border-radius:50%;background:var(--line);display:block}
+.nxtray .steps i.done{background:var(--ok)}.nxtray .steps i.cur{background:var(--accent);box-shadow:0 0 0 3px rgba(106,92,255,.25)}
+.nxtray .legend{display:flex;flex-wrap:wrap;gap:6px;font-size:.72rem;font-weight:800;color:var(--muted)}
+.nxtray .legend i{display:inline-block;width:14px;height:6px;border-radius:3px;margin-right:4px;vertical-align:middle}
+.nxtray .probs{background:#fee2e2;border-radius:12px;padding:8px 10px;font-weight:800;font-size:.84rem;color:#991b1b;line-height:1.4;display:none}
+.nxtray .probs.show{display:block}
+.nxmon{position:absolute;inset:0;z-index:8;background:rgba(15,23,42,.92);display:none;place-items:center;color:#fff}
+.nxmon.open{display:grid}
+.nxmon .scr{width:min(760px,90%);background:#000;border:10px solid #1e293b;border-radius:12px;padding:8px;display:grid;grid-template-columns:1fr 1fr;gap:8px;box-shadow:0 30px 60px rgba(0,0,0,.6)}
+.nxmon .feed{aspect-ratio:16/10;border-radius:4px;position:relative;display:grid;place-items:center;font-size:3.6rem;overflow:hidden}
+.nxmon .feed::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.04) 0 2px,transparent 2px 4px)}
+.nxmon .feed b{position:absolute;left:8px;top:6px;font-size:.72rem;font-family:Consolas,monospace;color:#fff;text-shadow:0 1px 3px #000}
+.nxmon .feed i{position:absolute;right:8px;top:6px;width:10px;height:10px;border-radius:50%;background:#ef4444;animation:glow 1s infinite}
+.nxmon .cap{text-align:center;font-weight:900;font-size:1.3rem;margin-top:14px}
 </style>
 </head>
 <body>
@@ -1084,7 +1188,8 @@ body[data-sec="home"] .tab.home{display:none}
   <nav class="tabs" data-sec="net">
     <button class="tab" data-mode="net-home"><span class="em">📡</span> Начало</button>
     <button class="tab" data-mode="net-lesson"><span class="em">📖</span> Урок</button>
-    <button class="tab" data-mode="net-build"><span class="em">🏠</span> Домашняя сеть</button>
+    <button class="tab" data-mode="net-build"><span class="em">🏠</span> Дом</button>
+    <button class="tab" data-mode="net-lab"><span class="em">🧪</span> Лаборатория</button>
     <button class="tab" data-mode="net-packet"><span class="em">✉️</span> Пакеты</button>
     <button class="tab" data-mode="net-quiz"><span class="em">❓</span> Викторина</button>
   </nav>
@@ -1494,6 +1599,14 @@ body[data-sec="home"] .tab.home{display:none}
   <section class="panel" id="panel-safe-share"><div class="share" id="share"></div></section>
   <section class="panel" id="panel-safe-rules"><div class="sit" id="sit"></div></section>
   <section class="panel" id="panel-safe-quiz"><div class="quiz" id="squiz"></div></section>
+
+  <section class="panel" id="panel-net-lab">
+    <div class="nxstages" id="nxstages"></div>
+    <div class="nxlab">
+      <div class="nx-wrap" id="nxWrap"><div class="nx" id="nx"></div><div class="nxmon" id="nxmon"></div></div>
+      <div class="nxtray" id="nxtray"></div>
+    </div>
+  </section>
 </main>
 
 <!-- ============ КЛАВИАТУРА ============ -->
@@ -1537,7 +1650,7 @@ body[data-sec="home"] .tab.home{display:none}
       <li><b>🔧 Сборка</b> — перетащи детали в корпус (или нажми на деталь, потом на место в корпусе), закрой крышку, подключи монитор, клавиатуру, мышь и кабель питания, вставь вилку в розетку, включи блок питания и нажми кнопку. Если что-то не подключено — компьютер подскажет, что не так.</li>
       <li><b>❓ Викторина</b> — угадай деталь по фото и описанию.</li>
       <li><b>🖱️ КликМастер</b> — урок: нажимай кнопки настоящей мыши, на картинке они загораются. Игры: пузыри (щелчок), сундуки (двойной щелчок), шарики (левая/правая кнопка), урожай (перетаскивание), лифт (колёсико), жук (точность).</li>
-      <li><b>📡 СетьМастер</b> — урок с живой схемой (компьютер → роутер → провайдер → сервер, IP-адреса, DNS, скорость), сборка домашней сети (роутер, порты WAN/LAN, Wi-Fi с паролем), игра «Доставь пакет» и викторина.</li>
+      <li><b>📡 СетьМастер</b> — урок с живой схемой (компьютер → роутер → провайдер → сервер, IP-адреса, DNS, скорость), сетевая лаборатория из 4 этапов: дом, компьютерный класс (коммутатор вместо хаба, IP-адреса без конфликтов, смена пароля Wi-Fi), офис (файрвол, DHCP, сервер с постоянным адресом), видеонаблюдение (PoE-коммутатор, камеры, регистратор, монитор); игра «Доставь пакет» и викторина. В каждом шаге — кнопка 💡 Подсказка.</li>
       <li><b>🛡️ КиберЩит</b> — лаборатория паролей (робот показывает, за сколько взломает), «Обман или нет?» (сообщения, письма, сайты), «Можно или нельзя?» (личные данные), «Что делать, если…» (ситуации) и викторина.</li>
       <li><b>🪟 ОкноМастер</b> — учебный рабочий стол Windows: меню Пуск, окна (свернуть, развернуть, закрыть, перетащить), Проводник, Блокнот, Параметры, Корзина, правая кнопка → создать папку, переименовать (F2), удалить (Delete), перетащить файл в папку, выключение. 14 заданий по порядку или свободный режим.</li>
       <li><b>📚 Урок</b> — выбери тему. Каждое сочетание подсвечивается на клавиатуре и объясняется. Нажми его сам — и переходи дальше.</li>
@@ -2493,7 +2606,7 @@ document.addEventListener('fullscreenchange',()=>{ if(!document.fullscreenElemen
 $('#btnHelp').addEventListener('click',()=>$('#help').classList.add('open'));
 $('#helpClose').addEventListener('click',()=>$('#help').classList.remove('open'));
 $('#help').addEventListener('click',e=>{ if(e.target.id==='help') $('#help').classList.remove('open'); });
-$('#resetProgress').addEventListener('click',()=>{ if(confirm('Сбросить все звёзды и прогресс?')){ const set=S.set; S={stars:0,learned:{},stats:{},best:{},set,lab:{seen:{},builds:0,best:0,quizBest:0},mouse:{best:{},lesson:0},win:{done:{},wp:'bloom'},net:{lesson:0,built:0,pkBest:0,quizBest:0},safe:{pass:{},phishBest:0,share:0,rulesBest:0,quizBest:0}}; save(); renderStars(); renderCats(); renderTrainGrid(); renderTypeHome(); renderHome(); toast('Прогресс сброшен'); } });
+$('#resetProgress').addEventListener('click',()=>{ if(confirm('Сбросить все звёзды и прогресс?')){ const set=S.set; S={stars:0,learned:{},stats:{},best:{},set,lab:{seen:{},builds:0,best:0,quizBest:0},mouse:{best:{},lesson:0},win:{done:{},wp:'bloom'},net:{lesson:0,built:0,pkBest:0,quizBest:0,labs:{}},safe:{pass:{},phishBest:0,share:0,rulesBest:0,quizBest:0}}; save(); renderStars(); renderCats(); renderTrainGrid(); renderTypeHome(); renderHome(); toast('Прогресс сброшен'); } });
 
 
 
@@ -2509,7 +2622,7 @@ function applySection(m){
   if(m!=='lab-build') cancelDrag();
   if(m==='home'){ renderMouseHome(); renderWinHome(); } if(m==='mouse-home') renderMouseHome(); if(m==='mouse-lesson') renderLesson(); if(m==='win-home') renderWinHome(); if(m==='win-desk') enterDesk();
   if(m!=='mouse-game'&&MG.running) stopGame();
-  if(m==='net-home') renderNetHome(); if(m==='net-lesson'){ nDiagram(); nRenderStep(); } if(m==='net-build') renderNetBuild(); if(m==='net-packet') renderPacket(); if(m==='net-quiz'&&!netQuiz.active) netQuiz.home();
+  if(m==='net-home') renderNetHome(); if(m==='net-lesson'){ nDiagram(); nRenderStep(); } if(m==='net-build') renderNetBuild(); if(m==='net-lab'){ renderNetLab(); } if(m==='net-packet') renderPacket(); if(m==='net-quiz'&&!netQuiz.active) netQuiz.home();
   if(m==='safe-home') renderSafeHome(); if(m==='safe-pass') renderPass(); if(m==='safe-phish') renderPhish(); if(m==='safe-share') renderShare(); if(m==='safe-rules') renderSit(); if(m==='safe-quiz'&&!safeQuiz.active) safeQuiz.home();
 }
 document.addEventListener('click',e=>{ const g=e.target.closest('[data-go]'); if(g){ unlockAudio(); setMode(g.dataset.go); } });
@@ -3321,7 +3434,7 @@ const NSTEPS=[
  {t:'Защищённый Wi-Fi',p:'Роутер защищают паролем Wi-Fi, чтобы соседи и чужие не подключались к твоей сети. Домашний Wi-Fi — с замочком 🔒. Открытые сети без замочка в кафе и на вокзале могут быть опасны.',f:'Пароль от Wi-Fi обычно написан на наклейке снизу роутера. Его можно поменять в настройках.',task:'Нажми на роутер, чтобы включить защиту паролем 🔒',ev:t=>t==='lock'},
 ];
 function renderNetHome(){
-  const items=[['net-lesson','📡','Как работает интернет','11 шагов: роутер, IP-адрес, провайдер, сервер, DNS, скорость',S.net.lesson>=NSTEPS.length?'пройдено':S.net.lesson+' / '+NSTEPS.length,S.net.lesson>=NSTEPS.length],['net-build','🏠','Собери домашнюю сеть','Поставь роутер, подключи кабели и Wi-Fi, проверь интернет',S.net.built?'собрано: '+S.net.built:'ещё не собирал',!!S.net.built],['net-packet','✉️','Доставь пакет','Проведи пакет по сети к серверу самым коротким путём — 6 уровней',S.net.pkBest?'лучший результат: '+S.net.pkBest+' ⭐':'ещё не играл',S.net.pkBest>=15],['net-quiz','❓','Викторина','10 вопросов про сеть и интернет',S.net.quizBest?'рекорд: '+S.net.quizBest+' / 10':'ещё не играл',S.net.quizBest>=10]];
+  const items=[['net-lesson','📡','Как работает интернет','11 шагов: роутер, IP-адрес, провайдер, сервер, DNS, скорость',S.net.lesson>=NSTEPS.length?'пройдено':S.net.lesson+' / '+NSTEPS.length,S.net.lesson>=NSTEPS.length],['net-build','🏠','Собери домашнюю сеть','Этап 1 лаборатории: роутер, кабели, Wi-Fi, проверь интернет',S.net.built?'собрано: '+S.net.built:'ещё не собирал',!!S.net.built],['net-lab','🧪','Сетевая лаборатория','Этапы 2–4: компьютерный класс (свитч, IP-адреса, Wi-Fi), офис (DHCP, сервер, файрвол), видеонаблюдение (PoE, камеры, регистратор)',Object.keys(S.net.labs||{}).length+' / 3 этапов',Object.keys(S.net.labs||{}).length>=3],['net-packet','✉️','Доставь пакет','Проведи пакет по сети к серверу самым коротким путём — 6 уровней',S.net.pkBest?'лучший результат: '+S.net.pkBest+' ⭐':'ещё не играл',S.net.pkBest>=15],['net-quiz','❓','Викторина','10 вопросов про сеть и интернет',S.net.quizBest?'рекорд: '+S.net.quizBest+' / 10':'ещё не играл',S.net.quizBest>=10]];
   $('#nhome').innerHTML=items.map((it,i)=>'<div class="catcard'+(it[5]?' done':'')+'" data-go="'+it[0]+'"><span class="stp">'+(it[5]?'✓ готово':'шаг '+(i+1))+'</span><div class="em">'+it[1]+'</div><div class="nm">'+it[2]+'</div><div class="ds">'+it[3]+'</div><div class="cnt">'+it[4]+'</div></div>').join('');
 }
 /* ---- урок ---- */
@@ -3480,6 +3593,236 @@ const NETQ=[
 ];
 const netQuiz=genQuiz('nquiz',NETQ,'net.quizBest','Викторина «Сеть и интернет»','📡');
 
+/* =====================================================================
+   СЕТЕВАЯ ЛАБОРАТОРИЯ: КЛАСС, ОФИС, ВИДЕОНАБЛЮДЕНИЕ
+   ===================================================================== */
+if(!S.net.labs) S.net.labs={};
+const NXT={
+  pc:{e:'🖥️',n:'Компьютер',ports:['LAN'],cfg:'ip'},
+  router:{e:'📶',n:'Роутер',ports:['WAN','LAN1','LAN2','LAN3','LAN4'],cfg:'router'},
+  fw:{e:'🛡️',n:'Роутер с файрволом',ports:['WAN','LAN1','LAN2','LAN3','LAN4'],cfg:'router',fw:true},
+  hub:{e:'📦',n:'Хаб (старый)',ports:['1','2','3','4','5','6','7','8'],decoy:true},
+  sw8:{e:'🔀',n:'Коммутатор 8 портов',ports:['1','2','3','4','5','6','7','8'],cfg:'switch'},
+  sw24:{e:'🔀',n:'Коммутатор 24 порта',ports:Array.from({length:24},(_,i)=>String(i+1)),cfg:'switch'},
+  poe:{e:'⚡',n:'PoE-коммутатор',ports:['PoE1','PoE2','PoE3','PoE4','PoE5','PoE6','PoE7','PoE8','UP'],cfg:'switch'},
+  ap:{e:'📡',n:'Точка доступа Wi-Fi',ports:['LAN'],cfg:'ap'},
+  printer:{e:'🖨️',n:'Принтер',ports:['LAN'],cfg:'ip'},
+  server:{e:'🗄️',n:'Сервер',ports:['LAN'],cfg:'ip'},
+  nvr:{e:'📼',n:'Видеорегистратор',ports:['LAN','HDMI'],cfg:'nvr'},
+  cam:{e:'📹',n:'IP-камера',ports:['PoE'],cfg:'ip'},
+  monitor:{e:'🖥',n:'Монитор охраны',ports:['HDMI']},
+};
+const pk=name=>name==='WAN'?'wan':name==='HDMI'?'hdmi':/^PoE/.test(name)?'poe':name==='UP'?'up':'lan';
+const NXLV=[
+ {id:'class',n:'Компьютерный класс',e:'🏫',net:{pre:'192.168.10.',gw:1,min:2,max:254},prov:{x:3,y:52},
+  rooms:[['Компьютерный класс',0,6,74,94],['Серверный шкаф',74,6,26,40],['Коридор',74,46,26,54]],
+  decor:[['🪟',20,14,2.2],['🪟',50,14,2.2],['📋',37,22,2.6],['🚪',87,95,2.2]],
+  zones:{zr:{x:87,y:17,l:'Стойка: роутер',f:['router']},zs:{x:87,y:34,l:'Стойка: коммутатор',f:['sw8','hub']},zt:{x:37,y:34,l:'Стол учителя',f:['pc1']},z1:{x:14,y:56,l:'Парта 1',f:['pc2']},z2:{x:37,y:56,l:'Парта 2',f:['pc3']},z3:{x:60,y:56,l:'Парта 3',f:['pc4']},z4:{x:14,y:80,l:'Парта 4',f:['pc5']},z5:{x:37,y:80,l:'Парта 5',f:['pc6']},zp:{x:60,y:80,l:'Тумба: принтер',f:['printer']},za:{x:87,y:70,l:'Стена: Wi-Fi',f:['ap']}},
+  devs:{router:{t:'router',n:'Роутер'},sw8:{t:'sw8',n:'Коммутатор'},hub:{t:'hub',n:'Хаб'},pc1:{t:'pc',n:'ПК учителя'},pc2:{t:'pc',n:'ПК 1'},pc3:{t:'pc',n:'ПК 2'},pc4:{t:'pc',n:'ПК 3'},pc5:{t:'pc',n:'ПК 4'},pc6:{t:'pc',n:'ПК 5'},printer:{t:'printer',n:'Принтер'},ap:{t:'ap',n:'Wi-Fi точка'}},
+  tray:['router','sw8','hub','pc1','pc2','pc3','pc4','pc5','pc6','printer','ap'],
+  steps:[
+   {t:'Поставь роутер в серверный шкаф',s:'Роутер раздаёт интернет всему классу. Он стоит в шкафу — чтобы дети не трогали.',h:{zone:'zr'},d:()=>NX.placed.router},
+   {t:'Подключи интернет к роутеру',s:'Нажми розетку провайдера, потом синий порт WAN роутера.',h:{dev:'router',port:'WAN'},d:()=>nxLinked('prov','router')},
+   {t:'Поставь коммутатор (свитч) в шкаф',s:'У роутера всего 4 порта, а компьютеров 6. Коммутатор добавляет порты. Не бери хаб — он устарел.',h:{zone:'zs'},d:()=>NX.placed.sw8},
+   {t:'Соедини роутер с коммутатором',s:'Любой порт LAN роутера → порт 1 коммутатора.',h:{dev:'sw8',port:'1'},d:()=>nxLinked('router','sw8')},
+   {t:'Расставь 6 компьютеров по партам',s:'ПК учителя — на стол учителя, остальные — на парты.',h:{zone:'zt'},d:()=>['pc1','pc2','pc3','pc4','pc5','pc6'].every(p=>NX.placed[p])},
+   {t:'Подключи каждый компьютер к коммутатору',s:'Нажми компьютер → порт LAN, потом коммутатор → свободный порт.',h:{dev:'pc1',port:'LAN'},d:()=>['pc1','pc2','pc3','pc4','pc5','pc6'].every(p=>nxReach(p,'router'))},
+   {t:'Назначь компьютерам IP-адреса',s:'Сеть класса: 192.168.10.x. Роутер — .1. Каждому компьютеру — свой номер от 2 до 254, все разные. Нажми ПК → ⚙️ Настроить.',h:{dev:'pc1',cfg:true},d:()=>['pc1','pc2','pc3','pc4','pc5','pc6'].every(p=>nxIpOk(p))},
+   {t:'Поставь точку доступа Wi-Fi и подключи её',s:'На стену в коридоре. Кабель — в коммутатор.',h:{zone:'za'},d:()=>NX.placed.ap&&nxReach('ap','router')},
+   {t:'Настрой Wi-Fi: имя сети и новый пароль',s:'Нажми точку доступа → ⚙️. Имя — например «Класс-5». Пароль по умолчанию 12345678 — его знают все. Придумай надёжный: 8+ знаков, буквы и цифры.',h:{dev:'ap',cfg:true},d:()=>nxApOk('ap')},
+   {t:'Подключи принтер и дай ему адрес',s:'Принтер — на тумбу, кабелем в коммутатор, адрес 192.168.10.x (свой, уникальный).',h:{zone:'zp'},d:()=>NX.placed.printer&&nxReach('printer','router')&&nxIpOk('printer')},
+   {t:'Проверь сеть',s:'Нажми «Проверить сеть». Если что-то не так — я подскажу.',h:{btn:true},d:()=>NX.done},
+  ],
+  success:'Компьютерный класс в сети! Все 6 компьютеров видят друг друга, принтер и интернет, а Wi-Fi защищён новым паролем.'},
+ {id:'office',n:'Офис организации',e:'🏢',net:{pre:'192.168.1.',gw:1,min:2,max:254},prov:{x:3,y:26},dhcp:true,
+  rooms:[['Серверная',0,6,24,42],['Бухгалтерия',24,6,38,42],['Отдел продаж',62,6,38,42],['Кабинет директора',0,48,30,52],['Приёмная',30,48,70,52]],
+  decor:[['🪟',43,12,2],['🪟',81,12,2],['🪟',15,55,2],['🛋️',75,90,2.6],['🌴',94,90,2.4],['❄️',12,13,2]],
+  zones:{zf:{x:12,y:22,l:'Стойка: роутер-файрвол',f:['fw']},zm:{x:12,y:38,l:'Стойка: главный коммутатор',f:['sw24']},zsv:{x:12,y:72,l:'Сервер',f:['server']},zs1:{x:56,y:16,l:'Коммутатор бухгалтерии',f:['s1','s2']},zs2:{x:94,y:16,l:'Коммутатор продаж',f:['s1','s2']},
+   b1:{x:30,y:30,l:'Бухгалтер 1',f:['b1']},b2:{x:43,y:30,l:'Бухгалтер 2',f:['b2']},b3:{x:36,y:42,l:'Главбух',f:['b3']},p1:{x:68,y:30,l:'Менеджер 1',f:['p1']},p2:{x:81,y:30,l:'Менеджер 2',f:['p2']},p3:{x:74,y:42,l:'Менеджер 3',f:['p3']},zd:{x:18,y:60,l:'Стол директора',f:['dir']},za1:{x:43,y:58,l:'Wi-Fi приёмная',f:['a1','a2']},za2:{x:88,y:58,l:'Wi-Fi продажи',f:['a1','a2']},zpr:{x:60,y:75,l:'Принтер',f:['printer']}},
+  devs:{fw:{t:'fw',n:'Роутер-файрвол'},sw24:{t:'sw24',n:'Главный свитч'},server:{t:'server',n:'Сервер'},s1:{t:'sw8',n:'Свитч А'},s2:{t:'sw8',n:'Свитч Б'},b1:{t:'pc',n:'Бухгалтер 1'},b2:{t:'pc',n:'Бухгалтер 2'},b3:{t:'pc',n:'Главбух'},p1:{t:'pc',n:'Менеджер 1'},p2:{t:'pc',n:'Менеджер 2'},p3:{t:'pc',n:'Менеджер 3'},dir:{t:'pc',n:'Директор'},a1:{t:'ap',n:'Wi-Fi 1'},a2:{t:'ap',n:'Wi-Fi 2'},printer:{t:'printer',n:'Принтер'}},
+  tray:['fw','sw24','server','s1','s2','b1','b2','b3','p1','p2','p3','dir','a1','a2','printer'],
+  steps:[
+   {t:'Серверная: роутер-файрвол, главный коммутатор, сервер',s:'Всё важное оборудование — в отдельной прохладной комнате. Файрвол — это роутер, который ещё и защищает сеть.',h:{zone:'zf'},d:()=>NX.placed.fw&&NX.placed.sw24&&NX.placed.server},
+   {t:'Интернет → WAN файрвола, файрвол → главный коммутатор',s:'Розетка провайдера → синий WAN. Потом LAN файрвола → порт 1 главного коммутатора.',h:{dev:'fw',port:'WAN'},d:()=>nxLinked('prov','fw')&&nxLinked('fw','sw24')},
+   {t:'Поставь коммутаторы в отделы и подключи к главному',s:'В каждом отделе свой коммутатор (порт 8 — «аплинк» к главному). Так кабели короче.',h:{zone:'zs1'},d:()=>NX.placed.s1&&NX.placed.s2&&nxLinked('s1','sw24')&&nxLinked('s2','sw24')},
+   {t:'Расставь компьютеры и подключи к коммутаторам отделов',s:'Бухгалтеры — к свитчу бухгалтерии, менеджеры — к свитчу продаж, директор — к главному коммутатору.',h:{zone:'b1'},d:()=>['b1','b2','b3','p1','p2','p3','dir'].every(p=>NX.placed[p]&&nxReach(p,'fw'))},
+   {t:'Включи DHCP на файрволе',s:'Семь компьютеров вручную настраивать долго. DHCP раздаёт адреса автоматически. Нажми файрвол → ⚙️ → DHCP: включить, диапазон 100–200.',h:{dev:'fw',cfg:true},d:()=>NX.cfg.fw&&NX.cfg.fw.dhcp&&NX.cfg.fw.range==='100-200'},
+   {t:'Компьютеры: режим «Автоматически (DHCP)»',s:'Нажми каждый ПК → ⚙️ → «Автоматически». Адрес придёт от файрвола сам.',h:{dev:'b1',cfg:true},d:()=>['b1','b2','b3','p1','p2','p3','dir'].every(p=>nxIpOk(p))},
+   {t:'Серверу — постоянный адрес 192.168.1.2',s:'Сервер должен быть всегда по одному адресу, чтобы все его находили. Подключи его к главному коммутатору и задай адрес вручную: 192.168.1.2.',h:{dev:'server',cfg:true},d:()=>nxLinked('server','sw24')&&NX.cfg.server&&NX.cfg.server.mode==='static'&&NX.cfg.server.ip==='192.168.1.2'},
+   {t:'Две точки Wi-Fi: подключи и настрой',s:'Приёмная и отдел продаж. Имя сети одинаковое, например «Офис», пароль надёжный (8+ знаков, буквы и цифры).',h:{zone:'za1'},d:()=>['a1','a2'].every(a=>NX.placed[a]&&nxReach(a,'fw')&&nxApOk(a))},
+   {t:'Включи защиту на файрволе',s:'Нажми файрвол → ⚙️ → включи «Блокировать опасные сайты» и «Запретить вход снаружи».',h:{dev:'fw',cfg:true},d:()=>NX.cfg.fw&&NX.cfg.fw.block&&NX.cfg.fw.noin},
+   {t:'Принтер для всех',s:'Принтер — в приёмную, кабелем в любой коммутатор, адрес автоматически.',h:{zone:'zpr'},d:()=>NX.placed.printer&&nxReach('printer','fw')&&nxIpOk('printer')},
+   {t:'Проверь сеть',s:'Нажми «Проверить сеть».',h:{btn:true},d:()=>NX.done},
+  ],
+  success:'Офис в сети: 7 компьютеров получают адреса по DHCP, сервер доступен по постоянному адресу, Wi-Fi защищён, файрвол охраняет вход.'},
+ {id:'cctv',n:'Видеонаблюдение',e:'📹',net:{pre:'192.168.1.',gw:1,min:201,max:250},prov:null,
+  rooms:[['Пост охраны',0,6,26,44],['Вход',26,6,30,44],['Коридор',56,6,44,44],['Склад',0,50,56,50],['Парковка',56,50,44,50,'out']],
+  decor:[['🚪',41,45,2.4],['📦',20,80,2.6],['📦',30,70,2.2],['🚗',70,80,2.6],['🚗',88,80,2.6],['🌳',94,60,2.2]],
+  pre:{fw:{t:'fw',n:'Роутер офиса',x:12,y:16,fixed:true,cfg:{ip:'192.168.1.1'}}},
+  zones:{zp:{x:12,y:34,l:'Стойка: PoE-коммутатор',f:['poe','sw8']},zn:{x:14,y:70,l:'Видеорегистратор',f:['nvr']},zmo:{x:36,y:70,l:'Монитор охраны',f:['monitor']},c1:{x:41,y:22,l:'Камера: вход',f:['c1','c2','c3','c4']},c2:{x:78,y:22,l:'Камера: коридор',f:['c1','c2','c3','c4']},c3:{x:44,y:86,l:'Камера: склад',f:['c1','c2','c3','c4']},c4:{x:78,y:62,l:'Камера: парковка',f:['c1','c2','c3','c4']}},
+  devs:{poe:{t:'poe',n:'PoE-свитч'},sw8:{t:'sw8',n:'Обычный свитч'},nvr:{t:'nvr',n:'Регистратор'},monitor:{t:'monitor',n:'Монитор'},c1:{t:'cam',n:'Камера 1'},c2:{t:'cam',n:'Камера 2'},c3:{t:'cam',n:'Камера 3'},c4:{t:'cam',n:'Камера 4'}},
+  tray:['poe','sw8','nvr','monitor','c1','c2','c3','c4'],opt:['sw8'],
+  steps:[
+   {t:'Поставь PoE-коммутатор, регистратор и монитор на пост охраны',s:'PoE — питание по сетевому кабелю: камере не нужна розетка. Обычный свитч камеры не включит!',h:{zone:'zp'},d:()=>NX.placed.poe&&NX.placed.nvr&&NX.placed.monitor},
+   {t:'Повесь 4 камеры: вход, коридор, склад, парковка',s:'Камеры ставят там, где нужно видеть: двери, проходы, ценные вещи.',h:{zone:'c1'},d:()=>['c1','c2','c3','c4'].every(c=>NX.placed[c])},
+   {t:'Подключи камеры к портам PoE',s:'Камера → порт PoE, потом PoE-коммутатор → зелёный порт PoE. Загорится ✓ — камера получила питание.',h:{dev:'c1',port:'PoE'},d:()=>['c1','c2','c3','c4'].every(c=>nxPowered(c))},
+   {t:'Подключи регистратор к PoE-коммутатору',s:'Регистратор LAN → любой порт коммутатора. Он будет записывать видео со всех камер.',h:{dev:'nvr',port:'LAN'},d:()=>nxLinked('nvr','poe')},
+   {t:'Монитор → регистратор по HDMI',s:'Чёрный порт HDMI монитора → порт HDMI регистратора.',h:{dev:'monitor',port:'HDMI'},d:()=>nxLinked('monitor','nvr')},
+   {t:'Дай камерам адреса 192.168.1.201 … 204',s:'Регистратор — .200. Камеры — с .201 по .250, все разные. Нажми камеру → ⚙️.',h:{dev:'c1',cfg:true},d:()=>['c1','c2','c3','c4'].every(c=>nxIpOk(c))},
+   {t:'Добавь камеры в регистратор',s:'Нажми регистратор → ⚙️ → «Найти камеры» → добавь все четыре.',h:{dev:'nvr',cfg:true},d:()=>NX.cfg.nvr&&['c1','c2','c3','c4'].every(c=>NX.cfg.nvr.cams&&NX.cfg.nvr.cams[c])},
+   {t:'Соедини с сетью офиса',s:'Порт UP PoE-коммутатора → LAN роутера офиса. Тогда охрана сможет смотреть камеры и с телефона.',h:{dev:'poe',port:'UP'},d:()=>nxLinked('poe','fw')},
+   {t:'Проверь систему',s:'Нажми «Проверить сеть» — на мониторе появятся все камеры.',h:{btn:true},d:()=>NX.done},
+  ],
+  success:'Видеонаблюдение работает: 4 камеры с питанием по PoE, регистратор пишет видео, монитор охраны показывает всё сразу.'},
+];
+const NX={lv:null,placed:{},conn:[],cfg:{},src:null,done:false,drag:null,sel:null};
+function nxLv(){ return NX.lv; }
+function nxType(id){ const L=NX.lv; const d=L.devs[id]||(L.pre&&L.pre[id]); return d?NXT[d.t]:null; }
+function nxName(id){ const L=NX.lv; const d=L.devs[id]||(L.pre&&L.pre[id]); return id==='prov'?'Провайдер':(d?d.n:id); }
+function nxLinked(a,b){ return NX.conn.some(c=>(c.a===a&&c.b===b)||(c.a===b&&c.b===a)); }
+function nxReach(from,to){ const seen=new Set([from]); const q=[from]; while(q.length){ const x=q.shift(); if(x===to) return true; NX.conn.forEach(c=>{ if(pk(c.ap)==='hdmi') return; const y=c.a===x?c.b:c.b===x?c.a:null; if(y&&!seen.has(y)){ seen.add(y); q.push(y); } }); } return false; }
+function nxPowered(cam){ return NX.conn.some(c=>{ const o=c.a===cam?{d:c.b,p:c.bp}:c.b===cam?{d:c.a,p:c.ap}:null; return o&&pk(o.p)==='poe'&&NX.placed[o.d]; }); }
+function nxAllIps(except){ const r=[]; Object.entries(NX.cfg).forEach(([id,c])=>{ if(id!==except&&c.ip&&c.mode!=='dhcp') r.push(c.ip); }); if(NX.lv.pre) Object.values(NX.lv.pre).forEach(p=>{ if(p.cfg&&p.cfg.ip) r.push(p.cfg.ip); }); return r; }
+function nxIpCheck(id,ip,mode){
+  const L=NX.lv, n=L.net; if(mode==='dhcp'){ if(!L.dhcp) return 'В этой сети адреса задают вручную.'; const gw=L.devs.fw?'fw':'router'; if(!(NX.cfg[gw]&&NX.cfg[gw].dhcp)) return 'DHCP на роутере ещё не включён — адрес не придёт.'; if(!nxReach(id,gw)) return 'Компьютер не соединён с роутером кабелем — DHCP до него не дойдёт.'; return ''; }
+  if(!/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(ip)) return 'Адрес — четыре числа через точку, например '+n.pre+(n.min+9)+'.';
+  if(!ip.startsWith(n.pre)) return 'Не та сеть! Все устройства здесь — в сети '+n.pre+'x. Начало должно быть '+n.pre;
+  const last=+ip.slice(n.pre.length); if(last===n.gw) return 'Это адрес роутера (.1)! Два устройства с одним адресом — конфликт.';
+  if(last<n.min||last>n.max) return 'Последнее число должно быть от '+n.min+' до '+n.max+'.';
+  if(nxAllIps(id).includes(ip)) return 'Такой адрес уже есть у другого устройства — конфликт адресов! Выбери другой номер.';
+  return '';
+}
+function nxIpOk(id){ const c=NX.cfg[id]; if(!c) return false; return nxIpCheck(id,c.ip,c.mode)===''; }
+function nxApOk(id){ const c=NX.cfg[id]; return !!(c&&c.ssid&&c.ssid.length>=3&&c.pass&&c.pass!=='12345678'&&c.pass.length>=8&&/\d/.test(c.pass)&&/[a-zа-я]/i.test(c.pass)); }
+/* ---- отрисовка ---- */
+function renderNetLab(lvId){
+  const L=NXLV.find(l=>l.id===(lvId||NX.lv&&NX.lv.id||'class')); NX.lv=L; NX.placed={}; NX.conn=[]; NX.cfg={}; NX.src=null; NX.done=false; NX.sel=null;
+  if(L.pre) Object.entries(L.pre).forEach(([id,p])=>{ NX.placed[id]='pre'; NX.cfg[id]=Object.assign({mode:'static'},p.cfg||{}); });
+  $('#nxstages').innerHTML='<span style="font-weight:900">🧪 Сетевая лаборатория:</span><div class="nxstage'+(S.net.built?' done':'')+'" data-go="net-build"><i>'+(S.net.built?'✓':'1')+'</i>🏠 Дом</div>'+NXLV.map((l,i)=>'<div class="nxstage'+(l.id===L.id?' cur':'')+(S.net.labs[l.id]?' done':'')+'" data-lv="'+l.id+'"><i>'+(S.net.labs[l.id]?'✓':i+2)+'</i>'+l.e+' '+l.n+'</div>').join('');
+  $$('#nxstages [data-lv]').forEach(b=>b.addEventListener('click',()=>{ if(b.dataset.lv!==NX.lv.id) renderNetLab(b.dataset.lv); }));
+  const nx=$('#nx'); nx.className='nx '+L.id; $('#nxmon').classList.remove('open');
+  nx.innerHTML=L.rooms.map(r=>'<div class="roomx'+(r[5]?' '+r[5]:'')+'" style="left:'+r[1]+'%;top:'+r[2]+'%;width:'+r[3]+'%;height:'+r[4]+'%"><b>'+r[0]+'</b></div>').join('')+
+    (L.decor||[]).map(d=>'<div class="decor" style="left:'+d[1]+'%;top:'+d[2]+'%;font-size:'+d[3]+'rem">'+d[0]+'</div>').join('')+
+    Object.entries(L.zones).map(([id,z])=>'<div class="zone" data-zone="'+id+'" style="left:'+z.x+'%;top:'+z.y+'%"><span>'+z.l+'</span></div>').join('')+
+    (L.prov?'<div class="wall" id="nxprov" style="left:'+L.prov.x+'%;top:'+L.prov.y+'%"><div class="plug"></div><b>Интернет от провайдера</b></div>':'')+
+    '<svg class="ncab" id="nxcab" viewBox="0 0 100 100" preserveAspectRatio="none"></svg><div id="nxdevs"></div><div class="nxpop" id="nxpop" style="display:none"></div><div id="nxdlg"></div>';
+  if(L.pre) Object.entries(L.pre).forEach(([id,p])=>nxAddDev(id,p.x,p.y));
+  if(L.prov) $('#nxprov').addEventListener('click',()=>nxPick('prov','WAN'));
+  $$('#nx .zone').forEach(z=>z.addEventListener('click',()=>{ if(NX.sel) nxPlace(NX.sel,z.dataset.zone); }));
+  const tray=$('#nxtray'); tray.innerHTML='<div class="task" id="nxtask"><div class="ic" id="nxIc">🎯</div><div class="tt"><b id="nxT"></b><span id="nxS"></span></div></div><div class="steps" id="nxsteps"></div><div class="row" style="gap:6px"><button class="btn ghost sm" id="nxHint">💡 Подсказка</button><button class="btn ok sm" id="nxCheck">🔍 Проверить сеть</button><button class="btn ghost sm" id="nxReset">↺</button></div><div class="probs" id="nxprobs"></div><h3>📦 Оборудование <small id="nxCnt"></small></h3><div class="devs" id="nxdevtray"></div><div class="legend"><span><i style="background:#2563eb"></i>WAN — интернет</span><span><i style="background:#b45309"></i>LAN</span><span><i style="background:#15803d"></i>PoE — питание</span><span><i style="background:#6d28d9"></i>UP — аплинк</span><span><i style="background:#111827"></i>HDMI</span></div><div class="note" style="background:var(--card2);border-radius:14px;padding:9px 12px;font-weight:700;color:var(--muted);font-size:.84rem;line-height:1.4">👆 Нажми устройство в списке, потом на место в помещении. Кабель: нажми устройство → порт, потом второе устройство → порт. ⚙️ — настройки (адрес, Wi-Fi, DHCP).</div>';
+  $('#nxdevtray').innerHTML=L.tray.map(id=>'<div class="tray-item'+(NXT[L.devs[id].t].decoy||(L.opt||[]).includes(id)?' decoy':'')+'" data-dev="'+id+'"><div class="ic">'+NXT[L.devs[id].t].e+'</div><div class="nm">'+L.devs[id].n+'</div></div>').join('');
+  $$('#nxdevtray .tray-item').forEach(it=>it.addEventListener('pointerdown',e=>{ if(it.classList.contains('done')) return; e.preventDefault(); NX.drag={id:it.dataset.dev,x0:e.clientX,y0:e.clientY,moved:false,ghost:null,it}; try{ it.setPointerCapture(e.pointerId); }catch(err){} }));
+  $('#nxHint').addEventListener('click',nxHint); $('#nxCheck').addEventListener('click',nxCheck); $('#nxReset').addEventListener('click',()=>{ if(confirm('Начать этап заново?')) renderNetLab(L.id); });
+  nxTask(); nxFit(); speak(L.n+'. '+L.steps[0].t+'. '+L.steps[0].s);
+}
+function nxFit(){ const w=$('#nxWrap'), h=$('#nx'); if(!w) return; const W=w.clientWidth, H=w.clientHeight; let sw=W, sh=W*0.62; if(sh>H){ sh=H; sw=H/0.62; } h.style.width=sw+'px'; h.style.height=sh+'px'; }
+addEventListener('resize',()=>{ if(mode==='net-lab') nxFit(); });
+document.addEventListener('pointermove',e=>{ const d=NX.drag; if(!d) return; if(!d.moved&&Math.hypot(e.clientX-d.x0,e.clientY-d.y0)<8) return; if(!d.moved){ d.moved=true; const g=document.createElement('div'); g.className='dragghost'; g.style.cssText='width:80px;height:80px;font-size:3rem;text-align:center;line-height:80px'; g.textContent=NXT[NX.lv.devs[d.id].t].e; document.body.appendChild(g); d.ghost=g; nxZoneHints(d.id); } d.ghost.style.left=(e.clientX-40)+'px'; d.ghost.style.top=(e.clientY-40)+'px'; $$('#nx .zone.over').forEach(z=>z.classList.remove('over')); const z=document.elementsFromPoint(e.clientX,e.clientY).map(x=>x.closest&&x.closest('#nx .zone')).find(Boolean); if(z) z.classList.add('over'); });
+document.addEventListener('pointerup',e=>{ const d=NX.drag; if(!d) return; NX.drag=null; if(!d.moved){ NX.sel=NX.sel===d.id?null:d.id; $$('#nxdevtray .tray-item').forEach(x=>x.classList.toggle('sel',x.dataset.dev===NX.sel)); nxZoneHints(NX.sel); if(NX.sel) snd.click(); return; } d.ghost.remove(); $$('#nx .zone').forEach(z=>z.classList.remove('hint','over')); const z=document.elementsFromPoint(e.clientX,e.clientY).map(x=>x.closest&&x.closest('#nx .zone')).find(Boolean); if(z) nxPlace(d.id,z.dataset.zone); });
+function nxZoneHints(id){ $$('#nx .zone').forEach(z=>z.classList.toggle('hint',!!id&&NX.lv.zones[z.dataset.zone].f.includes(id)&&!z.classList.contains('filled'))); }
+function nxPlace(id,zone){
+  const L=NX.lv; const z=L.zones[zone]; const t=NXT[L.devs[id].t]; if(NX.placed[id]) return;
+  if(t.decoy){ snd.bad(); nxTask('Хаб — устаревшее устройство: он отправляет каждый пакет ВСЕМ сразу, и сеть тормозит. Коммутатор (свитч) умный — отправляет только адресату. Бери коммутатор!','bad'); speak('Хаб устарел. Он отправляет данные всем сразу. Возьми коммутатор.'); return; }
+  if(!z.f.includes(id)){ snd.bad(); const right=Object.values(L.zones).find(x=>x.f.includes(id)); nxTask(L.devs[id].n+' сюда не ставят. Место: '+(right?right.l:'…')+'.','bad'); return; }
+  const zel=$$('#nx .zone').find(x=>x.dataset.zone===zone); if(zel.classList.contains('filled')){ snd.bad(); nxTask('Это место уже занято.','bad'); return; }
+  NX.placed[id]=zone; zel.classList.add('filled'); zel.classList.remove('hint'); NX.sel=null; nxAddDev(id,z.x,z.y);
+  $$('#nxdevtray .tray-item').forEach(x=>{ x.classList.toggle('done',!!NX.placed[x.dataset.dev]); x.classList.remove('sel'); }); $$('#nx .zone').forEach(x=>x.classList.remove('hint'));
+  snd.ok(); nxTask(L.devs[id].n+' на месте.','good');
+}
+function nxAddDev(id,x,y){
+  const t=nxType(id); const d=document.createElement('div'); d.className='dev'; d.dataset.dev=id; d.style.left=x+'%'; d.style.top=y+'%'; d.innerHTML='<div class="ic">'+t.e+'</div><div class="lb">'+nxName(id)+'<span class="ipb"></span></div><div class="st">·</div>'; $('#nxdevs').appendChild(d); d.addEventListener('click',()=>nxOpenPop(id)); nxDevState(id);
+}
+function nxDevState(id){
+  const d=$$('#nx .dev').find(x=>x.dataset.dev===id); if(!d) return; const t=nxType(id); const c=NX.cfg[id]||{}; const ipb=d.querySelector('.ipb'); ipb.textContent=c.mode==='dhcp'?(nxIpOk(id)?'DHCP ✓':'DHCP…'):(c.ip||'');
+  let ok=false, bad=false; if(t.cfg==='ip'){ ok=nxIpOk(id)&&(NX.conn.some(cn=>cn.a===id||cn.b===id)); bad=!!(c.ip&&!nxIpOk(id)); if(t.ports[0]==='PoE'){ const pw=nxPowered(id); ok=ok&&pw; bad=bad||(NX.conn.some(cn=>cn.a===id||cn.b===id)&&!pw); } }
+  else if(t.cfg==='ap') ok=nxApOk(id); else ok=NX.conn.some(cn=>cn.a===id||cn.b===id);
+  d.classList.toggle('ok',ok); d.classList.toggle('bad',bad); d.querySelector('.st').textContent=ok?'✓':bad?'!':'·';
+}
+function nxOpenPop(id){
+  const t=nxType(id); const d=$$('#nx .dev').find(x=>x.dataset.dev===id); const pop=$('#nxpop'); const r=d.getBoundingClientRect(), nr=$('#nx').getBoundingClientRect();
+  pop.style.display='block'; pop.style.left=Math.min(nr.width-160,Math.max(160,r.left-nr.left+r.width/2))+'px'; pop.style.top=Math.min(nr.height-170,r.bottom-nr.top+6)+'px';
+  const used=p=>NX.conn.some(c=>(c.a===id&&c.ap===p)||(c.b===id&&c.bp===p));
+  pop.innerHTML='<div class="ttl"><span>'+t.e+' '+nxName(id).toUpperCase()+' — ПОРТЫ</span><span class="x">✕</span></div><div class="ports">'+t.ports.map(p=>'<div class="port '+pk(p)+(used(p)?' used':'')+(NX.src&&NX.src.d===id&&NX.src.p===p?' sel':'')+'" data-p="'+p+'">'+p+(pk(p)==='poe'?' ⚡':'')+'</div>').join('')+'</div>'+(t.cfg?'<button class="cfgbtn">⚙️ Настроить</button>':'')+'<div class="info">'+(t.cfg==='ip'?(NX.cfg[id]&&NX.cfg[id].ip?'Адрес: <b>'+(NX.cfg[id].mode==='dhcp'?'автоматически':NX.cfg[id].ip)+'</b>':'Адрес не задан'):t.cfg==='ap'?(nxApOk(id)?'Сеть <b>'+NX.cfg[id].ssid+'</b>, пароль изменён ✓':'Wi-Fi не настроен: имя и пароль по умолчанию'):t.cfg==='router'?'Адрес роутера <b>'+NX.lv.net.pre+NX.lv.net.gw+'</b>'+(NX.lv.dhcp?' · DHCP: <b>'+(NX.cfg[id]&&NX.cfg[id].dhcp?'вкл':'выкл')+'</b>':''):t.cfg==='nvr'?'Адрес <b>192.168.1.200</b> · камер добавлено: <b>'+(NX.cfg[id]&&NX.cfg[id].cams?Object.keys(NX.cfg[id].cams).length:0)+'</b>':t.decoy?'':'Порты: нажми порт, потом второе устройство и его порт')+'</div>';
+  pop.querySelector('.x').addEventListener('click',()=>{ pop.style.display='none'; });
+  pop.querySelectorAll('.port').forEach(p=>p.addEventListener('click',()=>nxPick(id,p.dataset.p)));
+  const cb=pop.querySelector('.cfgbtn'); if(cb) cb.addEventListener('click',()=>{ pop.style.display='none'; nxConfig(id); });
+}
+function nxPick(id,port){
+  const used=NX.conn.find(c=>(c.a===id&&c.ap===port)||(c.b===id&&c.bp===port));
+  if(used){ if(confirm('Отключить кабель от порта '+port+'?')){ NX.conn=NX.conn.filter(c=>c!==used); nxRedraw(); nxDevState(used.a); nxDevState(used.b); } $('#nxpop').style.display='none'; return; }
+  if(!NX.src){ NX.src={d:id,p:port}; $('#nxpop').style.display='none'; if(id==='prov') $('#nxprov').classList.add('sel'); else $$('#nx .dev').forEach(x=>x.classList.toggle('sel',x.dataset.dev===id)); snd.click(); nxTask('Кабель от '+nxName(id)+' ('+port+') в руках. Нажми второе устройство и его порт.','hint'); return; }
+  const s=NX.src; if(s.d===id){ snd.bad(); nxTask('Нельзя соединить устройство само с собой.','bad'); return; }
+  const k1=pk(s.p), k2=pk(port); let err='';
+  if((k1==='hdmi')!==(k2==='hdmi')) err='HDMI соединяют только с HDMI — это видеокабель, а не сетевой.';
+  else if(k1==='wan'&&s.d!=='prov'&&id!=='prov') err='Синий порт WAN — только для кабеля от провайдера.';
+  else if(k2==='wan'&&s.d!=='prov') err='Синий порт WAN — только для кабеля от провайдера. Устройства — в LAN.';
+  else if(s.d==='prov'&&k2!=='wan') err='Кабель провайдера — в синий порт WAN роутера, а не в '+port+'.';
+  if(err){ snd.bad(); nxTask(err,'bad'); speak(err); return; }
+  NX.conn.push({a:s.d,ap:s.p,b:id,bp:port}); NX.src=null; $$('#nx .sel').forEach(x=>x.classList.remove('sel')); $('#nxpop').style.display='none'; nxRedraw(); snd.ok();
+  const camNoPoe=(nxType(id)&&nxType(id).ports[0]==='PoE'&&k1!=='poe')||(nxType(s.d)&&nxType(s.d).ports[0]==='PoE'&&k2!=='poe');
+  if(camNoPoe){ nxTask('Камера подключена, но не включается: в этом порту нет питания PoE! Переподключи её к зелёному порту PoE-коммутатора.','bad'); speak('Камера не включается: нет питания. Нужен порт PoE.'); }
+  else nxTask('Соединено: '+nxName(s.d)+' ('+s.p+') ↔ '+nxName(id)+' ('+port+').','good');
+  nxDevState(s.d); nxDevState(id); if(k1!=='hdmi') Object.keys(NX.cfg).forEach(nxDevState);
+}
+function nxPos(id){ if(id==='prov') return NX.lv.prov; const z=NX.placed[id]; if(z==='pre') return NX.lv.pre[id]; return NX.lv.zones[z]; }
+function nxRedraw(){ const svg=$('#nxcab'); svg.innerHTML=NX.conn.map(c=>{ const a=nxPos(c.a), b=nxPos(c.b); if(!a||!b) return ''; const k=pk(c.ap)==='hdmi'?'hdmi':pk(c.ap)==='wan'||pk(c.bp)==='wan'?'wan':(pk(c.ap)==='poe'||pk(c.bp)==='poe')?'poe':(c.ap==='UP'||c.bp==='UP')?'up':'lan'; const mx=(a.x+b.x)/2; return '<path class="'+k+'" vector-effect="non-scaling-stroke" d="M'+a.x+' '+a.y+' C'+mx+' '+a.y+' '+mx+' '+b.y+' '+b.x+' '+b.y+'"/>'; }).join(''); }
+/* ---- настройки ---- */
+function nxConfig(id){
+  const t=nxType(id); const L=NX.lv; const c=NX.cfg[id]=NX.cfg[id]||{}; const box=$('#nxdlg'); let html='';
+  if(t.cfg==='ip'){ const cam=t.ports[0]==='PoE'; html='<h4>⚙️ '+nxName(id)+' — сетевой адрес <span class="x">✕</span></h4>'+(L.dhcp?'<div class="seg"><button data-m="dhcp" class="'+(c.mode==='dhcp'?'on':'')+'">Автоматически (DHCP)</button><button data-m="static" class="'+(c.mode!=='dhcp'?'on':'')+'">Вручную</button></div>':'')+'<div id="nxStatic"><div class="tip">💡 Сеть: <b>'+L.net.pre+'x</b>. Роутер — .'+L.net.gw+'. '+(cam?'Камеры — с .201 по .250.':'Выбери номер от '+L.net.min+' до '+L.net.max+', которого ещё нет.')+'</div><input id="nxIp" value="'+(c.ip||L.net.pre)+'" inputmode="numeric"><div class="keys">'+['1','2','3','4','5','6','7','8','9','0','.','⌫'].map(k=>'<button data-k="'+k+'">'+k+'</button>').join('')+'</div><div class="row2"><span>Маска</span><span style="font-family:Consolas,monospace">255.255.255.0</span></div><div class="row2"><span>Шлюз (роутер)</span><span style="font-family:Consolas,monospace">'+L.net.pre+L.net.gw+'</span></div></div><div class="err" id="nxErr"></div><div class="foot"><button class="btn ghost sm nxclose">Отмена</button><button class="btn sm" id="nxSave">💾 Сохранить</button></div>'; }
+  if(t.cfg==='router'){ html='<h4>⚙️ '+nxName(id)+' <span class="x">✕</span></h4><div class="row2"><span>Адрес роутера (шлюз)<small>Через него все выходят в интернет</small></span><span style="font-family:Consolas,monospace">'+L.net.pre+L.net.gw+'</span></div>'+(L.dhcp?'<div class="row2"><span>DHCP-сервер<small>Раздаёт адреса автоматически</small></span><div class="tog'+(c.dhcp?' on':'')+'" data-t="dhcp"></div></div><div class="row2"><span>Диапазон адресов</span><div class="seg" style="width:60%"><button data-r="2-50" class="'+(c.range==='2-50'?'on':'')+'">.2–.50</button><button data-r="100-200" class="'+(c.range==='100-200'?'on':'')+'">.100–.200</button></div></div>':'')+(t.fw?'<div class="row2"><span>🛡️ Блокировать опасные сайты</span><div class="tog'+(c.block?' on':'')+'" data-t="block"></div></div><div class="row2"><span>🚪 Запретить вход снаружи</span><div class="tog'+(c.noin?' on':'')+'" data-t="noin"></div></div>':'')+'<div class="foot"><button class="btn sm nxclose">Готово</button></div>'; }
+  if(t.cfg==='ap'){ html='<h4>⚙️ '+nxName(id)+' — Wi-Fi <span class="x">✕</span></h4><div class="tip">💡 Имя сети увидят все. Пароль по умолчанию <b>12345678</b> знает каждый — поменяй на надёжный: 8+ знаков, буквы и цифры.</div><div class="row2" style="flex-direction:column;align-items:stretch"><span>Имя сети (SSID)</span><input class="txt" id="nxSsid" value="'+(c.ssid||'')+'" placeholder="Например: Класс-5"></div><div class="row2" style="flex-direction:column;align-items:stretch"><span>Пароль</span><input class="txt" id="nxPass" value="'+(c.pass||'12345678')+'"></div><div class="row2"><span>Канал</span><div class="seg" style="width:50%"><button class="on">Авто</button><button>6</button><button>11</button></div></div><div class="err" id="nxErr"></div><div class="foot"><button class="btn ghost sm nxclose">Отмена</button><button class="btn sm" id="nxSave">💾 Сохранить</button></div>'; }
+  if(t.cfg==='switch'){ html='<h4>⚙️ '+nxName(id)+' <span class="x">✕</span></h4><div class="row2"><span>Питание</span><div class="tog on"></div></div><div class="row2"><span>Портов</span><span>'+t.ports.length+(t.ports.includes('UP')?' (8 PoE + аплинк)':'')+'</span></div>'+(t.ports[0].startsWith('PoE')?'<div class="row2"><span>⚡ PoE — питание по кабелю</span><span>включено</span></div>':'')+'<div class="tip">Коммутатор умный: запоминает, кто в каком порту, и отправляет данные только адресату. Настраивать его почти не нужно.</div><div class="foot"><button class="btn sm nxclose">Готово</button></div>'; }
+  if(t.cfg==='nvr'){ c.cams=c.cams||{}; const found=['c1','c2','c3','c4'].filter(cm=>NX.placed[cm]&&nxPowered(cm)&&nxIpOk(cm)&&nxReach(cm,'nvr')); html='<h4>⚙️ Видеорегистратор <span class="x">✕</span></h4><div class="row2"><span>Адрес регистратора</span><span style="font-family:Consolas,monospace">192.168.1.200</span></div><button class="btn sm" id="nxFind" style="width:100%;justify-content:center">🔍 Найти камеры в сети</button><div class="camlist" id="nxCams"></div><div class="err" id="nxErr"></div><div class="foot"><button class="btn sm nxclose">Готово</button></div>'; box.innerHTML='<div class="nxdlg">'+html+'</div>'; box.querySelector('#nxFind').addEventListener('click',()=>{ const el=box.querySelector('#nxCams'); if(!found.length){ box.querySelector('#nxErr').textContent='Камеры не найдены. Проверь: камера подключена к PoE, у неё есть адрес, регистратор подключён к коммутатору.'; snd.bad(); return; } el.innerHTML=found.map(cm=>'<div><span>📹 '+nxName(cm)+' · '+NX.cfg[cm].ip+'</span><button data-c="'+cm+'" class="'+(c.cams[cm]?'added':'')+'">'+(c.cams[cm]?'✓ добавлена':'+ Добавить')+'</button></div>').join('')+(found.length<4?'<div style="background:#fef3c7;color:#92400e">Найдено '+found.length+' из 4 — остальные не подключены или без адреса</div>':''); snd.click(); el.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ c.cams[b.dataset.c]=1; b.className='added'; b.textContent='✓ добавлена'; snd.ok(); nxTask(); })); }); box.querySelectorAll('.x,.nxclose').forEach(b=>b.addEventListener('click',()=>{ box.innerHTML=''; nxTask(); })); return; }
+  box.innerHTML='<div class="nxdlg">'+html+'</div>';
+  box.querySelectorAll('.x,.nxclose').forEach(b=>b.addEventListener('click',()=>{ box.innerHTML=''; nxDevState(id); nxTask(); }));
+  box.querySelectorAll('.tog[data-t]').forEach(tg=>tg.addEventListener('click',()=>{ c[tg.dataset.t]=!c[tg.dataset.t]; tg.classList.toggle('on',c[tg.dataset.t]); snd.click(); if(tg.dataset.t==='dhcp'&&c.dhcp&&!c.range){ c.range='100-200'; box.querySelectorAll('[data-r]').forEach(b=>b.classList.toggle('on',b.dataset.r==='100-200')); } Object.keys(NX.cfg).forEach(nxDevState); nxTask(); }));
+  box.querySelectorAll('[data-r]').forEach(b=>b.addEventListener('click',()=>{ c.range=b.dataset.r; box.querySelectorAll('[data-r]').forEach(x=>x.classList.toggle('on',x===b)); snd.click(); nxTask(); }));
+  box.querySelectorAll('[data-m]').forEach(b=>b.addEventListener('click',()=>{ c.mode=b.dataset.m; box.querySelectorAll('[data-m]').forEach(x=>x.classList.toggle('on',x===b)); box.querySelector('#nxStatic').style.display=c.mode==='dhcp'?'none':''; snd.click(); }));
+  if(t.cfg==='ip'){ if(c.mode==='dhcp') box.querySelector('#nxStatic').style.display='none'; const inp=box.querySelector('#nxIp'); box.querySelectorAll('.keys button').forEach(b=>b.addEventListener('click',()=>{ const k=b.dataset.k; if(k==='⌫') inp.value=inp.value.slice(0,-1); else inp.value+=k; })); inp.addEventListener('keydown',e=>{ e.stopPropagation(); if(e.key==='Enter') box.querySelector('#nxSave').click(); });
+    box.querySelector('#nxSave').addEventListener('click',()=>{ const mode=c.mode==='dhcp'?'dhcp':'static'; const ip=inp.value.trim(); const err=nxIpCheck(id,ip,mode); if(err){ box.querySelector('#nxErr').textContent=err; snd.bad(); speak(err); return; } c.mode=mode; if(mode==='static') c.ip=ip; else c.ip=''; box.innerHTML=''; nxDevState(id); Object.keys(NX.cfg).forEach(nxDevState); snd.ok(); nxTask(mode==='dhcp'?nxName(id)+' получит адрес автоматически.':nxName(id)+': адрес '+ip+' сохранён.','good'); }); }
+  if(t.cfg==='ap'){ box.querySelectorAll('input').forEach(i=>i.addEventListener('keydown',e=>e.stopPropagation())); box.querySelector('#nxSave').addEventListener('click',()=>{ const ssid=box.querySelector('#nxSsid').value.trim(), pass=box.querySelector('#nxPass').value; let err=''; if(ssid.length<3) err='Придумай имя сети (хотя бы 3 знака).'; else if(pass==='12345678') err='Это пароль по умолчанию — его знают все! Придумай новый.'; else if(pass.length<8) err='Пароль слишком короткий: нужно 8 знаков или больше.'; else if(!/\d/.test(pass)||!/[a-zа-я]/i.test(pass)) err='В пароле должны быть и буквы, и цифры.'; if(err){ box.querySelector('#nxErr').textContent=err; snd.bad(); speak(err); return; } c.ssid=ssid; c.pass=pass; box.innerHTML=''; nxDevState(id); snd.ok(); nxTask('Wi-Fi «'+ssid+'» настроен, пароль изменён.','good'); }); }
+}
+/* ---- задания, подсказки, проверка ---- */
+function nxCur(){ return NX.lv.steps.find(s=>!s.d()); }
+function nxTask(msg,kind){
+  const t=$('#nxtask'); if(!t) return; t.className='task'+(kind?' '+kind:''); const L=NX.lv; const cur=nxCur();
+  $('#nxsteps').innerHTML=L.steps.map(s=>'<i class="'+(s.d()?'done':(cur===s?'cur':''))+'"></i>').join('');
+  const cnt=$('#nxCnt'); if(cnt){ const left=L.tray.filter(id=>!NX.placed[id]&&!NXT[L.devs[id].t].decoy&&!(L.opt||[]).includes(id)).length; cnt.textContent=left?left+' осталось':'всё расставлено'; }
+  if(msg){ $('#nxIc').textContent=kind==='bad'?'❌':kind==='good'?'✅':'💡'; $('#nxT').textContent=msg; $('#nxS').textContent=cur?'Дальше: '+cur.t.toLowerCase():''; clearTimeout(nxTask._t); nxTask._t=setTimeout(()=>nxTask(),kind==='bad'?4000:1800); return; }
+  if(!cur){ $('#nxIc').textContent='🏆'; $('#nxT').textContent='Этап пройден!'; $('#nxS').textContent=L.success; return; }
+  const i=L.steps.indexOf(cur); $('#nxIc').textContent='🎯'; $('#nxT').textContent='Шаг '+(i+1)+' из '+L.steps.length+': '+cur.t; $('#nxS').textContent=cur.s;
+  if(nxTask._last!==cur){ nxTask._last=cur; if(i>0) setTimeout(()=>speak(cur.t+'. '+cur.s),300); }
+}
+function nxHint(){
+  const cur=nxCur(); if(!cur) return; speak(cur.t+'. '+cur.s,true); const h=cur.h||{};
+  if(h.zone){ const z=$$('#nx .zone').find(x=>x.dataset.zone===h.zone); if(z&&!z.classList.contains('filled')) z.classList.add('hint'); const dev=NX.lv.zones[h.zone].f.find(d=>!NX.placed[d]); $$('#nxdevtray .tray-item').forEach(x=>x.classList.toggle('hint',x.dataset.dev===dev)); }
+  if(h.dev){ const d=$$('#nx .dev').find(x=>x.dataset.dev===h.dev); if(d){ d.classList.add('hint'); if(h.port||h.cfg){ nxOpenPop(h.dev); const p=$$('#nxpop .port').find(x=>x.dataset.p===h.port); if(p) p.classList.add('hint'); if(h.cfg){ const cb=$('#nxpop .cfgbtn'); if(cb) cb.style.animation='pulse 1s infinite'; } } } else { const dev=h.dev; $$('#nxdevtray .tray-item').forEach(x=>x.classList.toggle('hint',x.dataset.dev===dev)); } }
+  if(h.btn) $('#nxCheck').classList.add('hint');
+  setTimeout(()=>{ $$('#nx .hint,#nxdevtray .hint,#nxCheck.hint').forEach(x=>x.classList.remove('hint')); },3000);
+}
+function nxCheck(){
+  const L=NX.lv; const probs=[]; const gw=L.devs.fw?'fw':L.devs.router?'router':(L.pre&&L.pre.fw?'fw':null);
+  if(L.prov&&!nxLinked('prov',gw)) probs.push('Нет интернета: кабель провайдера не подключён к порту WAN.');
+  L.tray.forEach(id=>{ const t=NXT[L.devs[id].t]; if(t.decoy||(L.opt||[]).includes(id)) return; if(!NX.placed[id]){ probs.push(L.devs[id].n+' ещё не установлен.'); return; }
+    const linked=NX.conn.some(c=>c.a===id||c.b===id); if(!linked){ probs.push(L.devs[id].n+': не подключён кабелем.'); return; }
+    if(t.ports[0]==='PoE'&&!nxPowered(id)) probs.push(L.devs[id].n+': нет питания — нужен порт PoE.');
+    if(L.id!=='cctv'&&gw&&t.cfg!=='router'&&!nxReach(id,gw)) probs.push(L.devs[id].n+': не соединён с роутером (проверь цепочку кабелей).');
+    if(t.cfg==='ip'&&!nxIpOk(id)) probs.push(L.devs[id].n+': '+(NX.cfg[id]&&NX.cfg[id].ip||NX.cfg[id]&&NX.cfg[id].mode==='dhcp'?nxIpCheck(id,NX.cfg[id].ip,NX.cfg[id].mode):'адрес не задан.'));
+    if(t.cfg==='ap'&&!nxApOk(id)) probs.push(L.devs[id].n+': Wi-Fi не настроен (имя и новый пароль).');
+  });
+  if(L.id==='cctv'){ if(!nxLinked('monitor','nvr')) probs.push('Монитор не подключён к регистратору по HDMI.'); const cams=NX.cfg.nvr&&NX.cfg.nvr.cams||{}; ['c1','c2','c3','c4'].forEach(c=>{ if(!cams[c]) probs.push(nxName(c)+' не добавлена в регистратор.'); }); }
+  if(L.id==='office'){ if(!(NX.cfg.fw&&NX.cfg.fw.dhcp)) probs.push('DHCP на файрволе выключен — компьютеры не получат адреса.'); if(!(NX.cfg.fw&&NX.cfg.fw.block&&NX.cfg.fw.noin)) probs.push('Защита файрвола не включена.'); }
+  const pb=$('#nxprobs');
+  if(probs.length){ snd.bad(); pb.className='probs show'; pb.innerHTML='<b>Найдено проблем: '+probs.length+'</b><br>'+probs.slice(0,5).map(p=>'• '+p).join('<br>')+(probs.length>5?'<br>…':''); nxTask(probs[0],'bad'); speak('Есть проблемы. '+probs[0]); $$('#nxcab path').forEach(p=>p.classList.add('dead')); setTimeout(()=>$$('#nxcab path').forEach(p=>p.classList.remove('dead')),1500); return; }
+  pb.className='probs'; const paths=$$('#nxcab path'); paths.forEach((p,i)=>setTimeout(()=>p.classList.add('flow'),i*120));
+  setTimeout(()=>{ paths.forEach(p=>p.classList.remove('flow')); NX.done=true; const first=!S.net.labs[L.id]; S.net.labs[L.id]=(S.net.labs[L.id]||0)+1; save(); addStars(first?20:8); confetti(240); snd.win(); nxTask(); speak(L.success); toast('🏆 Этап пройден! +'+(first?20:8)+' ⭐',3000);
+    if(L.id==='cctv'){ const m=$('#nxmon'); m.innerHTML='<div><div class="scr">'+[['🚪','ВХОД','#1e3a5f'],['🚶','КОРИДОР','#1f2937'],['📦','СКЛАД','#3f2d1d'],['🚗','ПАРКОВКА','#14532d']].map((f,i)=>'<div class="feed" style="background:radial-gradient(circle at 50% 60%,'+f[2]+',#000)"><b>CAM'+(i+1)+' '+f[1]+' · 192.168.1.'+(201+i)+' · REC</b><i></i>'+f[0]+'</div>').join('')+'</div><div class="cap">📹 Все камеры в эфире! Нажми, чтобы закрыть</div></div>'; m.classList.add('open'); m.onclick=()=>m.classList.remove('open'); }
+    renderNetLab._stagesOnly=true; $$('#nxstages [data-lv]').forEach(b=>{ if(b.dataset.lv===L.id){ b.classList.add('done'); b.querySelector('i').textContent='✓'; } });
+  },paths.length*120+900);
+}
+
+
 
 /* =====================================================================
    КИБЕРЩИТ: БЕЗОПАСНОСТЬ В ИНТЕРНЕТЕ
@@ -3611,9 +3954,9 @@ const SECTIONS=[
  {id:'win',go:'win-home',brand:'ОКНОМАСТЕР',n:'Рабочий стол Windows',e:'🪟',d:'Настоящий рабочий стол: меню Пуск, окна, Проводник, Блокнот, папки, Корзина, обои. '+WMISSIONS.length+' заданий по порядку.',
   art:()=>'<div class="art win"><div class="art-win"><div class="aw-ico" style="left:5%;top:8%">💻<small>Компьютер</small></div><div class="aw-ico" style="left:5%;top:40%">🗑️<small>Корзина</small></div><div class="aw-ico" style="left:5%;top:72%">📁<small>Школа</small></div><div class="aw-w"><div class="t"><i></i><i></i><i style="background:#f87171"></i></div><div class="b">📄📁🖼️📄📁📄</div></div><div class="aw-bar">⊞ 📁 📝 ⚙️</div></div></div>',
   prog(){ const d=Object.keys(S.win.done).length; return {p:d/WMISSIONS.length,l:d+' / '+WMISSIONS.length+' заданий'}; }},
- {id:'net',go:'net-home',brand:'СЕТЬМАСТЕР',n:'Интернет и сеть',e:'📡',d:'Как компьютер попадает в интернет: роутер, провайдер, IP-адреса, DNS. Собери домашнюю сеть и доставь пакеты.',
+ {id:'net',go:'net-home',brand:'СЕТЬМАСТЕР',n:'Интернет и сеть',e:'📡',d:'Как работает интернет и сетевая лаборатория из 4 этапов: дом, компьютерный класс, офис, видеонаблюдение. IP-адреса, свитчи, Wi-Fi, DHCP, PoE-камеры.',
   art:()=>'<div class="art net"><div class="art-net"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M15 70 L40 35 L65 65 L88 30"/></svg><i style="left:15%;top:70%">💻</i><i style="left:40%;top:35%">📶</i><i style="left:65%;top:65%">🏢</i><i style="left:88%;top:30%">🖥️</i></div></div>',
-  prog(){ const L=S.net.lesson/NSTEPS.length; return {p:Math.min(1,L*.4+(S.net.built?.3:0)+((S.net.pkBest||0)>=12?.15:0)+((S.net.quizBest||0)>=8?.15:0)),l:'урок '+S.net.lesson+'/'+NSTEPS.length+(S.net.built?' · сеть ✓':'')+(S.net.pkBest?' · пакеты '+S.net.pkBest+'⭐':'')}; }},
+  prog(){ const L=S.net.lesson/NSTEPS.length; const labs=Object.keys(S.net.labs||{}).length; return {p:Math.min(1,L*.3+(S.net.built?.15:0)+labs/3*.35+((S.net.pkBest||0)>=12?.1:0)+((S.net.quizBest||0)>=8?.1:0)),l:'урок '+S.net.lesson+'/'+NSTEPS.length+' · лаборатория '+((S.net.built?1:0)+labs)+'/4'+(S.net.pkBest?' · пакеты '+S.net.pkBest+'⭐':'')}; }},
  {id:'safe',go:'safe-home',brand:'КИБЕРЩИТ',n:'Безопасность в интернете',e:'🛡️',d:'Надёжные пароли, обман в сообщениях, личные данные, правильные решения в трудных ситуациях.',
   art:()=>'<div class="art safe"><div class="art-safe">🛡️<small>10 правил безопасности</small></div></div>',
   prog(){ const p=Object.keys(S.safe.pass).length/6; return {p:Math.min(1,p*.3+((S.safe.phishBest||0)>=10?.2:0)+(S.safe.share?.2:0)+((S.safe.rulesBest||0)>=10?.15:0)+((S.safe.quizBest||0)>=8?.15:0)),l:'пароли '+Object.keys(S.safe.pass).length+'/6'+(S.safe.phishBest?' · обман '+S.safe.phishBest+'/12':'')+(S.safe.share?' · данные ✓':'')}; }},
@@ -3631,7 +3974,7 @@ function renderHome(){
 if(S.set.tpLimit!==undefined) TP.limit=S.set.tpLimit; if(S.set.tpStrict!==undefined) TP.strict=S.set.tpStrict; if(S.set.tpHints!==undefined) TP.hints=S.set.tpHints;
 buildKeyboard(); applySettings(); renderStars(); renderCats(); renderTrainGrid(); renderTypeHome(); renderRefCats(); renderRef(); pressedCombo(); updateKb(); setMode('home');
 addEventListener('pointerdown',unlockAudio,{once:true});
-window.KM={get T(){return T},get LN(){return LN},get TP(){return TP},get S(){return S},get B(){return B},get mode(){return mode},SHORTCUTS,CATS,TSETS,PARTS,comboHTML,MODCODES,sig,parseKeys,codeChars,charKeys,setMode,startBuild,place1,place2,closeCase,toggleSwitch,powerOn,nextStep,startQuiz,get G(){return MG},get W(){return W},startGame,endGame,lessonEvent,wOpen,wEv,wResetFS,wCreate,wRename,wDelete,wMove,wEmptyBin,wMax,wMin,wClose,WMISSIONS,nCable,nEv,nAction,nPlace,nPort,nSrc,nCheck,get NB(){return NB},get NL(){return NL},NSTEPS,get PK(){return PK},pkGo,pwUpdate,PHISH,phAnswer,get PH(){return PH},shDrop,get SH(){return SH},get SI(){return SI},netQuiz,safeQuiz,SECTIONS,renderHome};
+window.KM={get T(){return T},get LN(){return LN},get TP(){return TP},get S(){return S},get B(){return B},get mode(){return mode},SHORTCUTS,CATS,TSETS,PARTS,comboHTML,MODCODES,sig,parseKeys,codeChars,charKeys,setMode,startBuild,place1,place2,closeCase,toggleSwitch,powerOn,nextStep,startQuiz,get G(){return MG},get W(){return W},startGame,endGame,lessonEvent,wOpen,wEv,wResetFS,wCreate,wRename,wDelete,wMove,wEmptyBin,wMax,wMin,wClose,WMISSIONS,nCable,renderNetLab,nxPlace,nxPick,nxConfig,nxCheck,nxIpCheck,get NX(){return NX},NXLV,nEv,nAction,nPlace,nPort,nSrc,nCheck,get NB(){return NB},get NL(){return NL},NSTEPS,get PK(){return PK},pkGo,pwUpdate,PHISH,phAnswer,get PH(){return PH},shDrop,get SH(){return SH},get SI(){return SI},netQuiz,safeQuiz,SECTIONS,renderHome};
 if('serviceWorker' in navigator&&location.protocol.startsWith('http')){ navigator.serviceWorker.register('sw.js').catch(()=>{}); }
 </script>
 </body>
