@@ -1,5 +1,5 @@
 // Офлайн-кэш: после первого открытия тренажёр работает без интернета
-const CACHE = 'klavimaster-v1';
+const CACHE = 'klavimaster-v2';
 const FILES = ['./', './index.html', './manifest.json', './icon.svg'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting()));
