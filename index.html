@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Компьютерный класс — 6 разделов: компьютер, мышь, клавиатура, Windows, интернет, безопасность</title>
+<title>Компьютерный класс — 7 разделов: компьютер, путь информации, мышь, клавиатура, Windows, интернет, безопасность</title>
 <meta name="description" content="Компьютерный класс для школьников: тренажёр горячих клавиш и печати КлавиМастер и компьютерная лаборатория — детали компьютера с фото, сборка компьютера своими руками, викторина.">
 <meta name="theme-color" content="#6a5cff">
 <link rel="manifest" href="manifest.json">
@@ -311,7 +311,7 @@ p.lead{color:var(--muted);font-weight:700}
 /* ============ РАЗДЕЛЫ И ГЛАВНОЕ МЕНЮ ============ */
 .tabs[data-sec]{display:none}
 .tabs[data-sec="safe"] .tab,.tabs[data-sec="net"] .tab{padding:9px 12px;font-size:.93rem}
-body[data-sec="kb"] .tabs[data-sec="kb"],body[data-sec="lab"] .tabs[data-sec="lab"],body[data-sec="mouse"] .tabs[data-sec="mouse"],body[data-sec="win"] .tabs[data-sec="win"],body[data-sec="net"] .tabs[data-sec="net"],body[data-sec="safe"] .tabs[data-sec="safe"]{display:flex}
+body[data-sec="kb"] .tabs[data-sec="kb"],body[data-sec="lab"] .tabs[data-sec="lab"],body[data-sec="mouse"] .tabs[data-sec="mouse"],body[data-sec="win"] .tabs[data-sec="win"],body[data-sec="net"] .tabs[data-sec="net"],body[data-sec="safe"] .tabs[data-sec="safe"],body[data-sec="flow"] .tabs[data-sec="flow"]{display:flex}
 body[data-sec="home"] .tab.home{display:none}
 .tab.home{padding:9px 13px;font-size:1.1rem}
 .logo{cursor:pointer}
@@ -1158,6 +1158,133 @@ body[data-sec="home"] .tab.home{display:none}
 .nxmon .feed b{position:absolute;left:8px;top:6px;font-size:.72rem;font-family:Consolas,monospace;color:#fff;text-shadow:0 1px 3px #000}
 .nxmon .feed i{position:absolute;right:8px;top:6px;width:10px;height:10px;border-radius:50%;background:#ef4444;animation:glow 1s infinite}
 .nxmon .cap{text-align:center;font-weight:900;font-size:1.3rem;margin-top:14px}
+
+/* ============ ДАТАПОТОК: КАК КОМПЬЮТЕР ОБРАБАТЫВАЕТ ИНФОРМАЦИЮ ============ */
+.sec-card .art.flow{background:radial-gradient(circle at 30% 30%,#0ea5e9,#1e1b4b 70%)}
+.art-flow{position:relative;width:88%;height:82%}
+.art-flow i{position:absolute;transform:translate(-50%,-50%);background:#fff;border-radius:14px;padding:6px 10px;font-style:normal;font-weight:900;font-size:.78rem;color:#1e2140;box-shadow:0 8px 20px rgba(0,0,0,.35);white-space:nowrap}
+.art-flow svg{position:absolute;inset:0;width:100%;height:100%}
+.art-flow svg path{stroke:#38bdf8;stroke-width:4;fill:none;stroke-dasharray:10 8;animation:dash 1s linear infinite}
+.art-flow .b{position:absolute;transform:translate(-50%,-50%);font-family:Consolas,monospace;font-weight:900;color:#4ade80;font-size:.8rem;text-shadow:0 0 8px #4ade80}
+.flowlab{display:grid;grid-template-columns:1fr 372px;gap:12px;height:calc(100vh - 104px);min-height:560px}
+@media(max-width:1100px){.flowlab{grid-template-columns:1fr;height:auto}}
+.fl-main{display:flex;flex-direction:column;gap:10px;min-width:0;min-height:0}
+.fl-scheme{flex:1;min-height:0;background:linear-gradient(180deg,#0f172a,#1e1b4b);border-radius:24px;box-shadow:var(--shadow);position:relative;overflow:hidden;padding:6px}
+.fl-scheme svg{width:100%;height:100%;display:block}
+.fl-scheme .nd rect.bx{fill:#1e293b;stroke:#475569;stroke-width:3;transition:.25s}
+.fl-scheme .nd{cursor:pointer}
+.fl-scheme .nd:hover rect.bx{stroke:#94a3b8}
+.fl-scheme .nd.on rect.bx{stroke:#38bdf8;fill:#1e3a5f}
+.fl-scheme .nd.hot rect.bx{stroke:#f59e0b;fill:#3b2a12;filter:drop-shadow(0 0 10px #f59e0b)}
+.fl-scheme .nd.off rect.bx{fill:#111827;stroke:#374151}
+.fl-scheme text{font-family:Nunito,sans-serif;font-weight:900;fill:#e2e8f0;pointer-events:none}
+.fl-scheme .sub{fill:#94a3b8;font-weight:700}
+.fl-scheme .mono{font-family:Consolas,monospace}
+.fl-scheme .bus{stroke:#475569;stroke-width:5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.fl-scheme .bus.pw{stroke:#7f1d1d;stroke-dasharray:6 6}
+.fl-scheme .bus.live{stroke:#38bdf8}
+.fl-scheme .bus.pw.live{stroke:#f59e0b}
+.fl-scheme .buslbl{fill:#94a3b8;font-size:10px;font-weight:800}
+.fl-scheme .buslblg{pointer-events:none}
+.fl-scheme .cell rect{fill:#0f172a;stroke:#334155;stroke-width:1.5}
+.fl-scheme .cell.used rect{fill:#1e3a5f;stroke:#38bdf8}
+.fl-scheme .cell.os rect{fill:#312e81;stroke:#818cf8}
+.fl-scheme .cell.app rect{fill:#14532d;stroke:#4ade80}
+.fl-scheme .cell.hot rect{fill:#78350f;stroke:#f59e0b}
+.fl-scheme .cell text{font-size:7px;fill:#cbd5e1}
+.fl-scheme .file rect{fill:#0f172a;stroke:#334155;stroke-width:1.5}
+.fl-scheme .file.new rect{stroke:#4ade80;fill:#14532d}
+.fl-scheme .file.hot rect{stroke:#f59e0b;fill:#78350f}
+.fl-scheme .file text{font-size:9px}
+.fl-scheme .pkt rect{fill:#f59e0b;stroke:#fff;stroke-width:1.5;filter:drop-shadow(0 0 8px #f59e0b)}
+.fl-scheme .pkt text{fill:#111;font-size:11px;font-family:Consolas,monospace;font-weight:900}
+.fl-scheme .pkt.bin rect{fill:#4ade80;filter:drop-shadow(0 0 8px #4ade80)}
+.fl-scheme .pkt.frame rect{fill:#38bdf8;filter:drop-shadow(0 0 8px #38bdf8)}
+.fl-scheme .pkt.pw rect{fill:#ef4444;filter:drop-shadow(0 0 8px #ef4444)}
+.fl-scheme .mscr{fill:#000}
+.fl-scheme .mscr.on{fill:#0ea5e9}
+.fl-scheme .cpu-in rect{fill:#0f172a;stroke:#334155;stroke-width:1.5}
+.fl-scheme .cpu-in.hot rect{fill:#78350f;stroke:#f59e0b}
+.fl-scheme .cpu-in text{font-size:8px;fill:#cbd5e1}
+.fl-scheme .fan{transform-box:fill-box;transform-origin:center}
+.fl-scheme .on .fan{animation:spin .6s linear infinite}
+.fl-scheme .led{opacity:.15}
+.fl-scheme .on .led{opacity:1;animation:glow 1.4s infinite}
+.fl-scheme .pxgrid rect{fill:#111827}
+.fl-scheme .pxgrid rect.lit{fill:#f8fafc}
+.fl-explain{background:var(--card);border-radius:20px;box-shadow:var(--shadow);padding:12px 18px;display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:start;min-height:112px}
+.fl-explain .ic{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-size:1.6rem;background:linear-gradient(135deg,#0ea5e9,#6366f1);color:#fff}
+.fl-explain.good .ic{background:linear-gradient(135deg,#22c55e,#14b8a6)}
+.fl-explain.bad .ic{background:linear-gradient(135deg,#ef4444,#f97316)}
+.fl-explain b{display:block;font-size:1.08rem;line-height:1.3}
+.fl-explain .tx{color:var(--muted);font-weight:700;font-size:.92rem;line-height:1.45;margin-top:2px}
+.fl-explain .data{margin-top:6px;display:flex;gap:6px;flex-wrap:wrap}
+.fl-explain .data span{background:#0f172a;color:#4ade80;font-family:Consolas,monospace;font-weight:900;font-size:.82rem;padding:4px 9px;border-radius:8px}
+.fl-explain .data span.k{color:#fde68a}.fl-explain .data span.c{color:#93c5fd}
+.fl-explain .ctl{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.fl-explain .dots{display:flex;gap:4px}
+.fl-explain .dots i{width:10px;height:10px;border-radius:50%;background:var(--line);display:block}
+.fl-explain .dots i.done{background:var(--ok)}.fl-explain .dots i.cur{background:#f59e0b;box-shadow:0 0 0 3px rgba(245,158,11,.3)}
+.fl-side{display:flex;flex-direction:column;gap:10px;overflow:auto;min-height:0}
+.fl-side>*{flex-shrink:0}
+.fc{background:#1f2937;border-radius:22px;padding:10px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px}
+.fc-mon{background:#0b0f1a;border:6px solid #374151;border-radius:12px;aspect-ratio:16/10;position:relative;overflow:hidden;container-type:size}
+.fc-scr{position:absolute;inset:0;color:#fff;font-family:'Nunito',sans-serif}
+.fc-scr>div{position:absolute;inset:0;display:none}
+.fc-scr[data-s="off"] .s-off,.fc-scr[data-s="bios"] .s-bios,.fc-scr[data-s="load"] .s-load,.fc-scr[data-s="desk"] .s-desk,.fc-scr[data-s="app"] .s-app,.fc-scr[data-s="bye"] .s-bye{display:block}
+.fc-scr .s-off{background:#000}
+.fc-scr .s-bios{background:#000;color:#d6e4ff;font-family:Consolas,monospace;font-size:3.6cqw;padding:4%;line-height:1.55;white-space:pre-wrap}
+.fc-scr .s-bios i{color:#4ade80;font-style:normal}
+.fc-scr .s-load{background:radial-gradient(circle at 50% 40%,#0a2a63,#040b1c 70%);display:none;text-align:center}
+.fc-scr[data-s="load"] .s-load{display:grid!important;place-items:center}
+.fc-scr .s-load .lg{width:16cqw;aspect-ratio:1;display:grid;grid-template-columns:1fr 1fr;gap:4%;transform:skewY(-6deg)}
+.fc-scr .s-load .lg i{background:#38b6ff;box-shadow:0 0 12px #38b6ff}
+.fc-scr .s-load p{font-size:3.4cqw;font-weight:800;margin-top:5%}
+.fc-scr .s-desk,.fc-scr .s-app,.fc-scr .s-bye{background:linear-gradient(180deg,#7dd3fc,#38b6ff 50%,#5eead4)}
+.fc-scr .icons{position:absolute;left:4%;top:6%;font-size:5.4cqw;text-align:center;line-height:1.1;cursor:pointer}
+.fc-scr .icons small{display:block;font-size:2.2cqw;font-weight:800;text-shadow:0 1px 3px #000}
+.fc-scr .bar{position:absolute;left:0;right:0;bottom:0;height:10%;background:rgba(15,23,42,.85);display:flex;align-items:center;padding:0 3%;gap:3%;font-size:2.8cqw;font-weight:800}
+.fc-scr .win{position:absolute;left:8%;top:8%;width:84%;height:76%;background:#fff;color:#111;border-radius:5px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.35);display:flex;flex-direction:column}
+.fc-scr .win .tb{background:#f1f5f9;border-bottom:1px solid #e5e7eb;font-size:3cqw;font-weight:800;padding:2% 3%;display:flex;justify-content:space-between;color:#374151}
+.fc-scr .win .ta{flex:1;padding:3% 4%;font-family:Consolas,monospace;font-size:4.2cqw;white-space:pre-wrap;word-break:break-all;line-height:1.4;position:relative}
+.fc-scr .win .ta::after{content:'';display:inline-block;width:2px;height:1em;background:#111;vertical-align:-2px;margin-left:1px;animation:glow 1s infinite}
+.fc-scr .win .sb{font-size:2.4cqw;color:#6b7280;padding:1% 3%;border-top:1px solid #e5e7eb;background:#f9fafb;display:flex;justify-content:space-between}
+.fc-scr .toastm{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#fff;color:#111;border-radius:6px;padding:4% 6%;font-weight:900;font-size:3.4cqw;box-shadow:0 10px 30px rgba(0,0,0,.4);text-align:center;display:none;z-index:2}
+.fc-scr .toastm.show{display:block}
+.fc-scr .s-bye{display:none;place-items:center;text-align:center;font-weight:800;font-size:3.6cqw}
+.fc-scr[data-s="bye"] .s-bye{display:grid!important}
+.fc-scr .s-bye .spin{width:5cqw;height:5cqw;border:3px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .9s linear infinite;margin:0 auto 5%}
+.fc-ctl{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.fc-ctl .pw{width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#4b5160,#1a1d25 70%);border:3px solid #596170;color:#9aa3b5;font-weight:900;font-size:1.2rem;display:grid;place-items:center}
+.fc-ctl .pw.on{color:#4ade80;border-color:#4ade80;text-shadow:0 0 10px #4ade80}
+.fc-ctl .pw.hint,.fc-ctl .b.hint,.fc-kb .k.hint{animation:pulse 1s infinite;outline:3px solid #f59e0b}
+.fc-ctl .b{flex:1;min-width:0;background:#374151;color:#fff;border-radius:10px;padding:9px 6px;font-weight:900;font-size:.8rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fc-ctl .b:hover{background:#4b5563}.fc-ctl .b:disabled{opacity:.35}
+.fc-kb{display:flex;flex-direction:column;gap:3px;background:#111827;border-radius:12px;padding:6px}
+.fc-kb .r{display:flex;gap:2px;justify-content:center}
+.fc-kb .k{min-width:23px;height:32px;border-radius:6px;background:linear-gradient(180deg,#f8fafc,#cbd5e1);box-shadow:0 3px 0 #94a3b8;color:#1e2140;font-weight:900;font-size:.74rem;position:relative;padding:0 2px;transition:.08s;flex:1 1 0}
+.fc-kb .k small{position:absolute;right:2px;top:1px;font-size:.48rem;color:#6a5cff;font-weight:900}
+.fc-kb .k:active,.fc-kb .k.down{transform:translateY(3px);box-shadow:none}
+.fc-kb .k.w{flex:1.6 1 0;font-size:.62rem}.fc-kb .k.sp{flex:3.2 1 0;font-size:.62rem}
+.fc-kb .k.lay{flex:1.5 1 0;background:linear-gradient(180deg,#c7d2fe,#a5b4fc);font-size:.62rem}
+.fl-steps{background:var(--card);border-radius:20px;box-shadow:var(--shadow);padding:12px 14px}
+.fl-steps h3{font-size:1rem;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+.fl-steps .st{display:flex;gap:10px;align-items:center;padding:7px 10px;border-radius:12px;font-weight:800;font-size:.88rem;border:2px solid transparent}
+.fl-steps .st.cur{background:#fff7ed;border-color:#f59e0b}
+:root[data-theme="dark"] .fl-steps .st.cur{background:#3b2a12}
+.fl-steps .st.done{color:var(--muted)}
+.fl-steps .st i{width:26px;height:26px;border-radius:50%;background:var(--card2);display:grid;place-items:center;font-style:normal;font-size:.8rem;flex:none}
+.fl-steps .st.done i{background:var(--ok);color:#fff}
+.fl-opts{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-weight:800;font-size:.85rem}
+.fl-opts .seg{display:flex;gap:4px;background:var(--card2);border-radius:10px;padding:3px}
+.fl-opts .seg button{padding:5px 10px;border-radius:8px;font-weight:900;font-size:.8rem}
+.fl-opts .seg button.on{background:var(--accent);color:#fff}
+.fl-log{background:var(--card);border-radius:20px;box-shadow:var(--shadow);padding:10px 14px;max-height:220px;overflow:auto;font-size:.8rem;font-weight:700;color:var(--muted);line-height:1.4}
+.fl-log div{padding:3px 0;border-bottom:1px dashed var(--line)}
+.fl-log div b{color:var(--text)}
+.fl-info .card{max-width:620px}
+.fl-info .big{font-size:3rem;text-align:center}
+.fl-info ul{padding-left:20px;line-height:1.6;font-weight:700}
 </style>
 </head>
 <body>
@@ -1179,6 +1306,10 @@ body[data-sec="home"] .tab.home{display:none}
     <button class="tab" data-mode="lab-parts"><span class="em">📦</span> Детали</button>
     <button class="tab" data-mode="lab-build"><span class="em">🔧</span> Сборка</button>
     <button class="tab" data-mode="lab-quiz"><span class="em">❓</span> Викторина</button>
+  </nav>
+  <nav class="tabs" data-sec="flow">
+    <button class="tab" data-mode="flow-lab"><span class="em">🔀</span> Лаборатория</button>
+    <button class="tab" data-mode="flow-quiz"><span class="em">❓</span> Викторина</button>
   </nav>
   <nav class="tabs" data-sec="mouse">
     <button class="tab" data-mode="mouse-lesson"><span class="em">📖</span> Урок</button>
@@ -1419,7 +1550,7 @@ body[data-sec="home"] .tab.home{display:none}
   <!-- ---- ГЛАВНОЕ МЕНЮ ---- -->
   <section class="panel" id="panel-home">
     <div class="home-wrap">
-      <div class="home-title"><h1>🎓 Компьютерный класс</h1><p>Шесть разделов — проходи по порядку: от устройства компьютера до безопасности в интернете</p>
+      <div class="home-title"><h1>🎓 Компьютерный класс</h1><p>Семь разделов — проходи по порядку: от устройства компьютера до безопасности в интернете</p>
         <div class="home-cta"><button class="btn" id="homeContinue">▶ Продолжить обучение</button><span class="chip" id="homeTotal"></span></div>
       </div>
       <div class="path" id="homePath"></div>
@@ -1610,6 +1741,27 @@ body[data-sec="home"] .tab.home{display:none}
       <div class="nxtray" id="nxtray"></div>
     </div>
   </section>
+
+  <!-- ---- ДАТАПОТОК ---- -->
+  <section class="panel" id="panel-flow-lab">
+    <div class="flowlab">
+      <div class="fl-main">
+        <div class="fl-explain" id="flExplain"><div class="ic" id="flIc">🔌</div><div><b id="flT">Компьютер выключен</b><div class="tx" id="flS">Нажми кнопку ⏻ на мини-компьютере справа — и посмотри, что происходит внутри. Нажимай на блоки схемы, чтобы узнать, что они делают.</div><div class="data" id="flData"></div></div><div class="ctl"><div class="dots" id="flDots"></div><button class="btn sm" id="flNext" style="display:none">Далее ▶</button><button class="btn ghost sm" id="flSkip" style="display:none">⏭ Пропустить</button></div></div>
+        <div class="fl-scheme" id="flScheme"></div>
+      </div>
+      <div class="fl-side">
+        <div class="fc">
+          <div class="fc-mon"><div class="fc-scr" id="fcScr" data-s="off"><div class="s-off"></div><div class="s-bios" id="fcBios"></div><div class="s-load"><div><div class="lg"><i></i><i></i><i></i><i></i></div><p>Загрузка Windows…</p></div></div><div class="s-desk"><div class="icons" id="fcIcon">📝<small>Блокнот</small></div><div class="bar"><span>⊞</span><span>Пуск</span></div></div><div class="s-app"><div class="win"><div class="tb"><span>📝 <span id="fcTitle">Без имени — Блокнот</span></span><span>✕</span></div><div class="ta" id="fcTa"></div><div class="sb"><span id="fcLen">Символов: 0</span><span id="fcSaved">не сохранено</span></div></div><div class="toastm" id="fcToast"></div></div><div class="s-bye"><div><div class="spin"></div><span id="fcByeT">Завершение работы…</span></div></div></div></div>
+          <div class="fc-ctl"><button class="pw" id="fcPwr" title="Включить / выключить">⏻</button><button class="b" id="fcOpen">📝 Открыть Блокнот</button><button class="b" id="fcSave">💾 Сохранить</button><button class="b" id="fcClose">✕ Закрыть</button></div>
+          <div class="fc-kb" id="fcKb"></div>
+        </div>
+        <div class="fl-steps"><h3>📋 Задания <span class="pill" id="flProg" style="padding:4px 10px;font-size:.8rem">0 / 7</span></h3><div id="flSteps"></div></div>
+        <div class="fl-opts"><span>Скорость:</span><div class="seg" id="flSpeed"><button data-v="0.5">🐢</button><button data-v="1" class="on">▶</button><button data-v="2">🐇</button></div><label style="display:flex;gap:6px;align-items:center;cursor:pointer"><input type="checkbox" id="flStep"> Пошагово</label><button class="btn ghost sm" id="flReset">↺ Сброс</button></div>
+        <div class="fl-log" id="flLog"></div>
+      </div>
+    </div>
+  </section>
+  <section class="panel" id="panel-flow-quiz"><div class="quiz" id="fquiz"></div></section>
 </main>
 
 <!-- ============ КЛАВИАТУРА ============ -->
@@ -1653,6 +1805,7 @@ body[data-sec="home"] .tab.home{display:none}
       <li><b>🔧 Сборка</b> — перетащи детали в корпус (или нажми на деталь, потом на место в корпусе), закрой крышку, подключи монитор, клавиатуру, мышь и кабель питания, вставь вилку в розетку, включи блок питания и нажми кнопку. Если что-то не подключено — компьютер подскажет, что не так.</li>
       <li><b>❓ Викторина</b> — угадай деталь по фото и описанию.</li>
       <li><b>🖱️ КликМастер</b> — урок: нажимай кнопки настоящей мыши, на картинке они загораются. Игры: пузыри (щелчок), сундуки (двойной щелчок), шарики (левая/правая кнопка), урожай (перетаскивание), лифт (колёсико), жук (точность).</li>
+      <li><b>🔀 ДатаПоток</b> — анимированная схема внутри компьютера: нажми ⏻, клавиши, открой Блокнот, напиши, сохрани (Ctrl+S), закрой, выключи — и смотри, как информация идёт от клавиатуры через USB, процессор, оперативную память и видеокарту к монитору. Скан-коды, Unicode, двоичные коды, ячейки RAM, файлы на SSD. Режим «Пошагово» и скорость. Нажми на блок схемы — узнаешь, что он делает.</li>
       <li><b>📡 СетьМастер</b> — урок с живой схемой (компьютер → роутер → провайдер → сервер, IP-адреса, DNS, скорость), сетевая лаборатория из 4 этапов: дом, компьютерный класс (коммутатор вместо хаба, IP-адреса без конфликтов, смена пароля Wi-Fi), офис (файрвол, DHCP, сервер с постоянным адресом), видеонаблюдение (PoE-коммутатор, камеры, регистратор, монитор); игра «Доставь пакет» и викторина. В каждом шаге — кнопка 💡 Подсказка.</li>
       <li><b>🛡️ КиберЩит</b> — лаборатория паролей (робот показывает, за сколько взломает), «Обман или нет?» (сообщения, письма, сайты), «Можно или нельзя?» (личные данные), «Что делать, если…» (ситуации) и викторина.</li>
       <li><b>🪟 ОкноМастер</b> — учебный рабочий стол Windows: меню Пуск, окна (свернуть, развернуть, закрыть, перетащить), Проводник, Блокнот, Параметры, Корзина, правая кнопка → создать папку, переименовать (F2), удалить (Delete), перетащить файл в папку, выключение. 14 заданий по порядку или свободный режим.</li>
@@ -1698,6 +1851,7 @@ body[data-sec="home"] .tab.home{display:none}
   </div>
 </div>
 <div class="modal mres" id="mres"><div class="card"><div class="big" id="mrEmoji">🏆</div><h2 id="mrTitle"></h2><p class="lead" id="mrText"></p><div class="stats" id="mrStats"></div><div class="row" style="justify-content:center;margin-top:8px"><button class="btn" id="mrAgain">🔁 Ещё раз</button><button class="btn ghost" id="mrBack">🎮 Другие игры</button></div></div></div>
+<div class="modal fl-info" id="flInfo"><div class="card"><div id="flInfoBody"></div><div class="row" style="justify-content:flex-end;margin-top:14px"><button class="btn" id="flInfoClose">Понятно</button></div></div></div>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <linearGradient id="g-metal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e6e9ef"/><stop offset=".5" stop-color="#b9bfc9"/><stop offset="1" stop-color="#8e949f"/></linearGradient>
@@ -2609,15 +2763,15 @@ document.addEventListener('fullscreenchange',()=>{ if(!document.fullscreenElemen
 $('#btnHelp').addEventListener('click',()=>$('#help').classList.add('open'));
 $('#helpClose').addEventListener('click',()=>$('#help').classList.remove('open'));
 $('#help').addEventListener('click',e=>{ if(e.target.id==='help') $('#help').classList.remove('open'); });
-$('#resetProgress').addEventListener('click',()=>{ if(confirm('Сбросить все звёзды и прогресс?')){ const set=S.set; S={stars:0,learned:{},stats:{},best:{},set,lab:{seen:{},builds:0,best:0,quizBest:0},mouse:{best:{},lesson:0},win:{done:{},wp:'bloom'},net:{lesson:0,built:0,pkBest:0,quizBest:0,labs:{}},safe:{pass:{},phishBest:0,share:0,rulesBest:0,quizBest:0}}; save(); renderStars(); renderCats(); renderTrainGrid(); renderTypeHome(); renderHome(); toast('Прогресс сброшен'); } });
+$('#resetProgress').addEventListener('click',()=>{ if(confirm('Сбросить все звёзды и прогресс?')){ const set=S.set; S={stars:0,learned:{},stats:{},best:{},set,lab:{seen:{},builds:0,best:0,quizBest:0},mouse:{best:{},lesson:0},win:{done:{},wp:'bloom'},net:{lesson:0,built:0,pkBest:0,quizBest:0,labs:{}},flow:{done:{},quizBest:0},safe:{pass:{},phishBest:0,share:0,rulesBest:0,quizBest:0}}; save(); renderStars(); renderCats(); renderTrainGrid(); renderTypeHome(); renderHome(); toast('Прогресс сброшен'); } });
 
 
 
 /* =====================================================================
    РАЗДЕЛЫ: ГЛАВНОЕ МЕНЮ / КЛАВИАТУРА / ЛАБОРАТОРИЯ
    ===================================================================== */
-const LOGOS={home:['🎓','Компьютерный класс','ВЫБЕРИ РАЗДЕЛ'],kb:['⌨️','КлавиМастер','ТРЕНАЖЁР ГОРЯЧИХ КЛАВИШ'],lab:['🖥️','КомпьюЛаб','КОМПЬЮТЕРНАЯ ЛАБОРАТОРИЯ'],mouse:['🖱️','КликМастер','ТРЕНАЖЁР МЫШИ'],win:['🪟','ОкноМастер','РАБОЧИЙ СТОЛ WINDOWS'],net:['📡','СетьМастер','ИНТЕРНЕТ И СЕТЬ'],safe:['🛡️','КиберЩит','БЕЗОПАСНОСТЬ В ИНТЕРНЕТЕ']};
-function secOf(m){ return m==='home'?'home':m.startsWith('lab')?'lab':m.startsWith('mouse')?'mouse':m.startsWith('win')?'win':m.startsWith('net')?'net':m.startsWith('safe')?'safe':'kb'; }
+const LOGOS={home:['🎓','Компьютерный класс','ВЫБЕРИ РАЗДЕЛ'],kb:['⌨️','КлавиМастер','ТРЕНАЖЁР ГОРЯЧИХ КЛАВИШ'],lab:['🖥️','КомпьюЛаб','КОМПЬЮТЕРНАЯ ЛАБОРАТОРИЯ'],mouse:['🖱️','КликМастер','ТРЕНАЖЁР МЫШИ'],win:['🪟','ОкноМастер','РАБОЧИЙ СТОЛ WINDOWS'],net:['📡','СетьМастер','ИНТЕРНЕТ И СЕТЬ'],safe:['🛡️','КиберЩит','БЕЗОПАСНОСТЬ В ИНТЕРНЕТЕ'],flow:['🔀','ДатаПоток','ПУТЬ ИНФОРМАЦИИ В КОМПЬЮТЕРЕ']};
+function secOf(m){ return m==='home'?'home':m.startsWith('lab')?'lab':m.startsWith('mouse')?'mouse':m.startsWith('win')?'win':m.startsWith('net')?'net':m.startsWith('safe')?'safe':m.startsWith('flow')?'flow':'kb'; }
 function applySection(m){
   const s=secOf(m); document.body.dataset.sec=s; const l=LOGOS[s];
   $('#logoIco').textContent=l[0]; $('#logoT').textContent=l[1]; $('#logoS').textContent=l[2];
@@ -2626,6 +2780,7 @@ function applySection(m){
   if(m==='home'){ renderMouseHome(); renderWinHome(); } if(m==='mouse-home') renderMouseHome(); if(m==='mouse-lesson') renderLesson(); if(m==='win-home') renderWinHome(); if(m==='win-desk') enterDesk();
   if(m!=='mouse-game'&&MG.running) stopGame();
   if(m==='net-home') renderNetHome(); if(m==='net-lesson'){ nDiagram(); nRenderStep(); } if(m==='net-build') renderNetBuild(); if(m==='net-lab'){ renderNetLab(); } if(m==='net-packet') renderPacket(); if(m==='net-quiz'&&!netQuiz.active) netQuiz.home();
+  if(m==='flow-lab') renderFlow(); if(m==='flow-quiz'&&!flowQuiz.active) flowQuiz.home();
   if(m==='safe-home') renderSafeHome(); if(m==='safe-pass') renderPass(); if(m==='safe-phish') renderPhish(); if(m==='safe-share') renderShare(); if(m==='safe-rules') renderSit(); if(m==='safe-quiz'&&!safeQuiz.active) safeQuiz.home();
 }
 document.addEventListener('click',e=>{ const g=e.target.closest('[data-go]'); if(g){ unlockAudio(); setMode(g.dataset.go); } });
@@ -3943,6 +4098,194 @@ const SAFEQ=[
 ];
 const safeQuiz=genQuiz('squiz',SAFEQ,'safe.quizBest','Викторина «КиберЩит»','🛡️');
 
+/* =====================================================================
+   ДАТАПОТОК: КАК КОМПЬЮТЕР ОБРАБАТЫВАЕТ ИНФОРМАЦИЮ
+   ===================================================================== */
+if(!S.flow) S.flow={done:{},quizBest:0};
+const FLN={
+  psu:{x:20,y:20,w:150,h:64,e:'🔋',n:'Блок питания',info:'Превращает 220 В из розетки в 12, 5 и 3,3 В и даёт ток всем деталям. Без него ничего не включится.'},
+  bios:{x:20,y:104,w:150,h:64,e:'📀',n:'BIOS (ПЗУ)',info:'Маленькая микросхема на материнской плате с постоянной памятью. В ней — первая программа, которую процессор выполняет при включении: проверить детали и найти Windows на диске.'},
+  mon:{x:200,y:150,w:180,h:150,e:'🖥️',n:'Монитор',info:'Показывает кадр, который нарисовала видеокарта. Кадр приходит по кабелю HDMI 60 раз в секунду. Экран — это 2 миллиона точек-пикселей.'},
+  cpu:{x:420,y:150,w:210,h:180,e:'🧠',n:'Процессор',info:'Выполняет команды программ: читает данные из памяти, считает, сравнивает, отправляет результат дальше. Устройство управления решает, что делать; АЛУ считает; регистры — сверхбыстрые ячейки под рукой; кэш — быстрая память рядом.'},
+  ram:{x:670,y:120,w:310,h:210,e:'⚡',n:'Оперативная память (RAM)',info:'Рабочая память: здесь лежат Windows, открытые программы и то, что ты печатаешь. Каждая ячейка хранит байт — 8 нулей и единиц. После выключения всё стирается!'},
+  ssd:{x:670,y:370,w:310,h:150,e:'🚀',n:'Накопитель SSD',info:'Постоянное хранилище: Windows, программы и файлы. Ничего не забывает после выключения. Читается и пишется блоками байтов.'},
+  gpu:{x:420,y:380,w:210,h:140,e:'🎨',n:'Видеокарта',info:'Превращает команды «нарисуй букву А здесь» в пиксели. Хранит готовый кадр в видеопамяти и отправляет его на монитор.'},
+  usb:{x:230,y:430,w:150,h:90,e:'🔌',n:'Контроллер USB',info:'Микросхема на материнской плате. Принимает сигналы от клавиатуры и мыши по кабелю USB и сообщает процессору: «пришли данные!» — это называется прерывание.'},
+  kb:{x:20,y:400,w:180,h:120,e:'⌨️',n:'Клавиатура',info:'Под каждой клавишей — контакт. Контроллер внутри клавиатуры 1000 раз в секунду проверяет, какие контакты замкнуты, и отправляет по USB номер нажатой клавиши — скан-код.'},
+};
+const FLB={ // шины: id → path d, label
+  'kb-usb':{d:'M200 460 L230 460',l:'USB'},
+  'usb-cpu':{d:'M380 470 L400 470 L400 300 L420 300',l:'прерывание'},
+  'cpu-ram':{d:'M630 240 L670 240',l:'шина памяти'},
+  'cpu-ssd':{d:'M630 300 L650 300 L650 440 L670 440',l:'NVMe'},
+  'cpu-gpu':{d:'M525 330 L525 380',l:'PCI-Express'},
+  'gpu-mon':{d:'M420 450 L300 450 L300 300',l:'HDMI'},
+  'bios-cpu':{d:'M170 136 L400 136 L400 200 L420 200',l:'чтение ПЗУ'},
+  'psu-cpu':{d:'M95 84 L95 95 L185 95 L185 110 L410 110 L410 150',l:'питание 12 В',pw:true},
+};
+const FL={on:false,app:false,text:'',saved:true,busy:false,step:false,speed:1,layout:'ru',ramUsed:0,log:[],resolveNext:null,cur:null};
+const HID={KeyA:0x04,KeyB:0x05,KeyC:0x06,KeyD:0x07,KeyE:0x08,KeyF:0x09,KeyG:0x0A,KeyH:0x0B,KeyI:0x0C,KeyJ:0x0D,KeyK:0x0E,KeyL:0x0F,KeyM:0x10,KeyN:0x11,KeyO:0x12,KeyP:0x13,KeyQ:0x14,KeyR:0x15,KeyS:0x16,KeyT:0x17,KeyU:0x18,KeyV:0x19,KeyW:0x1A,KeyX:0x1B,KeyY:0x1C,KeyZ:0x1D,Digit1:0x1E,Digit2:0x1F,Digit3:0x20,Digit4:0x21,Digit5:0x22,Digit6:0x23,Digit7:0x24,Digit8:0x25,Digit9:0x26,Digit0:0x27,Enter:0x28,Backspace:0x2A,Space:0x2C,BracketLeft:0x2F,BracketRight:0x30,Semicolon:0x33,Quote:0x34,Comma:0x36,Period:0x37};
+const FKB=[[['Digit1','1','1'],['Digit2','2','2'],['Digit3','3','3'],['Digit4','4','4'],['Digit5','5','5'],['Digit6','6','6'],['Digit7','7','7'],['Digit8','8','8'],['Digit9','9','9'],['Digit0','0','0'],['Backspace','⌫','⌫','w']],
+ [['KeyQ','Q','Й'],['KeyW','W','Ц'],['KeyE','E','У'],['KeyR','R','К'],['KeyT','T','Е'],['KeyY','Y','Н'],['KeyU','U','Г'],['KeyI','I','Ш'],['KeyO','O','Щ'],['KeyP','P','З'],['BracketLeft','[','Х'],['BracketRight',']','Ъ']],
+ [['KeyA','A','Ф'],['KeyS','S','Ы'],['KeyD','D','В'],['KeyF','F','А'],['KeyG','G','П'],['KeyH','H','Р'],['KeyJ','J','О'],['KeyK','K','Л'],['KeyL','L','Д'],['Semicolon',';','Ж'],['Quote','\'','Э'],['Enter','Enter ↵','Enter ↵','w']],
+ [['KeyZ','Z','Я'],['KeyX','X','Ч'],['KeyC','C','С'],['KeyV','V','М'],['KeyB','B','И'],['KeyN','N','Т'],['KeyM','M','Ь'],['Comma',',','Б'],['Period','.','Ю'],['Space','Пробел','Пробел','sp'],['Lang','РУС','РУС','lay']]];
+const flBin=(n,bits)=>n.toString(2).padStart(bits,'0').replace(/(.{4})(?=.)/g,'$1 ');
+const flHex=n=>'0x'+n.toString(16).toUpperCase().padStart(2,'0');
+const FLSTEPS=[['power','Включи компьютер','Кнопка ⏻ — и смотри, как ток, BIOS и Windows приходят в память'],['key','Нажми любую клавишу','Увидишь скан-код, Unicode и двоичный код буквы'],['open','Открой Блокнот','Программа копируется с SSD в оперативную память'],['type','Напиши слово из 3+ букв в Блокноте','Каждая буква — байты в RAM и пиксели на экране'],['save','Сохрани файл (Ctrl+S)','Байты из RAM записываются на SSD навсегда'],['close','Закрой Блокнот','Память освобождается, окно стирается'],['off','Выключи компьютер','RAM очищается — несохранённое пропадает']];
+function renderFlow(){ if(!renderFlow.inited){ flScheme(); flKb(); renderFlow.inited=true; } flSteps(); flScreen(); }
+function flScheme(){
+  const node=(id,o)=>{ let inner='';
+    if(id==='cpu') inner='<g class="cpu-in" data-ci="cu" transform="translate(12 42)"><rect width="88" height="34" rx="5"/><text x="44" y="14" text-anchor="middle">Устройство</text><text x="44" y="26" text-anchor="middle">управления</text></g><g class="cpu-in" data-ci="alu" transform="translate(110 42)"><rect width="88" height="34" rx="5"/><text x="44" y="14" text-anchor="middle">АЛУ</text><text x="44" y="26" text-anchor="middle">(считает)</text></g><g class="cpu-in" data-ci="reg" transform="translate(12 86)"><rect width="88" height="34" rx="5"/><text x="44" y="14" text-anchor="middle">Регистры</text><text class="mono" x="44" y="27" text-anchor="middle" id="flReg">— — — —</text></g><g class="cpu-in" data-ci="cache" transform="translate(110 86)"><rect width="88" height="34" rx="5"/><text x="44" y="14" text-anchor="middle">Кэш</text><text x="44" y="26" text-anchor="middle">(быстрая память)</text></g><g class="cpu-in" data-ci="dec" transform="translate(12 130)"><rect width="186" height="36" rx="5"/><text x="93" y="14" text-anchor="middle">Декодер: скан-код → символ (по раскладке)</text><text class="mono" x="93" y="28" text-anchor="middle" id="flDec">ожидание…</text></g><circle class="led" cx="196" cy="14" r="5" fill="#4ade80"/>';
+    if(id==='ram'){ for(let i=0;i<32;i++){ const cx=12+(i%8)*36, cy=40+Math.floor(i/8)*40; inner+='<g class="cell" data-cell="'+i+'" transform="translate('+cx+' '+cy+')"><rect width="32" height="32" rx="4"/><text x="16" y="14" text-anchor="middle" class="mono" data-t="1"></text><text x="16" y="25" text-anchor="middle" class="mono" data-t="2"></text></g>'; } inner+='<text class="sub" x="155" y="205" text-anchor="middle" font-size="10" id="flRamLbl">пусто — питания нет</text>'; }
+    if(id==='ssd'){ inner='<g class="file" data-f="os" transform="translate(12 40)"><rect width="88" height="40" rx="5"/><text x="44" y="17" text-anchor="middle">🪟 Windows</text><text x="44" y="31" text-anchor="middle" class="sub">20 ГБ</text></g><g class="file" data-f="app" transform="translate(110 40)"><rect width="88" height="40" rx="5"/><text x="44" y="17" text-anchor="middle">📝 Блокнот.exe</text><text x="44" y="31" text-anchor="middle" class="sub">300 КБ</text></g><g class="file" data-f="doc" transform="translate(208 40)" style="display:none"><rect width="88" height="40" rx="5"/><text x="44" y="17" text-anchor="middle">📄 Текст.txt</text><text x="44" y="31" text-anchor="middle" class="sub" id="flDocSz">0 байт</text></g><text class="sub" x="155" y="110" text-anchor="middle" font-size="10">хранит данные даже без питания</text><text class="sub" x="155" y="130" text-anchor="middle" font-size="9" id="flSsdLbl">Windows · Блокнот.exe</text>'; }
+    if(id==='gpu'){ inner='<text class="sub" x="12" y="44" font-size="9">Видеопамять (кадр):</text><g class="pxgrid" id="flPx" transform="translate(12 50)">'+Array.from({length:7*5},(_,i)=>'<rect x="'+((i%7)*11)+'" y="'+(Math.floor(i/7)*11)+'" width="9" height="9" rx="1"/>').join('')+'</g><g transform="translate(150 80)"><g class="fan"><circle r="26" fill="#0f172a" stroke="#334155" stroke-width="2"/>'+[0,1,2,3,4,5].map(i=>'<path d="M0 0 L8 -22 L-8 -22Z" fill="#475569" transform="rotate('+(i*60)+')"/>').join('')+'<circle r="6" fill="#64748b"/></g></g><text class="sub" x="105" y="125" text-anchor="middle" font-size="9" id="flGpuLbl">кадр: чёрный</text>'; }
+    if(id==='mon'){ inner='<rect class="mscr" id="flMscr" x="14" y="36" width="152" height="86" rx="3"/><text id="flMtxt" x="90" y="88" text-anchor="middle" font-size="22" fill="#fff" class="mono"></text><rect x="80" y="124" width="20" height="10" fill="#334155"/><rect x="60" y="134" width="60" height="6" rx="3" fill="#334155"/>'; }
+    if(id==='kb'){ inner='<g id="flKeys">'+Array.from({length:30},(_,i)=>'<rect x="'+(12+(i%10)*16)+'" y="'+(40+Math.floor(i/10)*18)+'" width="13" height="13" rx="2" fill="#334155"/>').join('')+'</g><text class="sub" x="90" y="108" text-anchor="middle" font-size="9" id="flKbLbl">контроллер опрашивает клавиши</text>'; }
+    if(id==='usb'){ inner='<text class="sub" x="75" y="50" text-anchor="middle" font-size="9">принимает сигналы</text><text class="sub" x="75" y="64" text-anchor="middle" font-size="9">от клавиатуры и мыши</text><text class="mono" x="75" y="80" text-anchor="middle" font-size="9" fill="#fde68a" id="flUsbLbl"></text>'; }
+    if(id==='bios') inner='<text class="sub" x="75" y="52" text-anchor="middle" font-size="9">стартовая программа</text>';
+    if(id==='psu') inner='<text class="sub" x="75" y="52" text-anchor="middle" font-size="9">220 В → 12 / 5 / 3,3 В</text>';
+    return '<g class="nd off" data-nd="'+id+'" transform="translate('+o.x+' '+o.y+')"><rect class="bx" width="'+o.w+'" height="'+o.h+'" rx="12"/><text x="12" y="22" font-size="13">'+o.e+' '+o.n+'</text>'+inner+'</g>'; };
+  const buses=Object.entries(FLB).map(([id,b])=>'<path class="bus'+(b.pw?' pw':'')+'" data-bus="'+id+'" d="'+b.d+'"/>').join('');
+  const lbls=Object.entries(FLB).map(([id,b])=>{ const p=document.createElementNS('http://www.w3.org/2000/svg','path'); p.setAttribute('d',b.d); const svg=document.createElementNS('http://www.w3.org/2000/svg','svg'); svg.appendChild(p); document.body.appendChild(svg); const L=p.getTotalLength(); const m=p.getPointAtLength(L/2); svg.remove(); const w=b.l.length*6.2+10; return '<g class="buslblg"><rect x="'+(m.x-w/2)+'" y="'+(m.y-17)+'" width="'+w+'" height="14" rx="4" fill="#0f172a" opacity=".9"/><text class="buslbl" x="'+m.x+'" y="'+(m.y-6)+'" text-anchor="middle">'+b.l+'</text></g>'; }).join('');
+  $('#flScheme').innerHTML='<svg viewBox="0 0 1000 540">'+buses+Object.entries(FLN).map(([id,o])=>node(id,o)).join('')+lbls+'<g id="flPkts"></g></svg>';
+  $$('#flScheme .nd').forEach(n=>n.addEventListener('click',()=>{ const o=FLN[n.dataset.nd]; $('#flInfoBody').innerHTML='<div class="big">'+o.e+'</div><h2 style="text-align:center">'+o.n+'</h2><p class="lead" style="margin:10px 0 0;line-height:1.5">'+o.info+'</p>'; $('#flInfo').classList.add('open'); speak(o.n+'. '+o.info); }));
+}
+function flKb(){ $('#fcKb').innerHTML=FKB.map(r=>'<div class="r">'+r.map(k=>'<button class="k'+(k[3]?' '+k[3]:'')+'" data-code="'+k[0]+'"><span class="lat">'+(k[0]==='Lang'?'РУС':k[1])+'</span>'+(k[2]!==k[1]&&k[0]!=='Lang'?'<small>'+k[2]+'</small>':'')+'</button>').join('')+'</div>').join(''); flKbLabels();
+  $$('#fcKb .k').forEach(b=>b.addEventListener('click',()=>{ unlockAudio(); const code=b.dataset.code; if(code==='Lang'){ FL.layout=FL.layout==='ru'?'en':'ru'; flKbLabels(); snd.click(); flLog('Раскладка переключена: '+(FL.layout==='ru'?'РУС':'ENG')+' (как Alt+Shift)'); return; } const k=FKB.flat().find(x=>x[0]===code); const ch=code==='Space'?' ':code==='Enter'?'\n':code==='Backspace'?'\b':(FL.layout==='ru'?k[2]:k[1].toLowerCase()); flKey(code,ch); })); }
+function flKbLabels(){ $$('#fcKb .k').forEach(b=>{ const k=FKB.flat().find(x=>x[0]===b.dataset.code); if(!k) return; if(k[0]==='Lang'){ b.querySelector('.lat').textContent=FL.layout==='ru'?'РУС':'ENG'; return; } if(k[2]===k[1]) return; b.querySelector('.lat').textContent=FL.layout==='ru'?k[2]:k[1]; b.querySelector('small').textContent=FL.layout==='ru'?k[1]:k[2]; }); }
+function flSteps(){ const d=Object.keys(S.flow.done).length; $('#flProg').textContent=d+' / '+FLSTEPS.length; const cur=FLSTEPS.find(s=>!S.flow.done[s[0]]); $('#flSteps').innerHTML=FLSTEPS.map((s,i)=>'<div class="st'+(S.flow.done[s[0]]?' done':cur===s?' cur':'')+'"><i>'+(S.flow.done[s[0]]?'✓':i+1)+'</i><div>'+s[1]+(cur===s?'<div style="font-weight:700;color:var(--muted);font-size:.8rem">'+s[2]+'</div>':'')+'</div></div>').join('');
+  $$('.fc-ctl .hint,.fc-kb .hint').forEach(x=>x.classList.remove('hint')); if(cur){ const m={power:'#fcPwr',open:'#fcOpen',save:'#fcSave',close:'#fcClose',off:'#fcPwr'}[cur[0]]; if(m) $(m).classList.add('hint'); if(cur[0]==='key'||cur[0]==='type') $$('#fcKb .k').slice(12,16).forEach(k=>k.classList.add('hint')); } }
+function flDone(id){ if(S.flow.done[id]) return; S.flow.done[id]=1; save(); addStars(3); snd.ok(); toast('✅ '+FLSTEPS.find(s=>s[0]===id)[1]+' — +3 ⭐'); flSteps(); if(Object.keys(S.flow.done).length>=FLSTEPS.length){ addStars(10); confetti(220); snd.win(); speak('Ты проследил весь путь информации в компьютере! Плюс десять звёзд.'); } }
+function flLog(t){ FL.log.unshift(t); if(FL.log.length>40) FL.log.pop(); $('#flLog').innerHTML=FL.log.map((x,i)=>'<div>'+(i===0?'<b>'+x+'</b>':x)+'</div>').join(''); }
+function flScreen(){ const s=$('#fcScr'); $('#fcPwr').classList.toggle('on',FL.on); $('#fcOpen').disabled=!FL.on||FL.app; $('#fcSave').disabled=!FL.app; $('#fcClose').disabled=!FL.app; if(!FL.on){ s.dataset.s=s.dataset.s==='bye'?'bye':'off'; return; } if(FL.app){ s.dataset.s='app'; $('#fcTa').textContent=FL.text; $('#fcLen').textContent='Символов: '+FL.text.length; $('#fcSaved').textContent=FL.saved?'сохранено ✓':'не сохранено'; $('#fcTitle').textContent=(FL.savedOnce?'Текст.txt':'Без имени')+' — Блокнот'; } else if(s.dataset.s!=='bios'&&s.dataset.s!=='load') s.dataset.s='desk'; }
+function flMon(txt,on){ const m=$('#flMscr'); m.classList.toggle('on',!!on); $('#flMtxt').textContent=txt||''; $('#flGpuLbl').textContent=on?('кадр: '+(txt?'«'+txt.slice(-8)+'»':'рабочий стол')):'кадр: чёрный'; }
+function flRam(mode){ const cells=$$('#flScheme .cell'); cells.forEach(c=>{ c.className.baseVal='cell'; c.querySelectorAll('text').forEach(t=>t.textContent=''); });
+  if(mode==='off'){ $('#flRamLbl').textContent='пусто — питания нет'; FL.ramUsed=0; return; }
+  for(let i=0;i<8;i++){ cells[i].classList.add('os'); cells[i].querySelector('[data-t="1"]').textContent='OS'; } FL.ramUsed=8;
+  if(FL.app){ for(let i=8;i<14;i++){ cells[i].classList.add('app'); cells[i].querySelector('[data-t="1"]').textContent='APP'; } FL.ramUsed=14; [...FL.text].slice(0,18).forEach((ch,k)=>{ const c=cells[14+k]; c.classList.add('used'); c.querySelector('[data-t="1"]').textContent=ch===' '?'␣':ch==='\n'?'↵':ch; c.querySelector('[data-t="2"]').textContent=ch.charCodeAt(0).toString(16).toUpperCase().padStart(2,'0'); }); FL.ramUsed=14+Math.min(18,FL.text.length); }
+  $('#flRamLbl').textContent='занято '+FL.ramUsed+' из 32 ячеек'+(FL.app?' · текст: '+FL.text.length+' симв.':''); }
+function flNodes(on){ $$('#flScheme .nd').forEach(n=>{ n.classList.toggle('off',!on); n.classList.toggle('on',on); }); if(!on){ $$('#flScheme .bus').forEach(b=>b.classList.remove('live')); flRam('off'); flMon('',false); $('#flReg').textContent='— — — —'; $('#flDec').textContent='ожидание…'; $('#flUsbLbl').textContent=''; $$('#flPx rect').forEach(r=>r.classList.remove('lit')); } }
+/* ---- анимация одного этапа ---- */
+function flWait(ms){ return new Promise(r=>setTimeout(r,ms/FL.speed)); }
+function flPacket(busId,label,cls,rev){ return new Promise(res=>{ const b=$$('#flScheme .bus').find(x=>x.dataset.bus===busId); if(!b){ res(); return; } b.classList.add('live'); const L=b.getTotalLength(); const g=document.createElementNS('http://www.w3.org/2000/svg','g'); g.setAttribute('class','pkt '+(cls||'')); const w=Math.max(40,label.length*7.5+14); g.innerHTML='<rect x="'+(-w/2)+'" y="-11" width="'+w+'" height="22" rx="6"/><text y="4" text-anchor="middle">'+label+'</text>'; $('#flPkts').appendChild(g); const dur=Math.max(500,L*2.2)/FL.speed; const t0=performance.now(); snd.tick(); const an=()=>{ const p=Math.min(1,(performance.now()-t0)/dur); const pt=b.getPointAtLength((rev?1-p:p)*L); g.setAttribute('transform','translate('+pt.x+' '+pt.y+')'); if(p<1) requestAnimationFrame(an); else { g.remove(); b.classList.remove('live'); res(); } }; an(); }); }
+function flHot(id,on){ const n=$$('#flScheme .nd').find(x=>x.dataset.nd===id); if(n) n.classList.toggle('hot',!!on); }
+function flHotIn(ci,on){ $$('#flScheme .cpu-in').forEach(x=>x.classList.toggle('hot',!!on&&x.dataset.ci===ci)); }
+function flExplain(ic,t,s,data,kind){ const e=$('#flExplain'); e.className='fl-explain'+(kind?' '+kind:''); $('#flIc').textContent=ic; $('#flT').textContent=t; $('#flS').textContent=s; $('#flData').innerHTML=(data||[]).map(d=>'<span class="'+(d[1]||'')+'">'+d[0]+'</span>').join(''); }
+async function flRun(stages,onDone){
+  if(FL.busy){ toast('⏳ Подожди — компьютер ещё занят'); return; } FL.busy=true; FL.cur=stages; let skip=false; $('#flSkip').style.display=''; const sk=()=>{ skip=true; if(FL.resolveNext) FL.resolveNext(); }; $('#flSkip').onclick=sk;
+  for(let i=0;i<stages.length;i++){ const st=stages[i]; $('#flDots').innerHTML=stages.map((x,k)=>'<i class="'+(k<i?'done':k===i?'cur':'')+'"></i>').join('');
+    flExplain(st.ic||'➡️',st.t,st.s,st.data,st.kind); flLog((i+1)+'/'+stages.length+' '+st.t); if(!skip&&FL.speed<=1) speak(st.t+'. '+st.s);
+    if(st.pre) st.pre(); if(st.hot) st.hot.forEach(h=>flHot(h,true)); if(st.ci) flHotIn(st.ci,true);
+    if(!skip){ if(st.bus) await flPacket(st.bus,st.pk||'',st.cls,st.rev); else await flWait(st.ms||900); }
+    if(st.post) st.post(); if(st.hot) st.hot.forEach(h=>flHot(h,false)); flHotIn(null,false);
+    if(!skip&&FL.step&&i<stages.length-1){ $('#flNext').style.display=''; await new Promise(r=>{ FL.resolveNext=r; }); FL.resolveNext=null; $('#flNext').style.display='none'; }
+    else if(!skip) await flWait(st.hold||700);
+  }
+  $('#flDots').innerHTML=stages.map(()=>'<i class="done"></i>').join(''); $$('#flScheme .nd.hot').forEach(n=>n.classList.remove('hot')); flHotIn(null,false); $('#flSkip').style.display='none'; $('#flNext').style.display='none'; FL.busy=false; FL.cur=null; if(onDone) onDone(); flScreen(); flSteps();
+}
+$('#flNext').addEventListener('click',()=>{ if(FL.resolveNext) FL.resolveNext(); });
+/* ---- сценарии ---- */
+function flPower(){
+  if(FL.busy) return toast('⏳ Подожди');
+  if(FL.on){ return flShutdown(); }
+  const bios=$('#fcBios'); bios.innerHTML='';
+  flRun([
+    {ic:'🔌',t:'Кнопка ⏻ нажата — блок питания даёт ток',s:'Кнопка замыкает контакт на материнской плате. Блок питания превращает 220 В из розетки в 12, 5 и 3,3 вольта и раздаёт ток всем деталям.',data:[['220 В → 12 В / 5 В / 3,3 В','k']],hot:['psu'],bus:'psu-cpu',pk:'⚡ 12 В',cls:'pw',post:()=>{ flNodes(true); $('#fcScr').dataset.s='bios'; }},
+    {ic:'📀',t:'Процессор читает первую программу из BIOS',s:'Процессор ещё ничего не знает. Его первая команда всегда одна: прочитать программу из микросхемы BIOS (постоянная память на плате).',data:[['адрес 0xFFFF0','c'],['команда JMP','k']],hot:['bios','cpu'],ci:'cu',bus:'bios-cpu',pk:'BIOS',post:()=>{ bios.innerHTML+='КомпьюЛаб BIOS v1.0\n'; $('#flReg').textContent='FFFF 0000'; }},
+    {ic:'🔍',t:'POST: проверка деталей',s:'BIOS-программа проверяет процессор, память и диск: «все на месте?» На экране появляются строчки проверки.',data:[['RAM 16 ГБ ✓','c'],['SSD найден ✓','c']],hot:['cpu','ram'],bus:'cpu-ram',pk:'тест',post:()=>{ bios.innerHTML+='Процессор ...... OK\nПамять 16 ГБ ... <i>OK</i>\nSSD 1 ТБ ....... <i>OK</i>\n'; flMon('POST',true); }},
+    {ic:'🚀',t:'Загрузчик читает Windows с SSD',s:'BIOS находит на диске загрузчик Windows и даёт процессору команду: копировать систему в оперативную память. С диска читаются тысячи блоков по 4 КБ.',data:[['SSD → RAM','k'],['~20 000 блоков','c']],hot:['ssd','cpu'],bus:'cpu-ssd',pk:'блок 4 КБ',rev:true,post:()=>{ bios.innerHTML+='Загрузка системы...'; $$('#flScheme .file')[0].classList.add('hot'); }},
+    {ic:'⚡',t:'Windows разворачивается в оперативной памяти',s:'Система занимает первые ячейки RAM. Теперь процессор выполняет уже её команды, а не BIOS. Это называется «загрузка операционной системы».',data:[['ячейки 0–7: OS','c']],hot:['cpu','ram'],bus:'cpu-ram',pk:'Windows',post:()=>{ $$('#flScheme .file')[0].classList.remove('hot'); FL.on=true; FL.app=false; flRam(); $('#fcScr').dataset.s='load'; }},
+    {ic:'🎨',t:'Видеокарта рисует рабочий стол',s:'Windows просит видеокарту нарисовать рабочий стол. Видеокарта складывает картинку из миллионов пикселей и отправляет кадр на монитор по HDMI.',data:[['1920×1080','c'],['60 кадров/с','k']],hot:['gpu','mon'],ci:'cu',bus:'cpu-gpu',pk:'нарисуй стол',post:()=>{ $$('#flPx rect').forEach((r,i)=>r.classList.toggle('lit',i%3===0)); }},
+    {ic:'🖥️',t:'Кадр приходит на монитор — компьютер готов!',s:'Монитор показывает рабочий стол. От нажатия кнопки до этого момента прошло около 10 секунд, а процессор выполнил миллиарды команд.',data:[['HDMI: 60 кадров/с','k']],hot:['mon'],bus:'gpu-mon',pk:'кадр',cls:'frame',post:()=>{ flMon('🪟',true); $('#fcScr').dataset.s='desk'; [392,523,659,784].forEach((f,i)=>tone(f,.3,'sine',.12,i*.12)); }},
+  ],()=>{ flDone('power'); flExplain('✅','Компьютер включён и готов к работе','Нажми любую клавишу — проследим путь одной буквы. Или открой Блокнот.',[],'good'); });
+}
+function flKey(code,ch){
+  if(FL.busy) return; unlockAudio();
+  if(!FL.on){ flExplain('🔌','Компьютер выключен — клавиша никуда не попала','Клавиатура без питания даже не замечает нажатие. Сначала нажми ⏻.',[],'bad'); snd.bad(); return; }
+  const hid=HID[code]||0; const kb=$$('#fcKb .k').find(k=>k.dataset.code===code); if(kb){ kb.classList.add('down'); setTimeout(()=>kb.classList.remove('down'),200); }
+  const isCtl=ch==='\b'||ch==='\n'; const cp=isCtl?(ch==='\b'?8:13):ch.codePointAt(0); const bits=cp>255?16:8; const name=ch==='\b'?'Backspace':ch==='\n'?'Enter':ch===' '?'Пробел':'«'+ch+'»';
+  const kidx=FKB.flat().findIndex(k=>k[0]===code); const keyRects=$$('#flKeys rect'); const kr=keyRects[kidx%30]; if(kr) kr.setAttribute('fill','#f59e0b');
+  const toApp=FL.app; const stages=[
+    {ic:'⌨️',t:'Клавиша '+name+' нажата — контакт замкнулся',s:'Контроллер внутри клавиатуры 1000 раз в секунду проверяет все клавиши и замечает: замкнулась клавиша с номером '+hid+'. Этот номер называется скан-код. Клавиатура не знает букв — только номера!',data:[['скан-код '+flHex(hid),'k'],[flBin(hid,8),'']],hot:['kb'],ms:900,post:()=>{ $('#flKbLbl').textContent='скан-код '+flHex(hid)+' отправлен'; }},
+    {ic:'🔌',t:'Скан-код летит по кабелю USB',s:'По проводу USB бегут электрические импульсы: 1 — есть напряжение, 0 — нет. 8 импульсов = 1 байт = скан-код.',data:[[flBin(hid,8),''],['USB: 12 Мбит/с','c']],hot:['kb','usb'],bus:'kb-usb',pk:flHex(hid),post:()=>{ $('#flUsbLbl').textContent='получен '+flHex(hid); }},
+    {ic:'🚨',t:'Контроллер USB прерывает процессор',s:'Контроллер на плате говорит процессору: «Прерывание! Пришли данные от клавиатуры». Процессор откладывает текущую работу и читает байт.',data:[['IRQ → процессор','k'],['регистр: '+flHex(hid),'c']],hot:['usb','cpu'],ci:'reg',bus:'usb-cpu',pk:'IRQ '+flHex(hid),post:()=>{ $('#flReg').textContent=flHex(hid)+' 0000'; }},
+    {ic:'🧠',t:'Процессор переводит скан-код в символ по раскладке',s:'Программа Windows смотрит в таблицу раскладки '+(FL.layout==='ru'?'РУС':'ENG')+': скан-код '+flHex(hid)+' → '+name+'. Каждому символу соответствует номер в таблице Unicode, а номер хранится как двоичное число.',data:[[flHex(hid)+' → '+name,'k'],['Unicode '+cp,'c'],[flBin(cp,bits),'']],hot:['cpu'],ci:'dec',ms:1300,post:()=>{ $('#flDec').textContent=flHex(hid)+' → '+name+' = '+cp; }},
+  ];
+  if(toApp){ stages.push(
+    {ic:'⚡',t:'Символ записывается в оперативную память',s:'Блокнот ждёт ввод, поэтому процессор кладёт код символа в ячейку памяти, где Блокнот хранит текст. '+(bits===16?'Русская буква занимает 2 байта.':'Латинская буква занимает 1 байт.'),data:[['RAM ← '+flBin(cp,bits),''],['ячейка '+FL.ramUsed,'c']],hot:['cpu','ram'],bus:'cpu-ram',pk:flBin(cp,bits).slice(0,9),cls:'bin',post:()=>{ if(ch==='\b') FL.text=FL.text.slice(0,-1); else FL.text+=ch; FL.saved=false; flRam(); const c=$$('#flScheme .cell')[Math.min(31,FL.ramUsed-1)]; if(c){ c.classList.add('hot'); setTimeout(()=>c.classList.remove('hot'),900); } }},
+    {ic:'🎨',t:'Процессор просит видеокарту нарисовать символ',s:'Блокнот говорит: «нарисуй '+name+' в позиции '+FL.text.length+'». Видеокарта берёт форму буквы из шрифта и закрашивает нужные пиксели в видеопамяти.',data:[['шрифт → пиксели','k'],['кадр обновлён','c']],hot:['cpu','gpu'],ci:'cu',bus:'cpu-gpu',pk:'draw '+(isCtl?'⌫':ch),post:()=>{ $$('#flPx rect').forEach(r=>r.classList.toggle('lit',Math.random()<.5)); }},
+    {ic:'🖥️',t:'Новый кадр уходит на монитор — буква на экране!',s:'По HDMI на монитор летит целый кадр: все 2 миллиона пикселей. Монитор показывает его за 1/60 секунды. Весь путь от клавиши до экрана занял меньше 0,05 секунды.',data:[['HDMI → монитор','k'],['< 50 мс','c']],hot:['gpu','mon'],bus:'gpu-mon',pk:'кадр',cls:'frame',post:()=>{ flMon(FL.text.replace(/\n/g,'↵'),true); flScreen(); }},
+  ); } else stages.push(
+    {ic:'🤷',t:'Ни одна программа не ждёт ввод',s:'Windows получила символ '+name+', но на рабочем столе нет открытого окна для текста. Символ просто отброшен. Открой Блокнот — и буквы будут попадать в него.',data:[['получатель: нет','k']],hot:['cpu'],ms:1200,kind:'bad'});
+  flRun(stages,()=>{ if(kr) kr.setAttribute('fill','#334155'); $('#flKbLbl').textContent='контроллер опрашивает клавиши'; flDone('key'); if(toApp&&FL.text.replace(/\s/g,'').length>=3) flDone('type'); flExplain(toApp?'✅':'💡',toApp?'Буква '+name+' прошла путь: клавиша → USB → процессор → RAM → видеокарта → экран':'Открой Блокнот, чтобы буквы было куда записывать',toApp?'Так происходит с каждым нажатием — тысячи раз в минуту.':'Программа — это получатель ввода. Без неё символ пропадает.',[],toApp?'good':''); });
+}
+function flOpen(){
+  if(FL.busy) return toast('⏳ Подожди'); if(!FL.on) return flExplain('🔌','Сначала включи компьютер','Кнопка ⏻ справа.',[],'bad'); if(FL.app) return;
+  flRun([
+    {ic:'🖱️',t:'Двойной щелчок по значку «Блокнот»',s:'Мышь отправляет по USB координаты и нажатие. Windows видит: щелчок попал на значок программы Блокнот.',data:[['файл: Блокнот.exe','k']],hot:['usb','cpu'],bus:'usb-cpu',pk:'click'},
+    {ic:'🚀',t:'Процессор читает файл программы с SSD',s:'Программа хранится на диске как файл Блокнот.exe — 300 КБ команд для процессора. Но выполнять с диска нельзя: он слишком медленный. Файл копируется в оперативную память.',data:[['SSD → RAM','k'],['300 КБ','c']],hot:['ssd','cpu'],bus:'cpu-ssd',pk:'Блокнот.exe',rev:true,pre:()=>$$('#flScheme .file')[1].classList.add('hot'),post:()=>$$('#flScheme .file')[1].classList.remove('hot')},
+    {ic:'⚡',t:'Программа занимает ячейки оперативной памяти',s:'Windows выделяет Блокноту свои ячейки: для команд программы и для текста, который ты будешь печатать. Теперь программа «живёт» в RAM.',data:[['ячейки 8–13: APP','c'],['буфер текста: пусто','k']],hot:['cpu','ram'],bus:'cpu-ram',pk:'код + данные',cls:'bin',post:()=>{ FL.app=true; FL.text=''; FL.saved=true; FL.savedOnce=false; flRam(); $$('#flScheme .file')[2].style.display='none'; }},
+    {ic:'🧠',t:'Процессор выполняет команды Блокнота',s:'Устройство управления читает команды из памяти одну за другой: «создай окно», «нарисуй рамку», «покажи курсор». Миллионы команд в секунду.',data:[['команда 1: окно','c'],['команда 2: рамка','c'],['команда 3: курсор','c']],hot:['cpu'],ci:'cu',ms:1200,post:()=>{ $('#flReg').textContent='0804 0000'; }},
+    {ic:'🎨',t:'Видеокарта рисует окно программы',s:'Команды «нарисовать окно» уходят видеокарте. Она закрашивает белый прямоугольник, заголовок и кнопки — и отправляет кадр на монитор.',data:[['окно 640×400','c']],hot:['gpu','mon'],bus:'cpu-gpu',pk:'окно',post:()=>{ $$('#flPx rect').forEach((r,i)=>r.classList.toggle('lit',i>7&&i<28)); flMon('📝',true); }},
+    {ic:'🖥️',t:'Блокнот открыт и ждёт ввод',s:'Курсор мигает — программа готова принимать символы с клавиатуры.',data:[],hot:['mon'],bus:'gpu-mon',pk:'кадр',cls:'frame',post:()=>flScreen()},
+  ],()=>{ flDone('open'); flExplain('✅','Блокнот загружен с SSD в RAM и работает','Теперь напиши слово — каждая буква пройдёт путь до экрана.',[],'good'); });
+}
+function flSave(){
+  if(FL.busy) return toast('⏳ Подожди'); if(!FL.app) return flExplain('💡','Сначала открой Блокнот','Сохранять можно только то, что есть в программе.',[],'bad');
+  if(!FL.text.length) return flExplain('💡','Нечего сохранять','Напиши что-нибудь в Блокноте.',[],'bad');
+  const bytes=[...FL.text].reduce((a,c)=>a+(c.codePointAt(0)>127?2:1),0);
+  flRun([
+    {ic:'⌨️',t:'Ctrl+S — команда «сохранить»',s:'Два скан-кода (Ctrl и S) приходят вместе. Windows понимает: это не буква, а горячая клавиша, и передаёт Блокноту команду «сохрани файл».',data:[['0xE0 + 0x16','k'],['→ команда SAVE','c']],hot:['kb','usb','cpu'],bus:'kb-usb',pk:'Ctrl+S'},
+    {ic:'⚡',t:'Процессор читает текст из оперативной памяти',s:'Текст сейчас только в RAM — если выключить питание, он пропадёт. Процессор читает все байты текста из ячеек Блокнота.',data:[['RAM → процессор','k'],[FL.text.length+' симв. = '+bytes+' байт','c']],hot:['ram','cpu'],bus:'cpu-ram',pk:bytes+' байт',cls:'bin',rev:true},
+    {ic:'📦',t:'Байты собираются в файл',s:'Windows добавляет к байтам имя файла, дату и размер — получается файл Текст.txt. Текст кодируется в UTF-8: латинская буква — 1 байт, русская — 2.',data:[['имя: Текст.txt','c'],['UTF-8','k'],[bytes+' байт','']],hot:['cpu'],ci:'alu',ms:1100},
+    {ic:'🚀',t:'Файл записывается на SSD',s:'Процессор отправляет байты накопителю. SSD записывает их в свои ячейки памяти, которые не стираются без питания. Теперь текст в безопасности!',data:[['RAM → SSD','k'],['Текст.txt: '+bytes+' байт','c']],hot:['cpu','ssd'],bus:'cpu-ssd',pk:'Текст.txt',post:()=>{ const f=$$('#flScheme .file')[2]; f.style.display=''; f.classList.add('new','hot'); setTimeout(()=>f.classList.remove('hot'),1200); $('#flDocSz').textContent=bytes+' байт'; $('#flSsdLbl').textContent='Windows · Блокнот.exe · Текст.txt'; FL.saved=true; FL.savedOnce=true; }},
+    {ic:'🖥️',t:'Экран сообщает: сохранено',s:'Видеокарта перерисовывает заголовок окна: теперь там имя файла. Копия текста осталась и в RAM — ты продолжаешь работать.',data:[['заголовок: Текст.txt','c']],hot:['gpu','mon'],bus:'gpu-mon',pk:'кадр',cls:'frame',post:()=>{ flScreen(); const t=$('#fcToast'); t.textContent='💾 Сохранено: Текст.txt ('+bytes+' байт)'; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }},
+  ],()=>{ flDone('save'); flExplain('✅','Файл записан на SSD — теперь он не пропадёт','Попробуй закрыть Блокнот: память освободится, а файл останется на диске.',[],'good'); });
+}
+function flClose(){
+  if(FL.busy) return toast('⏳ Подожди'); if(!FL.app) return;
+  const lost=!FL.saved&&FL.text.length;
+  flRun([
+    {ic:'✕',t:'Нажата кнопка «Закрыть»',s:'Щелчок по крестику превращается в команду Windows: «завершить программу Блокнот».'+(lost?' Внимание: текст не сохранён!':''),data:lost?[['несохранённый текст!','k']]:[],hot:['usb','cpu'],bus:'usb-cpu',pk:'close',kind:lost?'bad':''},
+    {ic:'🧠',t:'Процессор выполняет последние команды программы',s:'Блокнот закрывает своё окно и сообщает системе: «я завершился».'+(lost?' Несохранённый текст стирается вместе с программой.':''),data:[['EXIT','c']],hot:['cpu'],ci:'cu',ms:1000},
+    {ic:'⚡',t:'Оперативная память освобождается',s:'Windows помечает ячейки Блокнота свободными — их может занять другая программа. '+(lost?'Текст, который был только в RAM, потерян.':'Файл на SSD остался — его можно открыть снова.'),data:[['ячейки 8–'+(FL.ramUsed-1)+': свободны','c']],hot:['cpu','ram'],bus:'cpu-ram',pk:'free',cls:'bin',post:()=>{ FL.app=false; FL.text=''; flRam(); }},
+    {ic:'🎨',t:'Видеокарта стирает окно',s:'На месте окна снова рисуется рабочий стол. Кадр уходит на монитор.',data:[],hot:['gpu','mon'],bus:'gpu-mon',pk:'кадр',cls:'frame',post:()=>{ $$('#flPx rect').forEach((r,i)=>r.classList.toggle('lit',i%3===0)); flMon('🪟',true); flScreen(); }},
+  ],()=>{ flDone('close'); flExplain(lost?'⚠️':'✅',lost?'Блокнот закрыт, несохранённый текст потерян':'Блокнот закрыт, память свободна, файл на диске',lost?'RAM — временная память. Всегда сохраняй файл перед закрытием!':'Так работает каждая программа: с диска в память, поработала — память освободилась.',[],lost?'bad':'good'); });
+}
+function flShutdown(){
+  if(FL.busy) return toast('⏳ Подожди'); if(!FL.on) return;
+  const lost=FL.app&&!FL.saved&&FL.text.length;
+  flRun([
+    {ic:'⏻',t:'Команда «Завершение работы»',s:'Windows получает сигнал выключения и просит все программы закрыться.'+(lost?' Блокнот с несохранённым текстом тоже закрывается — текст пропадёт!':''),data:lost?[['несохранённый текст!','k']]:[],hot:['cpu'],ci:'cu',ms:1000,kind:lost?'bad':''},
+    {ic:'🚀',t:'Система записывает настройки на SSD',s:'Последние изменения (настройки, журналы) записываются на диск, чтобы при следующем включении всё было на месте.',data:[['RAM → SSD','k']],hot:['cpu','ssd'],bus:'cpu-ssd',pk:'настройки',post:()=>{ $('#fcScr').dataset.s='bye'; $('#fcByeT').textContent='Завершение работы…'; }},
+    {ic:'🎨',t:'Экран гаснет',s:'Видеокарта отправляет последний кадр: «Завершение работы», затем перестаёт слать сигнал — монитор переходит в режим ожидания.',data:[['HDMI: нет сигнала','c']],hot:['gpu','mon'],bus:'gpu-mon',pk:'bye',cls:'frame',post:()=>flMon('',false)},
+    {ic:'⚡',t:'Оперативная память очищается',s:'Без питания ячейки RAM теряют заряд за доли секунды. Всё, что было только в памяти, исчезает. Поэтому сохранённое — на диске, а не в RAM.',data:[['32 ячейки → 0','k']],hot:['ram'],bus:'cpu-ram',pk:'0000 0000',cls:'bin',post:()=>{ FL.app=false; FL.text=''; flRam('off'); }},
+    {ic:'🔌',t:'Процессор даёт команду блоку питания: выключиться',s:'Последняя команда процессора — сигнал на блок питания. Ток перестаёт поступать, вентиляторы останавливаются.',data:[['PWR_OFF','k']],hot:['cpu','psu'],bus:'psu-cpu',pk:'OFF',cls:'pw',rev:true,post:()=>{ FL.on=false; flNodes(false); $('#fcScr').dataset.s='off'; }},
+  ],()=>{ flDone('off'); flExplain(lost?'⚠️':'✅','Компьютер выключен'+(lost?'. Несохранённый текст потерян':''),'Включи снова — и Windows опять загрузится с SSD в оперативную память.'+(lost?' Урок: сохраняй файл перед выключением.':''),[],lost?'bad':'good'); });
+}
+$('#fcPwr').addEventListener('click',()=>{ unlockAudio(); flPower(); });
+$('#fcOpen').addEventListener('click',()=>{ unlockAudio(); flOpen(); }); $('#fcIcon').addEventListener('dblclick',flOpen); $('#fcIcon').addEventListener('click',()=>{ if(!FL.app) flOpen(); });
+$('#fcSave').addEventListener('click',()=>{ unlockAudio(); flSave(); }); $('#fcClose').addEventListener('click',()=>{ unlockAudio(); flClose(); });
+$$('#flSpeed button').forEach(b=>b.addEventListener('click',()=>{ FL.speed=+b.dataset.v; $$('#flSpeed button').forEach(x=>x.classList.toggle('on',x===b)); }));
+$('#flStep').addEventListener('change',e=>{ FL.step=e.target.checked; });
+$('#flReset').addEventListener('click',()=>{ if(FL.busy) return toast('⏳ Подожди'); if(!confirm('Сбросить задания и выключить компьютер?')) return; S.flow.done={}; save(); FL.on=false; FL.app=false; FL.text=''; flNodes(false); $('#fcScr').dataset.s='off'; $$('#flScheme .file')[2].style.display='none'; $('#flSsdLbl').textContent='Windows · Блокнот.exe'; FL.log=[]; $('#flLog').innerHTML=''; flScreen(); flSteps(); flExplain('🔌','Компьютер выключен','Нажми ⏻, чтобы начать сначала.',[]); });
+addEventListener('keydown',e=>{ if(mode!=='flow-lab'||inField(e)||FL.busy) return; if(e.ctrlKey&&(e.code==='KeyS')){ e.preventDefault(); flSave(); return; } if(e.ctrlKey||e.altKey||e.metaKey) return; if(e.key==='Escape') return; if(e.key.length===1||e.key==='Enter'||e.key==='Backspace'){ if(!HID[e.code]&&e.key.length!==1) return; e.preventDefault(); flKey(e.code,e.key==='Enter'?'\n':e.key==='Backspace'?'\b':e.key); } });
+$('#flInfoClose').addEventListener('click',()=>$('#flInfo').classList.remove('open')); $('#flInfo').addEventListener('click',e=>{ if(e.target.id==='flInfo') $('#flInfo').classList.remove('open'); });
+const FLOWQ=[
+ {e:'⌨️',q:'Что отправляет клавиатура в компьютер, когда нажимают клавишу?',opts:['Скан-код — номер клавиши','Готовую букву','Картинку буквы','Звук нажатия'],a:0,x:'Клавиатура не знает букв. Она отправляет номер клавиши — скан-код. В букву его превращает процессор по таблице раскладки.'},
+ {e:'🧠',q:'Кто превращает скан-код в букву «А»?',opts:['Процессор по таблице раскладки','Монитор','Блок питания','Кабель USB'],a:0,x:'Windows на процессоре смотрит в таблицу раскладки (РУС/ENG) и находит, какой символ соответствует скан-коду.'},
+ {e:'⚡',q:'Где хранится текст, который ты печатаешь в Блокноте, пока не нажал «Сохранить»?',opts:['В оперативной памяти (RAM)','На SSD','В мониторе','В клавиатуре'],a:0,x:'Текст лежит в ячейках RAM. Если выключить компьютер, не сохранив, он пропадёт.'},
+ {e:'💾',q:'Что происходит при сохранении файла?',opts:['Байты из RAM записываются на SSD','Текст отправляется на монитор','Клавиатура запоминает текст','Процессор удаляет текст из памяти'],a:0,x:'Сохранить — значит скопировать байты из временной памяти на постоянный накопитель.'},
+ {e:'🔢',q:'Как хранится буква «A» (Unicode 65) внутри компьютера?',opts:['Как двоичное число 01000001','Как рисунок буквы','Как звук','Как слово «буква А»'],a:0,x:'Всё в компьютере — числа из нулей и единиц. 65 в двоичной системе = 01000001.'},
+ {e:'🎨',q:'Кто рисует букву на экране из пикселей?',opts:['Видеокарта','Оперативная память','SSD','Блок питания'],a:0,x:'Видеокарта превращает команду «нарисуй букву» в закрашенные пиксели и отправляет кадр на монитор.'},
+ {e:'📀',q:'Какую программу процессор выполняет первой при включении?',opts:['BIOS из микросхемы на плате','Блокнот','Браузер','Игру'],a:0,x:'BIOS хранится в постоянной памяти на материнской плате. Он проверяет детали и запускает загрузку Windows с диска.'},
+ {e:'🚀',q:'Почему программу копируют с SSD в RAM, а не выполняют прямо с диска?',opts:['RAM в сотни раз быстрее диска','Диск не умеет хранить программы','Так красивее','Чтобы освободить диск'],a:0,x:'Процессор работает с оперативной памятью, потому что она очень быстрая. Диск слишком медленный для выполнения команд.'},
+ {e:'🔌',q:'Что происходит с оперативной памятью при выключении?',opts:['Она полностью очищается','Всё сохраняется навсегда','Она переходит на SSD сама','Ничего'],a:0,x:'Ячейки RAM держат данные только пока есть ток. Выключил — всё стёрлось. Поэтому важно сохранять.'},
+ {e:'🚨',q:'Что такое прерывание?',opts:['Сигнал процессору: «пришли данные, обработай»','Поломка компьютера','Выключение монитора','Пауза в игре'],a:0,x:'Контроллер USB прерывает текущую работу процессора, чтобы тот обработал нажатие клавиши или движение мыши.'},
+];
+const flowQuiz=genQuiz('fquiz',FLOWQ,'flow.quizBest','Викторина «Путь информации»','🔀');
+
+
 
 /* =====================================================================
    ГЛАВНОЕ МЕНЮ: УЧЕБНЫЙ ПУТЬ
@@ -3951,6 +4294,9 @@ const SECTIONS=[
  {id:'lab',go:'lab-home',brand:'КОМПЬЮЛАБ',n:'Устройство компьютера',e:'🖥️',d:'Из чего состоит компьютер: 14 деталей с фотографиями, сборка своими руками и викторина.',
   art:()=>'<div class="art lab" style="background-image:url('+IMG.inside+')"><div class="float" style="left:8%;top:14%;background-image:url('+IMG.cpu+')"></div><div class="float" style="right:9%;top:22%;animation-delay:-2s;background-image:url('+IMG.gpu+')"></div><div class="float" style="left:38%;bottom:10%;animation-delay:-4s;width:70px;height:70px;background-image:url('+IMG.ram+')"></div></div>',
   prog(){ const seen=Object.keys(S.lab.seen).length; const b=S.lab.builds||0, q=S.lab.quizBest||0; return {p:Math.min(1,seen/PARTS.length*.5+(b?.3:0)+(q>=9?.2:0)),l:seen+' / '+PARTS.length+' деталей · сборок: '+b+(q?' · викторина '+q+'/12':'')}; }},
+ {id:'flow',go:'flow-lab',brand:'ДАТАПОТОК',n:'Путь информации',e:'🔀',d:'Анимированная лаборатория: что происходит внутри компьютера при включении, нажатии клавиши, открытии программы, сохранении и выключении. Скан-код → Unicode → двоичный код → RAM → пиксели.',
+  art:()=>'<div class="art flow"><div class="art-flow"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M12 80 L35 50 L62 50 L88 22"/></svg><i style="left:12%;top:80%">⌨️ клавиша</i><i style="left:35%;top:50%">🧠 процессор</i><i style="left:62%;top:50%">⚡ память</i><i style="left:88%;top:22%">🖥️ экран</i><span class="b" style="left:50%;top:84%">01000001</span><span class="b" style="left:74%;top:30%">A</span></div></div>',
+  prog(){ const d=Object.keys(S.flow.done).length; return {p:Math.min(1,d/FLSTEPS.length*.8+((S.flow.quizBest||0)>=8?.2:0)),l:d+' / '+FLSTEPS.length+' заданий'+(S.flow.quizBest?' · викторина '+S.flow.quizBest+'/10':'')}; }},
  {id:'mouse',go:'mouse-home',brand:'КЛИКМАСТЕР',n:'Мышь',e:'🖱️',d:'Урок с настоящей мышью и 8 игр: щелчок, двойной щелчок, правая кнопка, перетаскивание, колёсико, точность, выделение.',
   art:()=>'<div class="art mouse"><div class="art-mouse"><svg viewBox="0 0 200 330"><path d="M100 8 C152 8 184 60 184 150 C184 250 150 322 100 322 C50 322 16 250 16 150 C16 60 48 8 100 8Z" fill="url(#g-dark)" stroke="#0b0d12" stroke-width="3"/><path d="M98 12 C56 14 24 62 22 130 L98 130Z" fill="#f59e0b" stroke="#0b0d12" stroke-width="2"/><path d="M102 12 C144 14 176 62 178 130 L102 130Z" fill="#2f3542" stroke="#0b0d12" stroke-width="2"/><rect x="91" y="52" width="18" height="52" rx="9" fill="#4b5563" stroke="#0b0d12" stroke-width="2"/><path d="M22 134 H178" stroke="#0b0d12" stroke-width="3"/><circle cx="100" cy="200" r="6" fill="#38b6ff"/></svg></div></div>',
   prog(){ const g=Object.keys(S.mouse.best).length, n=Object.keys(GAMES).length; return {p:Math.min(1,(S.mouse.lesson?.3:0)+g/n*.7),l:(S.mouse.lesson?'урок пройден · ':'урок не пройден · ')+g+' / '+n+' игр'}; }},
@@ -3980,7 +4326,7 @@ function renderHome(){
 if(S.set.tpLimit!==undefined) TP.limit=S.set.tpLimit; if(S.set.tpStrict!==undefined) TP.strict=S.set.tpStrict; if(S.set.tpHints!==undefined) TP.hints=S.set.tpHints;
 buildKeyboard(); applySettings(); renderStars(); renderCats(); renderTrainGrid(); renderTypeHome(); renderRefCats(); renderRef(); pressedCombo(); updateKb(); setMode('home');
 addEventListener('pointerdown',unlockAudio,{once:true});
-window.KM={get T(){return T},get LN(){return LN},get TP(){return TP},get S(){return S},get B(){return B},get mode(){return mode},SHORTCUTS,CATS,TSETS,PARTS,comboHTML,MODCODES,sig,parseKeys,codeChars,charKeys,setMode,startBuild,place1,place2,closeCase,toggleSwitch,powerOn,bNextStep,startQuiz,get G(){return MG},get W(){return W},startGame,endGame,lessonEvent,wOpen,wEv,wResetFS,wCreate,wRename,wDelete,wMove,wEmptyBin,wMax,wMin,wClose,WMISSIONS,nCable,renderNetLab,nxPlace,nxPick,nxConfig,nxCheck,nxIpCheck,get NX(){return NX},NXLV,nEv,nAction,nPlace,nPort,nSrc,nCheck,get NB(){return NB},get NL(){return NL},NSTEPS,get PK(){return PK},pkGo,pwUpdate,PHISH,phAnswer,get PH(){return PH},shDrop,get SH(){return SH},get SI(){return SI},netQuiz,safeQuiz,SECTIONS,renderHome};
+window.KM={get T(){return T},get LN(){return LN},get TP(){return TP},get S(){return S},get B(){return B},get mode(){return mode},SHORTCUTS,CATS,TSETS,PARTS,comboHTML,MODCODES,sig,parseKeys,codeChars,charKeys,setMode,startBuild,place1,place2,closeCase,toggleSwitch,powerOn,bNextStep,startQuiz,get G(){return MG},get W(){return W},startGame,endGame,lessonEvent,wOpen,wEv,wResetFS,wCreate,wRename,wDelete,wMove,wEmptyBin,wMax,wMin,wClose,WMISSIONS,nCable,flPower,flKey,flOpen,flSave,flClose,flShutdown,get FL(){return FL},FLSTEPS,renderNetLab,nxPlace,nxPick,nxConfig,nxCheck,nxIpCheck,get NX(){return NX},NXLV,nEv,nAction,nPlace,nPort,nSrc,nCheck,get NB(){return NB},get NL(){return NL},NSTEPS,get PK(){return PK},pkGo,pwUpdate,PHISH,phAnswer,get PH(){return PH},shDrop,get SH(){return SH},get SI(){return SI},netQuiz,safeQuiz,SECTIONS,renderHome};
 if('serviceWorker' in navigator&&location.protocol.startsWith('http')){ navigator.serviceWorker.register('sw.js').catch(()=>{}); }
 </script>
 </body>
