@@ -2800,17 +2800,17 @@ function refreshTray(){
   const left=STEPS1.filter(s=>!stepDone(s)).length; const c=$('#trayCnt'); if(c) c.textContent=left?left+' осталось':'всё установлено';
   if(!left&&!$('#btnClose')){ const b=document.createElement('button'); b.className='btn ok'; b.id='btnClose'; b.innerHTML='🔒 Закрыть крышку корпуса'; b.style.cssText='margin-top:6px;justify-content:center'; b.addEventListener('click',closeCase); $('#tray .note').after(b); }
 }
-function nextStep(){ if(B.stage===1) return STEPS1.find(s=>!stepDone(s)&&s.need.every(n=>B.placed[n]))||null; return STEPS2.find(s=>!B.conn[s.id]&&!(s.id==='sw'&&B.sw)&&!(s.id==='on'&&B.on))||null; }
+function bNextStep(){ if(B.stage===1) return STEPS1.find(s=>!stepDone(s)&&s.need.every(n=>B.placed[n]))||null; return STEPS2.find(s=>!B.conn[s.id]&&!(s.id==='sw'&&B.sw)&&!(s.id==='on'&&B.on))||null; }
 function updateTask(msg,kind){
   const t=$('#task'); t.className='task'+(kind?' '+kind:'');
-  const steps=B.stage===1?STEPS1:STEPS2; const cur=nextStep();
+  const steps=B.stage===1?STEPS1:STEPS2; const cur=bNextStep();
   $('#taskSteps').innerHTML=steps.map(s=>'<i class="'+((B.stage===1?stepDone(s):(B.conn[s.id]||(s.id==='sw'&&B.sw)||(s.id==='on'&&B.on)))?'done':(cur&&cur.id===s.id?'cur':''))+'"></i>').join('');
   if(msg){ $('#taskIc').textContent=kind==='bad'?'❌':kind==='good'?'✅':'💡'; $('#taskT').textContent=msg; $('#taskS').textContent=cur?('Дальше: '+cur.t.toLowerCase()):''; clearTimeout(updateTask._t); updateTask._t=setTimeout(()=>updateTask(),kind==='bad'?3200:1800); return; }
   if(B.stage===1&&!cur){ $('#taskIc').textContent='🔒'; $('#taskT').textContent='Все детали на месте!'; $('#taskS').textContent='Закрой корпус крышкой — кнопка справа.'; return; }
   if(cur){ $('#taskIc').textContent=cur.e; $('#taskT').textContent=cur.t; $('#taskS').textContent=cur.s; }
 }
 function showBuildHint(){
-  const cur=nextStep(); if(!cur) return; speak(cur.t+'. '+cur.s);
+  const cur=bNextStep(); if(!cur) return; speak(cur.t+'. '+cur.s);
   $$('.tray-item').forEach(el=>el.classList.toggle('hint',el.dataset.part===cur.id));
   const target=B.stage===1?cur.id:({hdmi:'hdmigpu',kb:'usb1',mouse:'usb2',power:'power',wall:'wall'}[cur.id]);
   $$('.slot').forEach(el=>el.classList.toggle('hint',el.dataset.slot===target));
@@ -2883,7 +2883,7 @@ function place1(part,slot){
   const praise=['Отлично!','Молодец!','Точно в цель!','Супер!','Так держать!'][Math.floor(Math.random()*5)];
   const done=STEPS1.every(stepDone);
   updateTask(praise+' '+PART[part].n+(part==='ram'&&B.placed.ram<2?' — теперь вторая планка, через один слот':' установлен'+(/а$/.test(PART[part].n)?'а':'')),'good');
-  const nx=nextStep(); setTimeout(()=>{ if(done) speak('Все детали на месте! Закрой корпус крышкой.'); else if(nx) speak(praise+' '+nx.t+'. '+nx.s); },300);
+  const nx=bNextStep(); setTimeout(()=>{ if(done) speak('Все детали на месте! Закрой корпус крышкой.'); else if(nx) speak(praise+' '+nx.t+'. '+nx.s); },300);
   return true;
 }
 function closeCase(){
@@ -2892,7 +2892,7 @@ function closeCase(){
   requestAnimationFrame(()=>requestAnimationFrame(()=>{ $('#scene .glass').classList.remove('offp'); }));
   speak('Корпус закрыт. Теперь поставим компьютер на стол и подключим всё остальное.');
   updateTask('Крышка закрыта! Ставим компьютер на стол…','good');
-  setTimeout(()=>{ B.stage=2; B.sel=null; renderStage2(); updateTask(); const nx=nextStep(); speak(nx.t+'. '+nx.s); },1400);
+  setTimeout(()=>{ B.stage=2; B.sel=null; renderStage2(); updateTask(); const nx=bNextStep(); speak(nx.t+'. '+nx.s); },1400);
 }
 
 /* ---- этап 2: рабочее место ---- */
@@ -2963,7 +2963,7 @@ function place2(part,slot){
   if(part==='wall'){ $('#scene .plugin').style.display=''; }
   snd.ok(); flashSlot(slot,'ok'); refreshTray2();
   const msgs={hdmi:'Монитор подключён к видеокарте!',kb:'Клавиатура подключена!',mouse:'Мышь подключена!',power:'Кабель питания в блоке. Теперь вилку — в розетку!',wall:'Есть ток! Осталось включить блок питания и нажать кнопку.'};
-  updateTask(msgs[part],'good'); const nx=nextStep(); setTimeout(()=>{ if(nx) speak(msgs[part]+' '+nx.t+'. '+nx.s); },200);
+  updateTask(msgs[part],'good'); const nx=bNextStep(); setTimeout(()=>{ if(nx) speak(msgs[part]+' '+nx.t+'. '+nx.s); },200);
   if(B.on&&part==='hdmi') bootScreen(); if(B.on&&(part==='kb'||part==='mouse')) checkDesktop();
   return true;
 }
@@ -3020,7 +3020,6 @@ function renderQuizHome(){
   $('#quiz').innerHTML='<div class="card" style="text-align:center;padding:36px"><div style="font-size:4rem">❓</div><h2>Викторина «Детали компьютера»</h2><p class="lead" style="margin:8px 0 18px">12 вопросов: угадай деталь по фотографии, по описанию или по её работе. За каждый правильный ответ — звезда, за все — ещё четыре!</p>'+(S.lab.quizBest?'<p class="lead" style="margin-bottom:14px">🏆 Твой рекорд: '+S.lab.quizBest+' из 12</p>':'')+'<button class="btn" id="qStart" style="font-size:1.2rem">▶ Начать</button> <button class="btn ghost" data-go="lab-parts">📦 Сначала повторить детали</button></div>';
   $('#qStart').addEventListener('click',startQuiz);
 }
-function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
 const QEXTRA=[['К какой детали подключают монитор кабелем HDMI?','gpu'],['Какая деталь превращает ток из розетки в безопасный для компьютера?','psu'],['Что стирается, когда компьютер выключают?','ram'],['Где хранится Windows, которая загружается за 10 секунд?','ssd'],['Что ставят сверху на процессор, чтобы он не перегрелся?','cooler'],['Внутри какой детали крутятся блестящие диски?','hdd'],['На какую деталь устанавливают процессор, память и видеокарту?','mb'],['Что защищает детали от пыли и ударов?','case'],['Какую деталь называют «мозгом компьютера»?','cpu'],['Какая деталь рисует картинку для игр и мультфильмов?','gpu'],['Какой кабель соединяет блок питания с розеткой?','power'],['Что передаёт картинку и звук от видеокарты к монитору?','hdmi']];
 function startQuiz(){
   Q.active=true; Q.i=0; Q.score=0; const ps=shuffle(PARTS.slice()).slice(0,8);
@@ -3981,7 +3980,7 @@ function renderHome(){
 if(S.set.tpLimit!==undefined) TP.limit=S.set.tpLimit; if(S.set.tpStrict!==undefined) TP.strict=S.set.tpStrict; if(S.set.tpHints!==undefined) TP.hints=S.set.tpHints;
 buildKeyboard(); applySettings(); renderStars(); renderCats(); renderTrainGrid(); renderTypeHome(); renderRefCats(); renderRef(); pressedCombo(); updateKb(); setMode('home');
 addEventListener('pointerdown',unlockAudio,{once:true});
-window.KM={get T(){return T},get LN(){return LN},get TP(){return TP},get S(){return S},get B(){return B},get mode(){return mode},SHORTCUTS,CATS,TSETS,PARTS,comboHTML,MODCODES,sig,parseKeys,codeChars,charKeys,setMode,startBuild,place1,place2,closeCase,toggleSwitch,powerOn,nextStep,startQuiz,get G(){return MG},get W(){return W},startGame,endGame,lessonEvent,wOpen,wEv,wResetFS,wCreate,wRename,wDelete,wMove,wEmptyBin,wMax,wMin,wClose,WMISSIONS,nCable,renderNetLab,nxPlace,nxPick,nxConfig,nxCheck,nxIpCheck,get NX(){return NX},NXLV,nEv,nAction,nPlace,nPort,nSrc,nCheck,get NB(){return NB},get NL(){return NL},NSTEPS,get PK(){return PK},pkGo,pwUpdate,PHISH,phAnswer,get PH(){return PH},shDrop,get SH(){return SH},get SI(){return SI},netQuiz,safeQuiz,SECTIONS,renderHome};
+window.KM={get T(){return T},get LN(){return LN},get TP(){return TP},get S(){return S},get B(){return B},get mode(){return mode},SHORTCUTS,CATS,TSETS,PARTS,comboHTML,MODCODES,sig,parseKeys,codeChars,charKeys,setMode,startBuild,place1,place2,closeCase,toggleSwitch,powerOn,bNextStep,startQuiz,get G(){return MG},get W(){return W},startGame,endGame,lessonEvent,wOpen,wEv,wResetFS,wCreate,wRename,wDelete,wMove,wEmptyBin,wMax,wMin,wClose,WMISSIONS,nCable,renderNetLab,nxPlace,nxPick,nxConfig,nxCheck,nxIpCheck,get NX(){return NX},NXLV,nEv,nAction,nPlace,nPort,nSrc,nCheck,get NB(){return NB},get NL(){return NL},NSTEPS,get PK(){return PK},pkGo,pwUpdate,PHISH,phAnswer,get PH(){return PH},shDrop,get SH(){return SH},get SI(){return SI},netQuiz,safeQuiz,SECTIONS,renderHome};
 if('serviceWorker' in navigator&&location.protocol.startsWith('http')){ navigator.serviceWorker.register('sw.js').catch(()=>{}); }
 </script>
 </body>
